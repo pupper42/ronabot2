@@ -1,0 +1,32 @@
+{
+  "name": "ronabot2",
+  "version": "1.0.0",
+  "description": "Checks COVID-19 cases in Australia, including at the state level",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pupper42/ronabot2.git"
+  },
+  "keywords": [
+    "coronavirus",
+    "covid-19",
+    "sars-cov-2",
+    "discord",
+    "bot"
+  ],
+  "author": "pupper42",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pupper42/ronabot2/issues"
+  },
+  "homepage": "https://github.com/pupper42/ronabot2#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.9",
+    "discord.js": "^12.5.3",
+    "dotenv": "^9.0.2",
+    "mongodb": "^3.6.6"
+  }
+}
