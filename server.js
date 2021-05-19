@@ -1,4 +1,5 @@
 const config = require('./app/config');
+const mongoose = require('mongoose');
 const MongoFunctions = require('./MongoFunctions');
 const Discord = require('discord.js');
 const cheerio = require('cheerio');
@@ -21,8 +22,32 @@ class RonaBot {
      * Constructor - load the bot!
      */
     constructor() {
-        this.initCrudService();
+        this.initDatabaseConnection();
+        this.initDiscord();
+    }
 
+    /**
+     * Initialise the Database connection
+     */
+    initDatabaseConnection() {
+        // Test Database Connection
+        mongoose.connect(config.databaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
+        const db = mongoose.connection;
+
+        db.once('open', _ => {
+            console.log('Database connected:', config.databaseURL);
+        });
+
+        db.on('error', err => {
+            console.error('connection error:', config.databaseURL);
+            process.exit(1);
+        });
+    }
+
+    /**
+     * Initialise the Discord
+     */
+    initDiscord() {
         client.on('ready', () => {
             console.log(`Logged in as ${client.user.tag}`);
             client.guilds.cache.forEach(guild => {
@@ -36,11 +61,11 @@ class RonaBot {
     /**
      * Initialise the CRUD service
      */
-    initCrudService() {
-        const mfx = new MongoFunctions();
-        mfx.crudService("r").catch(console.error);
-        mfx.crudService("u", config.serverID, {vic: false});
-    }
+    // initCrudService() {
+    //     const mfx = new MongoFunctions();
+    //     mfx.crudService("r").catch(console.error);
+    //     mfx.crudService("u", config.serverID, {vic: false});
+    // }
 }
 
 // Run the bot
