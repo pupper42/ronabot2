@@ -1,4 +1,4 @@
-// TODO: Fix this
+// TODO: Fix this (Technically this should be the Bot command handler)
 
 const config = require('./app/config');
 const MongoClient = require('mongodb').MongoClient;

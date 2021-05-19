@@ -50,9 +50,9 @@ class RonaBot {
     }
 
     /**
-     * Initialise the CRUD service
+     * Initialise the BotCommand service
      */
-    // initCrudService() {
+    // initBotCommandService() {
     //     const mfx = new MongoFunctions();
     //     mfx.crudService("r").catch(console.error);
     //     mfx.crudService("u", config.serverID, {vic: false});
