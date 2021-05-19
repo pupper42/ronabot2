@@ -6,6 +6,7 @@ module.exports = {
     databaseURL: process.env.MONGO_URI,
     dataSource: 'https://covidlive.com.au/',
     discord: {
+        prefix: "/ronabot",
         token: process.env.DISCORD_TOKEN
     }
 }
