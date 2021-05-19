@@ -1,5 +1,6 @@
+# RonaBot v2
 A bot that will show COVID-19 cases in Australia at the state level.
-<br/>
+<br>
 Settings are saved on MongoDB.
 Database structure:
 - Database: "settings"
@@ -17,8 +18,14 @@ Database structure:
             - nt: boolean
             - aus: boolean
             - constantly_update: boolean
-<br/>
-TODO:
-- Allow the user to set whether or not the bot gives continuous updates
+
+### Config
+You will need to create an .env file with the following values:
+- DISCORD_TOKEN
+- MONGO_URI
+- SERVER_ID
+
+### TODO:
+- Allow the user to set whether the bot gives continuous updates
 - Allow the user to set which states (or the whole country) they want continuous updates for
 - Allow the user to get an update at will via a command
