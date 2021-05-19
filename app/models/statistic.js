@@ -7,7 +7,8 @@ const Statistic = new Schema({
     total_cases: String,
     rolling_average: String,
     tests_conducted: String,
-    updated_at: Date
+    updated_at: Date,
+    vaccinations: String
 });
 
 module.exports = mongoose.model('Statistic', Statistic);
