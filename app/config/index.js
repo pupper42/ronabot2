@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 module.exports = {
-    serverID: process.env.SERVER_ID,
     databaseURL: process.env.MONGO_URI,
     dataSource: 'https://covidlive.com.au/',
     discord: {
