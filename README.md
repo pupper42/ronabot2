@@ -23,8 +23,9 @@ Database structure:
 You will need to create an .env file with the following values:
 - DISCORD_TOKEN
 - MONGO_URI
+- SERVER_ID
 
 ### TODO:
-- Allow the user to set whether or not the bot gives continuous updates
+- Allow the user to set whether the bot gives continuous updates
 - Allow the user to set which states (or the whole country) they want continuous updates for
 - Allow the user to get an update at will via a command
