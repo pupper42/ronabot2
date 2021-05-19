@@ -1,6 +1,6 @@
 // TODO: Fix this (Technically this should be the Bot command handler)
 
-const config = require('./app/config');
+const config = require('../config');
 const MongoClient = require('mongodb').MongoClient;
 const uri = config.databaseURL;
 const db = "settings";
