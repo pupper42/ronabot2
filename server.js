@@ -1,6 +1,5 @@
-// Declare the consts
-require('dotenv').config();
-const mongoFunctions = require('./mongoFunctions');
+const config = require('./app/config');
+const MongoFunctions = require('./MongoFunctions');
 const Discord = require('discord.js');
 const cheerio = require('cheerio');
 const dataSource = 'https://covidlive.com.au/';
@@ -31,16 +30,16 @@ class RonaBot {
             });
         });
 
-        client.login(process.env.DISCORD_TOKEN);
+        client.login(config.discord.token);
     }
 
     /**
      * Initialise the CRUD service
      */
     initCrudService() {
-        const mfx = new mongoFunctions();
+        const mfx = new MongoFunctions();
         mfx.crudService("r").catch(console.error);
-        mfx.crudService("u", "381685383827554316", {vic: false});
+        mfx.crudService("u", config.serverID, {vic: false});
     }
 }
 

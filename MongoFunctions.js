@@ -1,10 +1,11 @@
+const config = require('./app/config');
 const MongoClient = require('mongodb').MongoClient;
-const uri = process.env.MONGO_URI
+const uri = config.databaseURL;
 const db = "settings";
 const collection = "servers"
 const mClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-class mongoFunctions {
+class MongoFunctions {
     /**
      * Scan the array
      *
@@ -115,5 +116,4 @@ class mongoFunctions {
     }
 }
 
-// Export the function
-module.exports = mongoFunctions;
+module.exports = MongoFunctions;
