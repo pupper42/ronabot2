@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Server = new Schema({
     name: String,
-    server_id: Number,
+    server_id: String,
     location: String,
     updateData: Object,
     constantly_update: Boolean,

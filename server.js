@@ -1,5 +1,6 @@
 const config = require('./app/config');
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 const fs = require('fs');
 const path = require('path');
 
@@ -9,6 +10,8 @@ const Discord = require('discord.js');
 // const dataSource = config.dataSource;
 const client = new Discord.Client();
 
+const serverController = require('./app/controllers/server');
+
 class RonaBot {
 
     /**
@@ -17,6 +20,10 @@ class RonaBot {
     constructor() {
         this.initDatabaseConnection();
         this.initDiscord();
+
+        serverController.update('381685383827554316', {
+            name: 'Potato Test'
+        });
     }
 
     /**
