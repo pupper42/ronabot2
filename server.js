@@ -53,6 +53,7 @@ class RonaBot {
         // Load the Discord listener
         client.commands = new Discord.Collection();
 
+        // Retrieve all the commands (as files)
         const commandFiles = fs.readdirSync(path.resolve(__dirname, './app/commands')).filter(file => file.endsWith('.js'));
 
         for (const file of commandFiles) {
@@ -71,19 +72,22 @@ class RonaBot {
             const args = message.content.slice(config.discord.prefix.length).trim().split(/ +/);
             const command = args.shift().toLowerCase();
 
+            // If the user did not provide a command
             if (!client.commands.has(command)) {
-                message.reply('Please give me a command!');
+                message.reply('please give me a command!');
                 return;
             }
 
+            // Attempt to execute the command
             try {
                 client.commands.get(command).execute(message, args);
             } catch (error) {
                 console.error(error);
-                message.reply('There was an error trying to execute that command!');
+                message.reply('there was an error trying to execute that command!');
             }
         });
 
+        // Discord login - must be last item for the bot to connect properly
         client.login(config.discord.token);
     }
 }
