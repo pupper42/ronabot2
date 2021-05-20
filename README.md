@@ -25,7 +25,9 @@ Prefix: /ronabot
 - **ping** - this is just a test
 - **on** - enables the alerts
 - **off** - disables the alerts
-- **setinterval [time in minutes]** - set how often you want to receive alerts (set to 0 to turn off)
+- **setinterval [location] [time in minutes]** - set how often you want to receive alerts (set to 0 to turn off)
+- **add [location]** - add a location to your server
+- **remove [location]** - remove a location from your server
 - **get [location]** - get the statistics of the location
 
 ### TODO:
