@@ -27,10 +27,12 @@ class RonaBot {
         mongoose.connect(config.databaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
         const db = mongoose.connection;
 
+        // Check database connection
         db.once('open', _ => {
             console.log('Database connected:', config.databaseURL);
         });
 
+        // If database is down, exit the bot application
         db.on('error', err => {
             console.error('Connection error:', config.databaseURL);
             process.exit(1);
