@@ -1,23 +1,6 @@
 const Server = require('../models/server');
 
 /**
- * Scan the array
- *
- * @param array
- * @param parameter
- * @returns {*[]}
- */
-function scanArray(array, parameter) {
-    let newArray = []
-    let i;
-
-    for (i=0; i < array.length; i++) {
-        newArray.push(array[i].parameter);
-    }
-    return newArray;
-}
-
-/**
  * Create the server
  *
  * @returns {Promise<void>}
@@ -44,7 +27,10 @@ exports.read = async function () {
         if (err) {
             console.log(err);
         } else {
-            console.log(scanArray(servers, "name"))
+            output = servers.map(function (server) {
+               return server.name;
+            });
+            console.log(output);
         }
     });
 }
@@ -57,11 +43,11 @@ exports.read = async function () {
  * @returns {Promise<void>}
  */
 exports.update = async function (serverId, updateData) {
-   await Server.updateOne({server_id: serverId}, updateData, {upsert: true}, function (err) {
+    await Server.findOneAndUpdate({server_id: serverId}, updateData, {new: true, upsert: true}, function (err, servers) {
         if (err) {
             console.log(err);
         } else {
-            console.log(`Updated ${serverId} successfully`);
+            console.log(`Updated ${servers.id} successfully`);
         }
     });
 }
