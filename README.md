@@ -1,3 +1,5 @@
+# ***THIS IS STILL UNDER DEVELOPMENT***
+
 # RonaBot v2
 A bot that will show COVID-19 cases in Australia at the state level.
 <br>
@@ -9,21 +11,27 @@ Database structure:
             - _id: 
             - name: string
             - server_id: string
-            - vic: boolean
-            - nsw: boolean
-            - qld: boolean
-            - act: boolean
-            - sa: boolean
-            - wa: boolean
-            - nt: boolean
-            - aus: boolean
+            - location: string
+            - updateData: object
             - constantly_update: boolean
+            - update_interval: number
+            - updated_at: date
 
 ### Config
 You will need to create an .env file with the following values:
 - DISCORD_TOKEN
 - MONGO_URI
-- SERVER_ID
+
+### Commands
+Prefix: /ronabot
+- **ping** - this is just a test
+- **on** - enables the alerts
+- **off** - disables the alerts
+- **setinterval [location] [time in minutes]** - set how often you want to receive alerts (set to 0 to turn off)
+- **add [location]** - add a location to your server
+- **remove [location]** - remove a location from your server
+- **get [location]** - get the statistics of the location
+- **list** - list the locations added
 
 ### TODO:
 - Allow the user to set whether the bot gives continuous updates

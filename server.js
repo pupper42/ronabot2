@@ -1,5 +1,6 @@
 const config = require('./app/config');
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 const fs = require('fs');
 const path = require('path');
 
@@ -27,10 +28,12 @@ class RonaBot {
         mongoose.connect(config.databaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
         const db = mongoose.connection;
 
+        // Check database connection
         db.once('open', _ => {
             console.log('Database connected:', config.databaseURL);
         });
 
+        // If database is down, exit the bot application
         db.on('error', err => {
             console.error('Connection error:', config.databaseURL);
             process.exit(1);
@@ -51,6 +54,7 @@ class RonaBot {
         // Load the Discord listener
         client.commands = new Discord.Collection();
 
+        // Retrieve all the commands (as files)
         const commandFiles = fs.readdirSync(path.resolve(__dirname, './app/commands')).filter(file => file.endsWith('.js'));
 
         for (const file of commandFiles) {
@@ -69,19 +73,22 @@ class RonaBot {
             const args = message.content.slice(config.discord.prefix.length).trim().split(/ +/);
             const command = args.shift().toLowerCase();
 
+            // If the user did not provide a command
             if (!client.commands.has(command)) {
-                message.reply('Please give me a command!');
+                message.reply('please give me a command!');
                 return;
             }
 
+            // Attempt to execute the command
             try {
                 client.commands.get(command).execute(message, args);
             } catch (error) {
                 console.error(error);
-                message.reply('There was an error trying to execute that command!');
+                message.reply('there was an error trying to execute that command!');
             }
         });
 
+        // Discord login - must be last item for the bot to connect properly
         client.login(config.discord.token);
     }
 }
