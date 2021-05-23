@@ -1,6 +1,5 @@
 const config = require('./app/config');
 const mongoose = require('mongoose');
-mongoose.set('useFindAndModify', false);
 const fs = require('fs');
 const path = require('path');
 
@@ -25,7 +24,7 @@ class RonaBot {
      */
     initDatabaseConnection() {
         // Test Database Connection
-        mongoose.connect(config.databaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
+        mongoose.connect(config.databaseURL, { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true });
         const db = mongoose.connection;
 
         // Check database connection
