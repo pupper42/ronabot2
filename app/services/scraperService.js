@@ -1,37 +1,38 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
-const Statistic = require('../models/statistic');
-
+const Statistic = require('../controllers/statistic');
 
 exports.getData = async function (url) {
-    var new_cases;
-    var case_change;
-    var active_cases;
-    var total_cases;
-    var update;
-    var last_updated;
-    var tests;
-    var local_cases;
-    var overseas_cases;
-    
-    var { website } = await axios.get(url);
-    var $ = cheerio.load(website);
-    var data = [];
+    let new_cases;
+    let case_change;
+    let active_cases;
+    let total_cases;
+    let update;
+    let last_updated;
+    let tests;
+    let local_cases;
+    let overseas_cases;
 
-    $("#content > div > div:nth-child(1) > section > table > tbody > tr").each((index, element) => { 
+    // Grab the website
+    const { website } = await axios.get(url);
+    const $ = cheerio.load(website);
+    let data = [];
+
+    // Scrape the data
+    $("#content > div > div:nth-child(1) > section > table > tbody > tr").each((index, element) => {
         if (index === 0) return true;
-        var tds = $(element).find("td");
+        let tds = $(element).find("td");
 
-        var category = $(tds[0]).text();
-        var total = $(tds[1]).text();
-        var change = $(tds[3]).text();
+        let category = $(tds[0]).text();
+        let total = $(tds[1]).text();
+        let change = $(tds[3]).text();
 
-        var tableRow = {category, total, change};
-        data.push(tableRow);       
-
+        let tableRow = {category, total, change};
+        data.push(tableRow);
     });
-    
-    for (i = 0; i < data.length; i++) {
+
+    // Filter the data
+    for (let i = 0; i < data.length; i++) {
         switch(data[i].category) {
             case "New Cases":
                 new_cases = data[i].total;
@@ -55,5 +56,8 @@ exports.getData = async function (url) {
 
         }
     }
+
+    // Save to database
+    // Something like Statistic.create() or Statistic.update()
 
 }
