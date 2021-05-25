@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/pupper42/ronabot2#readme",
   "dependencies": {
+    "agenda": "^4.1.3",
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.9",
     "discord.js": "^12.5.3",
