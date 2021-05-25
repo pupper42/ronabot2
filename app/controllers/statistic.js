@@ -20,7 +20,7 @@ exports.read = async function () {
 }
 
 /**
- * Updates the Servers
+ * Updates the stats
  *
  * @param locationId
  * @param updateData
@@ -31,7 +31,7 @@ exports.update = async function (locationId, updateData) {
 }
 
 /**
- * Delete the server
+ * Delete the stats
  *
  * @returns {Promise<void>}
  * @param locationId
