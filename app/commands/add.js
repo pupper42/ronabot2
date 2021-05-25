@@ -4,11 +4,10 @@ module.exports = {
     name: 'add',
     description: 'Add a location',
     execute(message, args) {
-        // TODO: Link to services function to run updater/scraper to grab latest data from db
-        // Also use args[0], args[1] to process the user input
-        messageServer = message.guild.id; 
-        newLocation = args.join(" ");
-        
+        let messageServer = message.guild.id;
+        let newLocation = args.join(" ");
+
+        // Create or add the location
         Server.update(messageServer, {$push: {location: [newLocation]}});
 
         const embed = {
