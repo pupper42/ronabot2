@@ -43,7 +43,7 @@ exports.read = async function () {
  * @returns {Promise<void>}
  */
 exports.update = async function (serverId, updateData) {
-    await Server.findOneAndUpdate({server_id: serverId}, updateData, {new: true, upsert: true}, function (err, servers) {
+    Server.findOneAndUpdate({server_id: serverId}, updateData, {new: true, upsert: true}, function (err, servers) {
         if (err) {
             console.log(err);
         } else {

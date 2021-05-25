@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Server = new Schema({
     name: String,
     server_id: String,
-    location: String,
+    location: Array,
     updateData: Object,
     constantly_update: Boolean,
     update_interval: Number,
