@@ -9,12 +9,12 @@ module.exports = {
         messageServer = message.guild.id; 
         newLocation = args.join(" ");
         
-        Server.update(messageServer, {$push: {location: [newLocation]}});
+        Server.update(messageServer, {$addToSet: {location: [newLocation]}});
 
         const embed = {
             color: '#ffe360',
             fields: [
-                {name: 'Added new location:', value: newLocation}
+                //{name: 'Added new location:', value: newLocation}
             ]
         };
         message.channel.send({embed: embed});

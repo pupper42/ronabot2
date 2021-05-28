@@ -17,6 +17,20 @@ exports.create = async function (server) {
     });
 }
 
+exports.getLocations = async function (serverId) {
+    console.log(serverId);
+    await Server.findOne({'server_id': serverId}).exec(function(err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Got it");
+
+        }
+        console.log(doc.location);
+        return doc.location;
+
+    });
+}
 /**
  * Retrieve the servers
  *
@@ -43,7 +57,7 @@ exports.read = async function () {
  * @returns {Promise<void>}
  */
 exports.update = async function (serverId, updateData) {
-    Server.findOneAndUpdate({server_id: serverId}, updateData, {new: true, upsert: true}, function (err, servers) {
+    await Server.findOneAndUpdate({server_id: serverId}, updateData, {new: true, upsert: true}, function (err, servers) {
         if (err) {
             console.log(err);
         } else {
