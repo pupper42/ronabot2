@@ -6,18 +6,23 @@ module.exports = {
     execute(message, args) {
         // TODO: Link to services function to run updater/scraper to grab latest data from db
         // Also use args[0], args[1] to process the user input
-        let messageServer = message.guild.id;
-        let doc;
-        async () => {
-            doc = await Server.getDoc(messageServer);  
+        let serverId = message.guild.id;
+
+        async function sendLocations() {
+            let doc = await Server.getDoc(serverId); 
+            return doc;            
         }
         
-        const embed = {
-            color: '#ffe360',
-            fields: [
-                {name: 'Locations added:', value: locationList}
-            ]
-        };
-        message.channel.send({embed: embed});
+        sendLocations().then((doc) => {
+            const embed = {
+                color: '#ffe360',
+                fields: [
+                    {name: 'Locations added:', value: doc}
+                ]
+            };
+            message.channel.send({embed: embed});            
+        }).catch(e => {
+            console.log(`Oops something happened... ${e}`);
+        });
     },
 };
