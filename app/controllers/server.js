@@ -17,7 +17,7 @@ exports.create = async function (server) {
     });
 }
 
-exports.getLocations = async function (serverId) {
+exports.getDoc = async function (serverId) {
     console.log(serverId);
     await Server.findOne({'server_id': serverId}).exec(function(err, doc) {
         if (err) {
@@ -26,8 +26,8 @@ exports.getLocations = async function (serverId) {
             console.log("Got it");
 
         }
-        console.log(doc.location);
-        return doc.location;
+        console.log(doc);
+        return doc;
 
     });
 }
@@ -36,7 +36,7 @@ exports.getLocations = async function (serverId) {
  *
  * @returns {Promise<void>}
  */
-exports.read = async function () {
+exports.getServers = async function () {
     await Server.find({}).exec(function (err, servers) {
         if (err) {
             console.log(err);
