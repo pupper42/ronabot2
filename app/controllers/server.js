@@ -18,20 +18,10 @@ exports.create = async function (server) {
 }
 
 exports.getDoc = async function (serverId) {
-    let locations;
-    await Server.findOne({'server_id': serverId}).exec(function(err, doc) {
-        
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Got it");
-            locations = doc.location.toObject().join(", ");
-            console.log(locations)
-            
-        }
-    });
+    let locations = await Server.findOne({'server_id': serverId})
     return locations;
 }
+    
 /**
  * Retrieve the servers
  *

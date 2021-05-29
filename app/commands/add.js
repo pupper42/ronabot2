@@ -14,7 +14,7 @@ module.exports = {
         const embed = {
             color: '#ffe360',
             fields: [
-                //{name: 'Added new location:', value: newLocation}
+                {name: 'Added new location:', value: newLocation}
             ]
         };
         message.channel.send({embed: embed});

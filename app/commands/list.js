@@ -10,19 +10,16 @@ module.exports = {
 
         async function sendLocations() {
             let doc = await Server.getDoc(serverId); 
-            return doc;            
-        }
-        
-        sendLocations().then((doc) => {
+            console.log("list.js: " + doc);
             const embed = {
                 color: '#ffe360',
                 fields: [
-                    {name: 'Locations added:', value: doc}
+                    {name: 'Locations added:', value: doc.location}
                 ]
             };
-            message.channel.send({embed: embed});            
-        }).catch(e => {
-            console.log(`Oops something happened... ${e}`);
-        });
+            message.channel.send({embed: embed});          
+        }
+
+        sendLocations();
     },
 };
