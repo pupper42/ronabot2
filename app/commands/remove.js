@@ -16,7 +16,7 @@ module.exports = {
                         {name: 'Removed', value: location}
                     ]
                 };
-                message.channel.send({embed: embed});
+                await message.channel.send({embed: embed});
             } catch(e) {
                 console.log(e);
             }

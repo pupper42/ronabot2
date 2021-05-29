@@ -24,7 +24,7 @@ exports.create = async function (server) {
  */
 exports.getDoc = async function (serverId) {
     try {
-        return await Server.findOne({'server_id': serverId});
+        return await Server.findOne({server_id: serverId});
     } catch(e) {
         console.log("Error!: " + e);
     }
@@ -34,12 +34,12 @@ exports.getDoc = async function (serverId) {
  * Remove a location from a server
  *
  * @param serverId
- * @param locations
+ * @param location
  * @returns {Promise<void>}
  */
-exports.removeLocation = async function (serverId, locations) {
+exports.removeLocation = async function (serverId, location) {
     try {
-        await Server.findOneAndUpdate({'server_id': serverId}, { $pull: {'location': locations}}, {'new': true});
+        await Server.findOneAndUpdate({server_id: serverId}, { $pull: {'location': location}}, {'new': true});
     } catch(e) {
         console.log("Error!: " + e);
     }

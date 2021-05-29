@@ -7,19 +7,19 @@ module.exports = {
         // TODO: Link to services function to run updater/scraper to grab latest data from db
         // Also use args[0], args[1] to process the user input
 
-        let serverId = message.guild.id; 
+        let serverId = message.guild.id;
 
         async function off() {
-            Server.update(serverId, {'constantly_update': false});
+            await Server.update(serverId, {'constantly_update': false});
             const embed = {
                 color: '#ffe360',
                 fields: [
                     {name: 'Automatic Updates', value: "Off. Use `/ronabot on` to turn on"}
                 ]
             };
-            message.channel.send({embed: embed});
-        }      
-        
+            await message.channel.send({embed: embed});
+        }
+
         off();
     },
 };

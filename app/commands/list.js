@@ -16,7 +16,7 @@ module.exports = {
                     {name: 'Locations added:', value: doc.location}
                 ]
             };
-            message.channel.send({embed: embed});          
+            await message.channel.send({embed: embed});
         }
 
         sendLocations();
