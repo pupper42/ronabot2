@@ -29,7 +29,7 @@ module.exports = {
                 },
                 {
                     name: prefix + 'list',
-                    value: 'Lists al lthe locations added to this server',
+                    value: 'Lists all the locations added to this server',
                 },
                 {
                     name: prefix + 'off',
