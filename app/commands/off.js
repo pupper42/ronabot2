@@ -1,3 +1,5 @@
+const Server = require('../controllers/server');
+
 module.exports = {
     name: 'off',
     description: 'Turn off the bot alerts',
@@ -5,12 +7,19 @@ module.exports = {
         // TODO: Link to services function to run updater/scraper to grab latest data from db
         // Also use args[0], args[1] to process the user input
 
-        const embed = {
-            color: '#ffe360',
-            fields: [
+        let serverId = message.guild.id; 
 
-            ]
-        };
-        message.channel.send({embed: embed});
+        async function off() {
+            Server.update(serverId, {'constantly_update': false});
+            const embed = {
+                color: '#ffe360',
+                fields: [
+                    {name: 'Automatic Updates', value: "Off. Use `/ronabot on` to turn on"}
+                ]
+            };
+            message.channel.send({embed: embed});
+        }      
+        
+        off();
     },
 };

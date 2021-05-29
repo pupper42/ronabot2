@@ -8,7 +8,8 @@ const Server = new Schema({
     updateData: Object,
     constantly_update: Boolean,
     update_interval: Number,
-    updated_at: Date
+    updated_at: Date,
+    update_channel: String,
 });
 
 module.exports = mongoose.model('Server', Server);
