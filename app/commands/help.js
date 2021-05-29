@@ -1,5 +1,4 @@
 const config = require('../../app/config');
-const Server = require('../controllers/server');
 
 module.exports = {
     name: 'help',

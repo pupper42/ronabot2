@@ -1,3 +1,4 @@
+const config = require('../../app/config');
 const Server = require('../controllers/server');
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
             const embed = {
                 color: '#ffe360',
                 fields: [
-                    {name: 'Automatic Updates', value: "On. Use `/ronabot off` to turn off"}
+                    {name: 'Automatic Updates', value: `On. Use \`${config.discord.prefix} off\` to turn off`}
                 ]
             };
             await message.channel.send({embed: embed});
