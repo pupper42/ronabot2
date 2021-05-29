@@ -36,7 +36,7 @@ module.exports = {
                 },
                 {
                     name: prefix + 'on',
-                    value: 'Turn off auto updates for the server',
+                    value: 'Turn on auto updates for the server',
                 },
                 {
                     name: prefix + 'ping',
