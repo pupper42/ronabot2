@@ -10,9 +10,7 @@ module.exports = {
 
         async function sendLocations() {
             let doc = await Server.getDoc(serverId);
-            let serverList = await Server.getServers(); 
             console.log("list.js: " + doc);
-            console.log(serverList);
             const embed = {
                 color: '#ffe360',
                 fields: [
