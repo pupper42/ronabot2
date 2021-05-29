@@ -30,6 +30,14 @@ exports.getDoc = async function (serverId) {
         console.log("Error!: " + e);
     }    
 }
+
+exports.removeLocation = async function (serverId, locations) {
+    try {
+        await Server.findOneAndUpdate({'server_id': serverId}, { $pull: {'location': locations}}, {'new': true});
+    } catch(e) {
+        console.log("Error!: " + e);
+    }
+}
     
 /**
  * Retrieve the servers
