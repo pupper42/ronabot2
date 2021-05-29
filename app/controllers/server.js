@@ -17,9 +17,18 @@ exports.create = async function (server) {
     });
 }
 
+/**
+ * Retrieve a document based on server ID
+ *
+ * @returns {Promise<void>}
+ */
 exports.getDoc = async function (serverId) {
-    let locations = await Server.findOne({'server_id': serverId})
-    return locations;
+    try {
+        let locations = await Server.findOne({'server_id': serverId});
+        return locations;
+    } catch(e) {
+        console.log("Error!: " + e);
+    }    
 }
     
 /**
@@ -28,16 +37,14 @@ exports.getDoc = async function (serverId) {
  * @returns {Promise<void>}
  */
 exports.getServers = async function () {
-    await Server.find({}).exec(function (err, servers) {
-        if (err) {
-            console.log(err);
-        } else {
-            output = servers.map(function (server) {
-               return server.name;
-            });
-            console.log(output);
-        }
-    });
+    try {
+        let docs = await Server.find({});
+        return docs.map(function (server) {
+            return server.name;
+        });        
+    } catch(e) {
+        console.log("Error!: " + e);
+    }
 }
 
 /**
