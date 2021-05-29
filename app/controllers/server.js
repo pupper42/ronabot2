@@ -24,13 +24,19 @@ exports.create = async function (server) {
  */
 exports.getDoc = async function (serverId) {
     try {
-        let locations = await Server.findOne({'server_id': serverId});
-        return locations;
+        return await Server.findOne({'server_id': serverId});
     } catch(e) {
         console.log("Error!: " + e);
-    }    
+    }
 }
 
+/**
+ * Remove a location from a server
+ *
+ * @param serverId
+ * @param locations
+ * @returns {Promise<void>}
+ */
 exports.removeLocation = async function (serverId, locations) {
     try {
         await Server.findOneAndUpdate({'server_id': serverId}, { $pull: {'location': locations}}, {'new': true});
@@ -38,7 +44,7 @@ exports.removeLocation = async function (serverId, locations) {
         console.log("Error!: " + e);
     }
 }
-    
+
 /**
  * Retrieve the servers
  *
@@ -49,7 +55,7 @@ exports.getServers = async function () {
         let docs = await Server.find({});
         return docs.map(function (server) {
             return server.name;
-        });        
+        });
     } catch(e) {
         console.log("Error!: " + e);
     }
