@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Statistic = new Schema({
-    location: Array,
+    location: String,
     new_cases: String,
     active_cases: String,
     total_cases: String,

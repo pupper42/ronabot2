@@ -15,8 +15,12 @@ exports.create = async function (statistic) {
  *
  * @returns {Promise<void>}
  */
-exports.read = async function () {
-
+exports.read = async function (location) {
+    try {
+        return await Statistic.findOne({'location': location});
+    } catch(e) {
+        console.log("Error!: " + e);
+    }
 }
 
 /**
@@ -26,8 +30,14 @@ exports.read = async function () {
  * @param updateData
  * @returns {Promise<void>}
  */
-exports.update = async function (locationId, updateData) {
-
+ exports.update = async function (location, updateData) {
+    await Statistic.findOneAndUpdate({'location': location}, updateData, {new: true, upsert: true}, function (err, location) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(`Updated ${location} successfully`);
+        }
+    });
 }
 
 /**

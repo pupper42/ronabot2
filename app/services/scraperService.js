@@ -60,4 +60,5 @@ exports.getData = async function (url) {
     // Save to database
     // Something like Statistic.create() or Statistic.update()
 
+
 }
