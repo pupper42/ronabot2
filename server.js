@@ -2,11 +2,7 @@ const config = require('./app/config');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
-
-// TODO: Clean these up
 const Discord = require('discord.js');
-// const cheerio = require('cheerio');
-// const dataSource = config.dataSource;
 const client = new Discord.Client();
 
 class RonaBot {
