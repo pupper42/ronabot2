@@ -2,8 +2,9 @@
   "name": "ronabot2",
   "version": "1.0.0",
   "description": "Checks COVID-19 cases in Australia, including at the state level",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "run": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
