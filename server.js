@@ -18,7 +18,7 @@ class RonaBot {
     constructor() {
         this.initDatabaseConnection();
         this.initDiscord();
-        this.initTaskRunner();
+        this.initAgenda();
     }
 
     /**
@@ -96,11 +96,28 @@ class RonaBot {
     /**
      * Initialises the Agenda.js task service
      */
-    initTaskRunner() {
+    initAgenda() {
+        // Testing task runner
         const agenda = new Agenda({
             db: {address: config.databaseURL},
-            processEvery: '5 minutes'
+            processEvery: '5 minutes',
+            useUnifiedTopology: true
         });
+
+        // Define the job
+        agenda.define('get latest statistics', async job => {
+            job.repeatEvery('15 minutes');
+
+            // TODO: Initialise scraperService
+            let date = new Date();
+            console.log('Job test now: '+date.toUTCString());
+        });
+
+        // Start the job scheduler
+        (async function() {
+            await agenda.start();
+            await agenda.every('15 minutes', 'get latest statistics');
+        })();
     }
 }
 
