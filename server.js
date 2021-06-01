@@ -1,9 +1,14 @@
+/**
+ * Welcome to RonaBot v2!
+ */
+
 const config = require('./app/config');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const Agenda = require('agenda');
 
 class RonaBot {
 
@@ -13,6 +18,7 @@ class RonaBot {
     constructor() {
         this.initDatabaseConnection();
         this.initDiscord();
+        this.initTaskRunner();
     }
 
     /**
@@ -85,6 +91,16 @@ class RonaBot {
 
         // Discord login - must be last item for the bot to connect properly
         client.login(config.discord.token);
+    }
+
+    /**
+     * Initialises the Agenja.js task service
+     */
+    initTaskRunner() {
+        const agenda = new Agenda({
+            db: {address: config.databaseURL},
+            processEvery: '5 minutes'
+        });
     }
 }
 
