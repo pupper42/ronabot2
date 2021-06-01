@@ -94,7 +94,7 @@ class RonaBot {
     }
 
     /**
-     * Initialises the Agenja.js task service
+     * Initialises the Agenda.js task service
      */
     initTaskRunner() {
         const agenda = new Agenda({
