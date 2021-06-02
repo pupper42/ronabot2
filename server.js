@@ -100,7 +100,7 @@ class RonaBot {
         // Testing task runner
         const agenda = new Agenda({
             db: {address: config.databaseURL},
-            processEvery: '5 minutes',
+            processEvery: '1 minute',
             useUnifiedTopology: true
         });
 
@@ -113,10 +113,23 @@ class RonaBot {
             console.log('Job test now: '+date.toUTCString());
         });
 
+        agenda.define('notify servers', async job => {
+            job.repeatEvery('1 minute');
+
+            // Get all servers and their intervals
+
+            // Check if any server requires notification (get updated_at and interval)
+
+            // Push notification to server & specified channel
+
+            // Update server updated_at
+        });
+
         // Start the job scheduler
         (async function() {
             await agenda.start();
             await agenda.every('15 minutes', 'get latest statistics');
+            await agenda.every('1 minute', 'notify servers');
         })();
     }
 }
