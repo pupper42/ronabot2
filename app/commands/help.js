@@ -15,41 +15,41 @@ module.exports = {
                     value: 'Add a new location to the server',
                 },
                 {
-                    name: prefix + 'get [location]',
-                    value: 'Return a single location\'s statistics',
-                },
-                {
-                    name: prefix + 'help',
-                    value: 'Well you\'re looking at it right now, aren\'t you?',
-                },
-                {
-                    name: prefix + 'init',
-                    value: 'Initialise the current channel for the bot',
+                    name: prefix + 'remove [location]',
+                    value: 'Remove a location from the server'
                 },
                 {
                     name: prefix + 'list',
                     value: 'Lists all the locations added to this server',
                 },
                 {
-                    name: prefix + 'off',
-                    value: 'Turn off auto updates for the server',
+                    name: prefix + 'get [location]',
+                    value: 'Return a single location\'s statistics',
+                },                
+                {
+                    name: prefix + 'init',
+                    value: 'Initialise the current channel for the bot. Still need to do `/rb on` to enable automatic updates',
                 },
                 {
                     name: prefix + 'on',
                     value: 'Turn on auto updates for the server',
-                },
+                },                
+                {
+                    name: prefix + 'off',
+                    value: 'Turn off auto updates for the server',
+                }, 
+                {
+                    name: prefix + 'setinterval [time]',
+                    value: 'Set the how often the bot should check for updates if auto updates are on. If an update is found it will send it to the initialised channel.'
+                },               
                 {
                     name: prefix + 'ping',
                     value: 'Get the current latency between the bot and the Discord server'
-                },
+                },          
                 {
-                    name: prefix + 'remove [location]',
-                    value: 'Remove a location from the server'
+                    name: prefix + 'help',
+                    value: 'Well you\'re looking at it right now, aren\'t you?',
                 },
-                {
-                    name: prefix + 'setinterval [time]',
-                    value: 'Set the interval between server notifications'
-                }
             ]
         };
         message.channel.send({embed: embed});
