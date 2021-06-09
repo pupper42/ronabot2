@@ -50,7 +50,9 @@ class RonaBot {
             client.guilds.cache.forEach(guild => {
                 console.log(`${guild.name} | ${guild.id}`);
             });
+            client.user.setActivity(" '/rb help'", {type: "LISTENING"});
         });
+
 
         // Load the Discord listener
         client.commands = new Discord.Collection();
