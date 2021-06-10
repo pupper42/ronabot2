@@ -7,7 +7,16 @@ const Server = require('../models/server');
  * @param server
  */
 exports.create = async function (server) {
-    let newServer = new Server(server);
+    let newServer = new Server({
+        'name': server.name,
+        'server_id': server.id,
+        'location': [],
+        'updateData': {},
+        constantly_update: false,
+        update_interval: 3600,
+        updated_at: 0,
+        update_channel: '0',
+    });
     await newServer.save(function (err, doc) {
         if (err) {
             console.log(err);

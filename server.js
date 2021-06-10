@@ -9,6 +9,7 @@ const path = require('path');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Agenda = require('agenda');
+const Server = require('./app/controllers/server');
 
 class RonaBot {
 
@@ -66,6 +67,12 @@ class RonaBot {
             // with the key as the command name and the value as the exported module
             client.commands.set(command.name, command);
         }
+
+        //Listen to when the bot joins a new server
+        client.on('guildCreate', guild => {
+            console.log(guild);
+            Server.create(guild);     
+        });
 
         // Listen to Discord messages
         client.on('message', message => {
