@@ -77,10 +77,11 @@ class RonaBot {
         // Listen to Discord messages
         client.on('message', message => {
             console.log(message.content);
+            let lowercaseMessage = message.content.toLowerCase();
 
-            if (!message.content.startsWith(config.discord.prefix) || message.author.bot) return;
+            if (!lowercaseMessage.startsWith(config.discord.prefix) || message.author.bot) return;
 
-            const args = message.content.slice(config.discord.prefix.length).trim().split(/ +/);
+            const args = lowercaseMessage.slice(config.discord.prefix.length).trim().split(/ +/);
             const command = args.shift().toLowerCase();
 
             // If the user did not provide a command
