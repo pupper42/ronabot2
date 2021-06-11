@@ -7,6 +7,10 @@ module.exports = {
         const prefix = config.discord.prefix + ' ';
         const embed = {
             color: '#ffe360',
+            author: {
+                name: 'RonaBot v2',
+                icon_url: 'https://i.imgur.com/rUakJmE.png'
+            },
             title: 'Ronabot Commands',
             description: 'List of commands that Ronabot will accept!',
             fields: [

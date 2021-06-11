@@ -42,15 +42,21 @@ module.exports = {
         }
 
         async function getData() {
-            updateData = await scraper.getData(url, location);
+            try {
+                updateData = await scraper.getData(url, location);
+            }
+            catch {
+                message.reply("please enter a valid location!")
+            }
+            
 
             const embed = {
                 color: '#ffe360',
-                title: `Report for ${location.toUpperCase()}`,
                 author: {
                     name: 'RonaBot v2',
                     icon_url: 'https://i.imgur.com/rUakJmE.png'
                 },
+                title: `Report for ${location.toUpperCase()}`,
                 fields: [
                     {name: 'New local cases', value: updateData.new_lcases, inline: true},
                     {name: 'New overseas cases', value: updateData.new_ocases, inline: true},

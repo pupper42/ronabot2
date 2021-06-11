@@ -1,5 +1,9 @@
 module.exports = {
     name: 'ardex',
+    author: {
+        name: 'RonaBot v2',
+        icon_url: 'https://i.imgur.com/rUakJmE.png'
+    },
     description: 'Ardex! The bot loves you!',
     execute(message) {
         const embed = {

@@ -12,6 +12,10 @@ module.exports = {
                 await Server.removeLocation(serverId, location);
                 const embed = {
                     color: '#ffe360',
+                    author: {
+                        name: 'RonaBot v2',
+                        icon_url: 'https://i.imgur.com/rUakJmE.png'
+                    },
                     fields: [
                         {name: 'Removed', value: location}
                     ]

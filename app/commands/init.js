@@ -15,6 +15,10 @@ module.exports = {
             await Server.update(serverId, {'update_channel': channelId});
             const embed = {
                 color: '#ffe360',
+                author: {
+                    name: 'RonaBot v2',
+                    icon_url: 'https://i.imgur.com/rUakJmE.png'
+                },
                 fields: [
                     {name: `'${channelName}' set`, value: "Will send updates to this channel if automatic updates are turned on. Enable automatic updates with `/ronabot on`"}
                 ]

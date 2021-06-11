@@ -14,6 +14,10 @@ module.exports = {
             await Server.update(serverId, {'constantly_update': false});
             const embed = {
                 color: '#ffe360',
+                author: {
+                    name: 'RonaBot v2',
+                    icon_url: 'https://i.imgur.com/rUakJmE.png'
+                },
                 fields: [
                     {name: 'Automatic Updates', value: `Off. Use \`${config.discord.prefix} on\` to turn on`}
                 ]

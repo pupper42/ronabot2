@@ -12,6 +12,10 @@ module.exports = {
             let doc = await Server.getDoc(serverId);
             const embed = {
                 color: '#ffe360',
+                author: {
+                    name: 'RonaBot v2',
+                    icon_url: 'https://i.imgur.com/rUakJmE.png'
+                },
                 fields: [
                     {name: 'Locations added:', value: doc.location}
                 ]
