@@ -12,7 +12,7 @@ Database structure:
             - _id: 
             - name: string
             - server_id: string
-            - location: string
+            - location: array
             - updateData: object
             - constantly_update: boolean
             - update_interval: number
@@ -35,6 +35,5 @@ Prefix: /ronabot
 - **list** - list the locations added
 
 ### TODO:
-- Allow the user to set whether the bot gives continuous updates
-- Allow the user to set which states (or the whole country) they want continuous updates for
+- Scraper service
 - Allow the user to get an update at will via a command

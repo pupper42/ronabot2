@@ -3,16 +3,15 @@ const Schema = mongoose.Schema;
 
 const Statistic = new Schema({
     location: String,
-    new_cases: Number,
-    case_change: Number,
+    new_lcases: Number,
+    new_ocases: Number,
     active_cases: Number,
-    total_cases: Number,
-    rolling_average: String,
-    tests_conducted: Number,
+    total_lases: Number,
+    total_ocases: Number,
+    tests: Number,
     vaccinations: Number,
     deaths: Number,
-    tests: Number,
-    updated_at: Date,
+    last_updated: Date,
 });
 
 module.exports = mongoose.model('Statistic', Statistic);

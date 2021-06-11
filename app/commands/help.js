@@ -12,7 +12,7 @@ module.exports = {
             fields: [
                 {
                     name: prefix + 'add [location]',
-                    value: 'Add a new location to the server',
+                    value: 'Add a new location to the server. Available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
                 },
                 {
                     name: prefix + 'remove [location]',
