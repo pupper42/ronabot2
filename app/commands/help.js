@@ -9,7 +9,7 @@ module.exports = {
             color: '#ffe360',
             author: {
                 name: 'RonaBot v2',
-                icon_url: 'https://i.imgur.com/rUakJmE.png'
+                icon_url: 'https://i.imgur.com/2ojyW5z.png'
             },
             title: 'Ronabot Commands',
             description: 'List of commands that Ronabot will accept!',
@@ -44,7 +44,7 @@ module.exports = {
                 }, 
                 {
                     name: prefix + 'setinterval [time]',
-                    value: 'Set the how often the bot should check for updates if auto updates are on. If an update is found it will send it to the initialised channel.'
+                    value: 'Set the how often the bot should check for updates (in seconds) if auto updates are on. If an update is found it will send it to the initialised channel.'
                 },               
                 {
                     name: prefix + 'ping',

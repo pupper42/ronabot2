@@ -2,7 +2,7 @@ module.exports = {
     name: 'ardex',
     author: {
         name: 'RonaBot v2',
-        icon_url: 'https://i.imgur.com/rUakJmE.png'
+        icon_url: 'https://i.imgur.com/2ojyW5z.png'
     },
     description: 'Ardex! The bot loves you!',
     execute(message) {

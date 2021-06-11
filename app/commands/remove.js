@@ -14,7 +14,7 @@ module.exports = {
                     color: '#ffe360',
                     author: {
                         name: 'RonaBot v2',
-                        icon_url: 'https://i.imgur.com/rUakJmE.png'
+                        icon_url: 'https://i.imgur.com/2ojyW5z.png'
                     },
                     fields: [
                         {name: 'Removed', value: location}
