@@ -16,15 +16,15 @@ module.exports = {
             fields: [
                 {
                     name: prefix + 'add [location]',
-                    value: 'Add a new location to the server. Available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
+                    value: 'Add a location to provide automatic updates for. Available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
                 },
                 {
                     name: prefix + 'remove [location]',
-                    value: 'Remove a location from the server'
+                    value: 'Remove a location to provide automatic updates for'
                 },
                 {
                     name: prefix + 'list',
-                    value: 'Lists all the locations added to this server',
+                    value: 'Lists all the locations that have automatic updates enabled',
                 },
                 {
                     name: prefix + 'get [location]',
