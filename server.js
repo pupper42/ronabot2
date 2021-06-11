@@ -1,7 +1,6 @@
 /**
  * Welcome to RonaBot v2!
  */
-
 const config = require('./app/config');
 const mongoose = require('mongoose');
 const fs = require('fs');
@@ -10,6 +9,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const Agenda = require('agenda');
 const Server = require('./app/controllers/server');
+const Scraper = require('./app/services/scraperService');
 
 class RonaBot {
 
@@ -68,10 +68,10 @@ class RonaBot {
             client.commands.set(command.name, command);
         }
 
-        //Listen to when the bot joins a new server
+        // Listen to when the bot joins a new server
         client.on('guildCreate', guild => {
             console.log(guild);
-            Server.create(guild);     
+            Server.create(guild);
         });
 
         // Listen to Discord messages
@@ -118,9 +118,13 @@ class RonaBot {
         agenda.define('get latest statistics', async job => {
             job.repeatEvery('15 minutes');
 
-            // TODO: Initialise scraperService
+            // Scrape website data every 15 minutes
             let date = new Date();
             console.log('Job test now: '+date.toUTCString());
+
+            await Scraper.getData();
+
+            console.log('Data updated!');
         });
 
         agenda.define('notify servers', async job => {

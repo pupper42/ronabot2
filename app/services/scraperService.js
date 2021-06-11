@@ -12,7 +12,6 @@ exports.getData = async function (url, location) {
     let vaccinations;
     let deaths;
     let last_updated;
-    
 
     // Grab the website
     const website = await axios.get(url);
@@ -77,7 +76,7 @@ exports.getData = async function (url, location) {
                 tests = overviewData[i].change;
                 break;
         }
-        
+
     }
 
     new_lcases = sourceData[0].local;
@@ -86,25 +85,22 @@ exports.getData = async function (url, location) {
     total_ocases = sourceData[0].total_overseas;
     vaccinations = vaccinationData[0].change;
 
+    // Consolidate data into a usable object
     updateData = {
         location: location,
-        new_lcases: (new_lcases == "-") ? 'N/A' : new_lcases,
-        new_ocases: (new_ocases == "-") ? 'N/A' : new_ocases,
-        active_cases: (active_cases == "-") ? 'N/A' : active_cases,
-        total_lcases: (total_lcases == "-") ? 'N/A' : total_lcases,
-        total_ocases: (total_ocases == "-") ? 'N/A' : total_ocases,
-        tests: (tests == "-") ? 'N/A' : tests,
-        vaccinations: (vaccinations == "-") ? 'N/A' : vaccinations,
-        deaths: (deaths == "-") ? 'N/A' : deaths,
-        last_updated: (last_updated == "-") ? 'N/A' : last_updated,
+        new_lcases: (new_lcases === "-") ? 'N/A' : new_lcases,
+        new_ocases: (new_ocases === "-") ? 'N/A' : new_ocases,
+        active_cases: (active_cases === "-") ? 'N/A' : active_cases,
+        total_lcases: (total_lcases === "-") ? 'N/A' : total_lcases,
+        total_ocases: (total_ocases === "-") ? 'N/A' : total_ocases,
+        tests: (tests === "-") ? 'N/A' : tests,
+        vaccinations: (vaccinations === "-") ? 'N/A' : vaccinations,
+        deaths: (deaths === "-") ? 'N/A' : deaths,
+        last_updated: (last_updated === "-") ? 'N/A' : last_updated,
     }
+
     // Save to database
     await Statistic.update(location, updateData);
 
-
     return updateData;
-    
-    // Something like Statistic.create() or Statistic.update()
-
-
 }

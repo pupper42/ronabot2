@@ -16,7 +16,7 @@ module.exports = {
                 color: '#ffe360',
                 author: {
                     name: 'RonaBot v2',
-                    icon_url: 'https://i.imgur.com/2ojyW5z.png'
+                    icon_url: config.discord.icon
                 },
                 fields: [
                     {name: 'Automatic Updates', value: `On. Use \`${config.discord.prefix} off\` to turn off`}

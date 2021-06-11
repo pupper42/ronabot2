@@ -14,6 +14,7 @@ module.exports = {
     actSource: 'https://covidlive.com.au/act',
     discord: {
         prefix: "/rb",
-        token: process.env.DISCORD_TOKEN
+        token: process.env.DISCORD_TOKEN,
+        icon: 'https://i.imgur.com/2ojyW5z.png'
     }
 }

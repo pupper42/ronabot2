@@ -1,3 +1,4 @@
+const config = require('../config');
 const Server = require('../controllers/server');
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
                 color: '#ffe360',
                 author: {
                     name: 'RonaBot v2',
-                    icon_url: 'https://i.imgur.com/2ojyW5z.png'
+                    icon_url: config.discord.icon
                 },
                 fields: [
                     {name: 'Locations added:', value: doc.location}

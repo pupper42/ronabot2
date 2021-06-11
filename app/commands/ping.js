@@ -1,3 +1,5 @@
+const config = require('../config');
+
 module.exports = {
     name: 'ping',
     description: 'Ping!',
@@ -6,7 +8,7 @@ module.exports = {
             color: '#ffe360',
             author: {
                 name: 'RonaBot v2',
-                icon_url: 'https://i.imgur.com/2ojyW5z.png'
+                icon_url: config.discord.icon
             },
             fields: [
                 {

@@ -1,3 +1,5 @@
+const config = require('../config');
+
 module.exports = {
     name: 'ardex',
     author: {
@@ -8,6 +10,10 @@ module.exports = {
     execute(message) {
         const embed = {
             color: '#e31b23',
+            author: {
+                name: 'RonaBot v2',
+                icon_url: config.discord.icon
+            },
             description: ':heart:'
         };
         message.channel.send({embed: embed});
