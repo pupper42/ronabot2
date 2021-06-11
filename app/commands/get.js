@@ -11,7 +11,6 @@ module.exports = {
         
         let location = args[0];
         let url;
-        let serverId = message.guild.id;
 
         switch(location) {
             case 'vic':
@@ -44,12 +43,10 @@ module.exports = {
 
         async function getData() {
             updateData = await scraper.getData(url, location);
-            //updateData = Server.getDoc(serverId);
-            console.log(updateData);
 
             const embed = {
                 color: '#ffe360',
-                title: `Report for ${location.toUpperCase()}, last updated ${updateData.last_updated}`,
+                title: `Report for ${location.toUpperCase()}`,
                 author: {
                     name: 'RonaBot v2',
                     icon_url: 'https://i.imgur.com/rUakJmE.png'

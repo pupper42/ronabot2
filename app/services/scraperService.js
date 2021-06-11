@@ -88,20 +88,22 @@ exports.getData = async function (url, location) {
 
     updateData = {
         location: location,
-        new_lcases: new_lcases,
-        new_ocases: new_ocases,
-        active_cases: active_cases,
-        total_lcases: total_lcases,
-        total_ocases: total_ocases,
-        tests: tests,
-        vaccinations: vaccinations,
-        deaths: deaths,
-        last_updated: last_updated,
+        new_lcases: (new_lcases == "-") ? 'N/A' : new_lcases,
+        new_ocases: (new_ocases == "-") ? 'N/A' : new_ocases,
+        active_cases: (active_cases == "-") ? 'N/A' : active_cases,
+        total_lcases: (total_lcases == "-") ? 'N/A' : total_lcases,
+        total_ocases: (total_ocases == "-") ? 'N/A' : total_ocases,
+        tests: (tests == "-") ? 'N/A' : tests,
+        vaccinations: (vaccinations == "-") ? 'N/A' : vaccinations,
+        deaths: (deaths == "-") ? 'N/A' : deaths,
+        last_updated: (last_updated == "-") ? 'N/A' : last_updated,
     }
+    // Save to database
+    await Statistic.update(location, updateData);
+
 
     return updateData;
-
-    // Save to database
+    
     // Something like Statistic.create() or Statistic.update()
 
 
