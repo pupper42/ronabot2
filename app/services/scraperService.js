@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const axios = require('axios');
 const Statistic = require('../controllers/statistic');
 
-exports.getData = async function (location) {
+exports.getData = async function (url, location) {
     let new_lcases;
     let new_ocases;
     let active_cases;
@@ -12,9 +12,6 @@ exports.getData = async function (location) {
     let vaccinations;
     let deaths;
     let last_updated;
-
-    // TODO: Grab the relevant URL from config matching location
-
 
     // Grab the website
     const website = await axios.get(url);
