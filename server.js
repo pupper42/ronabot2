@@ -9,6 +9,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const Agenda = require('agenda');
 const Server = require('./app/controllers/server');
+const Statistics = require('./app/controllers/statistic');
 const Scraper = require('./app/services/scraperService');
 
 class RonaBot {
@@ -122,8 +123,21 @@ class RonaBot {
             let date = new Date();
             console.log('Job test now: '+date.toUTCString());
 
-            await Scraper.getData();
+            // Grab all locations in database
+            Statistics.all().then(res => {
+                res.forEach(async function (location, index) {
+                    try {
+                        let scraper = await Scraper.getData(location);
 
+                        // TODO: Notify on success!
+
+                    } catch (e) {
+                        console.log("Error!: " + e);
+                    }
+                });
+            })
+
+            // Update each location
             console.log('Data updated!');
         });
 

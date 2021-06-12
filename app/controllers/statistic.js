@@ -26,12 +26,12 @@ exports.read = async function (location) {
 /**
  * Updates the stats
  *
- * @param locationId
+ * @param location
  * @param updateData
  * @returns {Promise<void>}
  */
  exports.update = async function (location, updateData) {
-    await Statistic.findOneAndUpdate({'location': location}, updateData, {new: true, upsert: true}, function (err, location) {
+    await Statistic.findOneAndUpdate({location: location}, updateData, {new: true, upsert: true}, function (err, location) {
         if (err) {
             console.log(err);
         } else {
@@ -44,8 +44,28 @@ exports.read = async function (location) {
  * Delete the stats
  *
  * @returns {Promise<void>}
- * @param locationId
+ * @param location
  */
-exports.delete = async function(locationId) {
+exports.delete = async function(location) {
+    await Statistic.findOneAndDelete({location: location}, function (err, statistic) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(`Deleted ${statistic} successfully`);
+        }
+    });
+}
 
+/**
+ * Retrieve all statistics
+ */
+exports.all = async function() {
+    try {
+        let stats = await Statistic.find({});
+        return stats.map(function (server) {
+            return server.location;
+        });
+    } catch(e) {
+        console.log("Error!: " + e);
+    }
 }
