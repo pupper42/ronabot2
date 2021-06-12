@@ -127,7 +127,40 @@ class RonaBot {
             Statistics.all().then(res => {
                 res.forEach(async function (location, index) {
                     try {
-                        let scraper = await Scraper.getData(location);
+                        let url = '';
+
+                        // Get the URL
+                        // TODO: rerwrite into location URL getter thing
+                        switch(location) {
+                            case 'vic':
+                                url = config.vicSource;
+                                break;
+                            case 'nsw':
+                                url = config.nswSource;
+                                break;
+                            case 'qld':
+                                url = config.qldSource;
+                                break;
+                            case 'wa':
+                                url = config.waSource;
+                                break;
+                            case 'sa':
+                                url = config.saSource;
+                                break;
+                            case 'tas':
+                                url = config.tasSource;
+                                break;
+                            case 'nt':
+                                url = config.ntSource;
+                                break;
+                            case 'act':
+                                url = config.actSource;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        let scraper = await Scraper.getData(url, location);
 
                         // TODO: Notify on success!
 
