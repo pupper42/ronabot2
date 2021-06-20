@@ -1,5 +1,3 @@
-//temporary function
-/*
 const Server = require('../controllers/server');
 
 module.exports = {
@@ -15,7 +13,7 @@ module.exports = {
             const embed = {
                 color: '#ffe360',
                 fields: [
-                    {name: `;)`, value: ":eyes:"}
+                    {name: `Server added to database`, value: ":eyes:"}
                 ]
             };
             await message.channel.send({embed: embed});
@@ -24,4 +22,3 @@ module.exports = {
         addserver();
     },
 };
-*/

@@ -47,6 +47,10 @@ module.exports = {
                     value: 'Set the how often the bot should check for updates (in seconds) if auto updates are on. If an update is found it will send it to the initialised channel.'
                 },
                 {
+                    name: prefix + 'addserver',
+                    value: 'If the bot isn\'t detecting your server then use this command'
+                },
+                {
                     name: prefix + 'ping',
                     value: 'Get the current latency between the bot and the Discord server'
                 },

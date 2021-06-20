@@ -1,6 +1,7 @@
 const config = require('../config');
 const scraper = require('../services/scraperService');
 const Server = require('../controllers/server');
+const urlService = require('../services/urlService');
 
 module.exports = {
     name: 'get',
@@ -10,36 +11,7 @@ module.exports = {
         // Also use args[0], args[1] to process the user input
 
         let location = args[0];
-        let url;
-
-        switch(location) {
-            case 'vic':
-                url = config.vicSource;
-                break;
-            case 'nsw':
-                url = config.nswSource;
-                break;
-            case 'qld':
-                url = config.qldSource;
-                break;
-            case 'wa':
-                url = config.waSource;
-                break;
-            case 'sa':
-                url = config.saSource;
-                break;
-            case 'tas':
-                url = config.tasSource;
-                break;
-            case 'nt':
-                url = config.ntSource;
-                break;
-            case 'act':
-                url = config.actSource;
-                break;
-            default:
-                break;
-        }
+        let url = urlService.getUrl(location);
 
         async function getData() {
             try {
@@ -56,7 +28,7 @@ module.exports = {
                     name: 'RonaBot v2',
                     icon_url: config.discord.icon
                 },
-                title: `Report for ${location.toUpperCase()}`,
+                title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
                 fields: [
                     {name: 'New local cases', value: updateData.new_lcases, inline: true},
                     {name: 'New overseas cases', value: updateData.new_ocases, inline: true},
