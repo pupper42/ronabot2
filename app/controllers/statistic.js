@@ -35,7 +35,7 @@ exports.read = async function (location) {
         if (err) {
             console.log(err);
         } else {
-            console.log(`Updated ${location} successfully`);
+            console.log(`Updated ${location.location} successfully`);
         }
     });
 }
