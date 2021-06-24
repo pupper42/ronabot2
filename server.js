@@ -10,6 +10,7 @@ const client = new Discord.Client();
 const Agenda = require('agenda');
 const Server = require('./app/controllers/server');
 const Statistics = require('./app/controllers/statistic');
+const Url = require('./app/services/urlService');
 const Scraper = require('./app/services/scraperService');
 
 class RonaBot {
@@ -127,43 +128,14 @@ class RonaBot {
             Statistics.all().then(res => {
                 res.forEach(async function (location, index) {
                     try {
-                        let url = '';
-
                         // Get the URL
-                        // TODO: rerwrite into location URL getter thing
-                        switch(location) {
-                            case 'vic':
-                                url = config.vicSource;
-                                break;
-                            case 'nsw':
-                                url = config.nswSource;
-                                break;
-                            case 'qld':
-                                url = config.qldSource;
-                                break;
-                            case 'wa':
-                                url = config.waSource;
-                                break;
-                            case 'sa':
-                                url = config.saSource;
-                                break;
-                            case 'tas':
-                                url = config.tasSource;
-                                break;
-                            case 'nt':
-                                url = config.ntSource;
-                                break;
-                            case 'act':
-                                url = config.actSource;
-                                break;
-                            default:
-                                break;
-                        }
+                        let url = Url.getUrl(location);
 
-                        let scraper = await Scraper.getData(url, location);
+                        // Update location data
+                        await Scraper.getData(url, location);
 
-                        // TODO: Notify on success!
-
+                        // Notify on success!
+                        console.log(`Location statistics for ${location} updated!`);
                     } catch (e) {
                         console.log("Error!: " + e);
                     }

@@ -1,5 +1,6 @@
 const config = require('../config');
 
+// TODO: Rewrite this into less hardcodey stuff (check location exists in database)
 exports.getUrl = function(location) {
 
     let url;
