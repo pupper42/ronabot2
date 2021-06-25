@@ -1,5 +1,10 @@
 const config = require('../config');
 
+/**
+ * Sets the interval
+ *
+ * @type {{name: string, description: string, execute(*, *): void}}
+ */
 module.exports = {
     name: 'setinterval',
     description: 'Sets the timeout between alerts in minutes',

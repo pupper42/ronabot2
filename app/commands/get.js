@@ -3,6 +3,11 @@ const scraper = require('../services/scraperService');
 const Server = require('../controllers/server');
 const urlService = require('../services/urlService');
 
+/**
+ * Get the statistics of a location
+ *
+ * @type {{name: string, description: string, execute(*, *): void}}
+ */
 module.exports = {
     name: 'get',
     description: 'Get stats for a location',

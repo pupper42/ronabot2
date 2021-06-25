@@ -1,5 +1,10 @@
 const config = require('../config');
 
+/**
+ * Sends a ping request to the bot
+ *
+ * @type {{name: string, description: string, execute(*): void}}
+ */
 module.exports = {
     name: 'ping',
     description: 'Ping!',

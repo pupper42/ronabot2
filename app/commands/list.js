@@ -1,6 +1,11 @@
 const config = require('../config');
 const Server = require('../controllers/server');
 
+/**
+ * Returns locations that are added to a specific Discord server
+ *
+ * @type {{name: string, description: string, execute(*, *): void}}
+ */
 module.exports = {
     name: 'list',
     description: 'List locations added by a server',

@@ -1,11 +1,14 @@
 const Server = require('../controllers/server');
 
+/**
+ * Adds a (discord) server to the database
+ *
+ * @type {{name: string, description: string, execute(*): void}}
+ */
 module.exports = {
     name: 'addserver',
     description: 'Initialise the db for all server',
     execute(message) {
-        // TODO: Link to services function to run updater/scraper to grab latest data from db
-        // Also use args[0], args[1] to process the user input
         guild = message.guild;
 
         async function addserver() {

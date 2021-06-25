@@ -1,6 +1,11 @@
 const config = require('../config');
 const Server = require('../controllers/server');
 
+/**
+ * Removes a location from the server
+ *
+ * @type {{name: string, description: string, execute(*, *): void}}
+ */
 module.exports = {
     name: 'remove',
     description: 'Remove a location',

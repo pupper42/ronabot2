@@ -1,6 +1,11 @@
 const config = require('../config');
 const Server = require('../controllers/server');
 
+/**
+ * Inits the bot to a specific channel to output messages to
+ *
+ * @type {{name: string, description: string, execute(*): void}}
+ */
 module.exports = {
     name: 'init',
     description: 'Set the channel to send updates in',

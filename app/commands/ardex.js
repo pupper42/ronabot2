@@ -1,5 +1,10 @@
 const config = require('../config');
 
+/**
+ * Ardex :heart:
+ *
+ * @type {{author: {icon_url: string, name: string}, name: string, description: string, execute(*): void}}
+ */
 module.exports = {
     name: 'ardex',
     author: {

@@ -1,5 +1,10 @@
 const config = require('../../app/config');
 
+/**
+ * Returns help text
+ *
+ * @type {{name: string, description: string, execute(*): void}}
+ */
 module.exports = {
     name: 'help',
     description: 'Return list of commands available for use',
@@ -16,7 +21,7 @@ module.exports = {
             fields: [
                 {
                     name: prefix + 'add [location]',
-                    value: 'Add a location to provide automatic updates for. Available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
+                    value: 'Add a location to provide automatic updates for. Current available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
                 },
                 {
                     name: prefix + 'remove [location]',

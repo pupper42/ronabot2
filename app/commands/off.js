@@ -1,13 +1,15 @@
 const config = require('../../app/config');
 const Server = require('../controllers/server');
 
+/**
+ * Disnable the bot to use automatic notification updates
+ *
+ * @type {{name: string, description: string, execute(*): void}}
+ */
 module.exports = {
     name: 'off',
     description: 'Turn off the bot alerts',
     execute(message) {
-        // TODO: Link to services function to run updater/scraper to grab latest data from db
-        // Also use args[0], args[1] to process the user input
-
         let serverId = message.guild.id;
 
         async function off() {
