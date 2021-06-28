@@ -60,6 +60,10 @@ module.exports = {
                     value: 'Get the current latency between the bot and the Discord server'
                 },
                 {
+                    name: prefix + 'addserver',
+                    value: 'If the bot doesn\'t detect your server, then use this command. WARNING: WILL REVERT ALL SETTINGS TO DEFAULT!!!',
+                },
+                {
                     name: prefix + 'help',
                     value: 'Well you\'re looking at it right now, aren\'t you?',
                 },

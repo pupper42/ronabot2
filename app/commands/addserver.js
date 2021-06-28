@@ -9,10 +9,11 @@ module.exports = {
     name: 'addserver',
     description: 'Initialise the db for all server',
     execute(message) {
-        guild = message.guild;
+        serverId = message.guild.id;
+        serverName = message.guild.name;
 
         async function addserver() {
-            await Server.create(guild);
+            await Server.create(serverId, serverName);
             const embed = {
                 color: '#ffe360',
                 fields: [

@@ -107,6 +107,7 @@ exports.getData = async function (url, location) {
     }
 
     // Save to database
+    console.log(updateData);
     await Statistic.update(location, updateData);
 
     return updateData;

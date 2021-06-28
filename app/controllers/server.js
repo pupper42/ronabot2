@@ -1,28 +1,26 @@
 const Server = require('../models/server');
 
 /**
- * Create the server
+ * Create the server 
  *
  * @returns {Promise<void>}
  * @param server
- */
-exports.create = async function (server) {
-    let newServer = new Server({
-        name: server.name,
-        server_id: server.id,
+*/
+exports.create = async function (serverId, serverName) {
+    defaultSettings = {
         location: [],
-        updateData: {},
+        name: serverName,
+        server_id: serverId,
         constantly_update: false,
         update_interval: 3600,
         updated_at: 0,
-        update_channel: '0',
-    });
-    
-    await newServer.save(function (err, doc) {
+        update_channel: "0"
+    }
+    await Server.findOneAndUpdate({server_id: serverId}, defaultSettings, {new: true, upsert: true}, function (err, servers) {
         if (err) {
             console.log(err);
         } else {
-            console.log(`New server added with id: ${doc.id}`);
+            console.log(`New server added with ID ${servers.id}`);
         }
     });
 }
@@ -56,6 +54,23 @@ exports.removeLocation = async function (serverId, location) {
 }
 
 /**
+ * Updates the Servers
+ *
+ * @param serverId
+ * @param updateData
+ * @returns {Promise<void>}
+ */
+ exports.update = async function (serverId, updateData) {
+    await Server.findOneAndUpdate({server_id: serverId}, updateData, {new: true, upsert: true}, function (err, servers) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(`Updated ${servers.id} successfully`);
+        }
+    });
+}
+
+/**
  * Retrieve the servers
  *
  * @returns {Promise<void>}
@@ -69,23 +84,6 @@ exports.getServers = async function () {
     } catch(e) {
         console.log("Error!: " + e);
     }
-}
-
-/**
- * Updates the Servers
- *
- * @param serverId
- * @param updateData
- * @returns {Promise<void>}
- */
-exports.update = async function (serverId, updateData) {
-    await Server.findOneAndUpdate({server_id: serverId}, updateData, {new: true, upsert: true}, function (err, servers) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(`Updated ${servers.id} successfully`);
-        }
-    });
 }
 
 /**
