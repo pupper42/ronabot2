@@ -1,6 +1,7 @@
 /**
  * Welcome to RonaBot v2!
  */
+const moment = require('moment');
 const config = require('./app/config');
 const mongoose = require('mongoose');
 const fs = require('fs');
@@ -140,7 +141,7 @@ class RonaBot {
                         console.log("Error!: " + e);
                     }
                 });
-            })
+            });
 
             // Update each location
             console.log('Data updated!');
@@ -150,12 +151,63 @@ class RonaBot {
             job.repeatEvery('1 minute');
 
             // Get all servers and their intervals
+            Server.getServers().then(res => {
+                res.forEach(async function (server, index) {
+                    // Check if server is allowed to constantly update
+                    if (!server.constantly_update || !server.location.length > 0) {
+                        return;
+                    }
 
-            // Check if any server requires notification (get updated_at and interval)
+                    // Check if any server requires notification (get updated_at and interval)
+                    let updatedAt = moment(server.updated_at);
+                    let currentTime = moment(new Date());
 
-            // Push notification to server & specified channel
+                    // Compare currentTime and last server was updated_at
+                    if (currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
 
-            // Update server updated_at
+                        // Get each added location and then notify
+                        let locations = server.location;
+
+                        locations.forEach(function (location) {
+                            // Get the statistics
+                            Statistics.read(location).then(res => {
+                                const updateData = res;
+
+                                // TODO: Rewrite this
+                                const embed = {
+                                    color: '#ffe360',
+                                    author: {
+                                        name: 'RonaBot v2',
+                                        icon_url: config.discord.icon
+                                    },
+                                    title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
+                                    fields: [
+                                        {name: 'New local cases', value: updateData.new_lcases, inline: true},
+                                        {name: 'New overseas cases', value: updateData.new_ocases, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                        {name: 'Total local cases', value: updateData.total_lcases, inline: true},
+                                        {name: 'Total overseas cases', value: updateData.total_ocases, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                        {name: 'Active cases', value: updateData.active_cases, inline: true},
+                                        {name: 'Deaths', value: updateData.deaths, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                        {name: 'Tests', value: updateData.tests, inline: true},
+                                        {name: 'Vaccinations', value: updateData.vaccinations, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                    ]
+                                };
+
+                                // Send the message to the specific server channel
+                                client.channels.cache.get(server.update_channel).send({embed: embed});
+                            });
+
+                        });
+
+                        // Update server updated_at
+                        Server.update(server.server_id, {updated_at: currentTime});
+                    }
+                });
+            });
         });
 
         // Start the job scheduler
