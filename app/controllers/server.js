@@ -17,7 +17,7 @@ exports.create = async function (server) {
         updated_at: 0,
         update_channel: '0',
     });
-    
+
     await newServer.save(function (err, doc) {
         if (err) {
             console.log(err);
@@ -62,10 +62,7 @@ exports.removeLocation = async function (serverId, location) {
  */
 exports.getServers = async function () {
     try {
-        let docs = await Server.find({});
-        return docs.map(function (server) {
-            return server.name;
-        });
+        return await Server.find({});
     } catch(e) {
         console.log("Error!: " + e);
     }

@@ -1,6 +1,5 @@
 const config = require('../config');
 const scraper = require('../services/scraperService');
-const Server = require('../controllers/server');
 const urlService = require('../services/urlService');
 
 /**
@@ -53,7 +52,5 @@ module.exports = {
         }
 
         getData();
-
-
     },
 };
