@@ -9,8 +9,8 @@ module.exports = {
     name: 'addserver',
     description: 'Initialise the db for all server',
     execute(message) {
-        serverId = message.guild.id;
-        serverName = message.guild.name;
+        const serverId = message.guild.id;
+        const serverName = message.guild.name;
 
         async function addserver() {
             await Server.create(serverId, serverName);
