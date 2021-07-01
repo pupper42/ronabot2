@@ -49,7 +49,7 @@ module.exports = {
                 },
                 {
                     name: prefix + 'setinterval [time]',
-                    value: 'Set the how often the bot should check for updates (in seconds) if auto updates are on. If an update is found it will send it to the initialised channel.'
+                    value: 'Set the how often the bot should check for updates (in minutes) if auto updates are on. If an update is found it will send it to the initialised channel.'
                 },
                 {
                     name: prefix + 'addserver',
