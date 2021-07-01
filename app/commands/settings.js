@@ -12,11 +12,20 @@ module.exports = {
     execute(message, args) {
         // Also use args[0], args[1] to process the user input
         let serverId = message.guild.id;
+        let updateChannel;
 
         async function sendSettings() {
 
             let doc = await Server.getDoc(serverId);
-            let updateChannel = message.guild.channels.cache.get(doc.update_channel).name;
+            try {
+                updateChannel = message.guild.channels.cache.get(doc.update_channel).name;
+            }
+            catch {
+                updateChannel = "Not set"
+            }
+
+            console.log(doc.location);
+            
 
             const embed = {
                 color: '#ffe360',
@@ -26,7 +35,7 @@ module.exports = {
                 },
                 title: `Current settings`,
                 fields: [
-                    {name: 'Locations', value: doc.location},
+                    {name: 'Locations', value: (doc.location.length == 0) ? "Not set" : doc.location},
                     {name: 'Constantly update?', value: doc.constantly_update},
                     {name: 'Update interval', value: `${doc.update_interval / 60} minutes`}, 
                     {name: 'Update channel', value: updateChannel},                    
