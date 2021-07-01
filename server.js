@@ -79,7 +79,6 @@ class RonaBot {
 
         // Listen to Discord messages
         client.on('message', message => {
-            console.log(message.content);
             let lowercaseMessage = message.content.toLowerCase();
 
             if (!lowercaseMessage.startsWith(config.discord.prefix) || message.author.bot) return;
