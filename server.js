@@ -74,7 +74,7 @@ class RonaBot {
         // Listen to when the bot joins a new server
         client.on('guildCreate', guild => {
             console.log(guild);
-            Server.create(guild);
+            Server.create(guild.id, guild.name);
         });
 
         // Listen to Discord messages
