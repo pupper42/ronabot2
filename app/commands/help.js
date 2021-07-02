@@ -20,16 +20,16 @@ module.exports = {
             description: 'List of commands that Ronabot will accept!',
             fields: [
                 {
+                    name: prefix + 'settings',
+                    value: 'Show the current settings for the server',
+                },
+                {
                     name: prefix + 'add [location]',
                     value: 'Add a location to provide automatic updates for. Current available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
                 },
                 {
                     name: prefix + 'remove [location]',
                     value: 'Remove a location to provide automatic updates for'
-                },
-                {
-                    name: prefix + 'list',
-                    value: 'Lists all the locations that have automatic updates enabled',
                 },
                 {
                     name: prefix + 'get [location]',
@@ -50,10 +50,6 @@ module.exports = {
                 {
                     name: prefix + 'setinterval [time]',
                     value: 'Set the how often the bot should check for updates (in minutes) if auto updates are on. If an update is found it will send it to the initialised channel.'
-                },
-                {
-                    name: prefix + 'addserver',
-                    value: 'If the bot isn\'t detecting your server then use this command'
                 },
                 {
                     name: prefix + 'ping',

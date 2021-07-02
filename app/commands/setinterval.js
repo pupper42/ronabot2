@@ -13,14 +13,11 @@ module.exports = {
         // TODO: Set interval for servers
         // Also use args[0], args[1] to process the user input
         let timeMinutes;
-        let timeSec;
         let serverId = message.guild.id;
 
         try {
             timeMinutes = parseFloat(args[0]);
-            timeSec = timeMinutes * 60;
             console.log(timeMinutes);
-            console.log(timeSec);
         }
         catch {
             const errorEmbed = {
@@ -48,7 +45,7 @@ module.exports = {
             fields: []
         };
 
-        Server.update(serverId, {update_interval: timeSec});
+        Server.update(serverId, {update_interval: timeMinutes});
         message.channel.send({embed: embed});
     },
 };
