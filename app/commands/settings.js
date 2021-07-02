@@ -37,7 +37,7 @@ module.exports = {
                 fields: [
                     {name: 'Locations', value: (doc.location.length == 0) ? "Not set" : doc.location},
                     {name: 'Constantly update?', value: doc.constantly_update},
-                    {name: 'Update interval', value: `${doc.update_interval / 60} minutes`}, 
+                    {name: 'Update interval', value: `${doc.update_interval} minutes`}, 
                     {name: 'Update channel', value: updateChannel},                    
                 ]
             };
