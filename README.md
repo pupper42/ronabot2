@@ -2,7 +2,7 @@
 
 # RonaBot v2
 A bot that will show COVID-19 cases in Australia at the state level.
-Invite: https://discord.com/api/oauth2/authorize?client_id=844123673257443338&permissions=8&scope=bot
+Invite: https://discord.com/api/oauth2/authorize?client_id=844123673257443338&permissions=0&scope=bot
 <br>
 <br>
 Settings are saved on MongoDB.
