@@ -40,3 +40,4 @@ Prefix: /rb
 
 ### TODO:
 - Social media updates maybe?
+- Add other countries?
