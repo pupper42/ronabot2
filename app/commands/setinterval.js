@@ -15,29 +15,10 @@ module.exports = {
         let timeMinutes;
         let serverId = message.guild.id;
 
-        try {
-            timeMinutes = parseFloat(args[0]);
-            console.log(timeMinutes);
-        }
-        catch {
-            const errorEmbed = {
-                color: '#ffe360',
-                title: "Error!",
-                description: "Please type a number!",
-                author: {
-                    name: 'RonaBot v2',
-                    icon_url: config.discord.icon
-                },
-                fields: []
-            };
-
-            message.channel.send({embed: errorEmbed});
-        }
-
-        const embed = {
+        const errorEmbed = {
             color: '#ffe360',
-            title: "Update interval set!",
-            description: `Currently set to ${timeMinutes} minutes`,
+            title: "Error!",
+            description: "Please type a number between 1 and 4320!",
             author: {
                 name: 'RonaBot v2',
                 icon_url: config.discord.icon
@@ -45,7 +26,31 @@ module.exports = {
             fields: []
         };
 
-        Server.update(serverId, {update_interval: timeMinutes});
-        message.channel.send({embed: embed});
+        try {
+            timeMinutes = parseFloat(args[0]);
+            console.log(timeMinutes);
+            if (timeMinutes >= 1 && timeMinutes <= 4320) {
+                
+                const embed = {
+                    color: '#ffe360',
+                    title: "Update interval set!",
+                    description: `Currently set to ${timeMinutes} minutes`,
+                    author: {
+                        name: 'RonaBot v2',
+                        icon_url: config.discord.icon
+                    },
+                    fields: []
+                };
+        
+                Server.update(serverId, {update_interval: timeMinutes});
+                message.channel.send({embed: embed});
+            }
+            else {
+                message.channel.send({embed: errorEmbed});
+            }
+        }
+        catch {
+            message.channel.send({embed: errorEmbed});
+        }        
     },
 };
