@@ -78,10 +78,7 @@ exports.removeLocation = async function (serverId, location) {
  */
 exports.getServers = async function () {
     try {
-        let docs = await Server.find({});
-        return docs.map(function (server) {
-            return server.name;
-        });
+        return await Server.find({});
     } catch(e) {
         console.log("Error!: " + e);
     }

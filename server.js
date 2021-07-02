@@ -152,14 +152,17 @@ class RonaBot {
             // Get all servers and their intervals
             Server.getServers().then(res => {
                 res.forEach(async function (server, index) {
+                    console.log('Server:'+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
                     // Check if server is allowed to constantly update
-                    if (!server.constantly_update || !server.location.length > 0) {
+                    if (!server.constantly_update || server.location.length < 1) {
                         return;
                     }
 
                     // Check if any server requires notification (get updated_at and interval)
                     let updatedAt = moment(server.updated_at);
                     let currentTime = moment(new Date());
+
+                    console.log('Time diff: '+currentTime.diff(updatedAt, 'minutes'));
 
                     // Compare currentTime and last server was updated_at
                     if (currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
