@@ -37,7 +37,7 @@ module.exports = {
                 },
                 {
                     name: prefix + 'init',
-                    value: 'Initialise the current channel for the bot. Still need to do `/rb on` to enable automatic updates',
+                    value: 'Use the current channel for automatic updates. Still need to do `/rb on` to enable automatic updates',
                 },
                 {
                     name: prefix + 'on',

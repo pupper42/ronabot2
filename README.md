@@ -20,21 +20,23 @@ Database structure:
             - updated_at: date
 
 ### Config
-You will need to create an .env file with the following values:
+You will need to create a .env file with the following values:
 - DISCORD_TOKEN
 - MONGO_URI
 
 ### Commands
-Prefix: /ronabot
-- **ping** - this is just a test
-- **on** - enables the alerts
-- **off** - disables the alerts
-- **setinterval [location] [time in minutes]** - set how often you want to receive alerts (set to 0 to turn off)
-- **add [location]** - add a location to your server
-- **remove [location]** - remove a location from your server
-- **get [location]** - get the statistics of the location
-- **list** - list the locations added
+Prefix: /rb
+- **settings** - Show the current settings for the server
+- **add [location]** - Add a location to provide automatic updates for. Current available locations are: vic, nsw, qld, wa, sa, tas, nt, act
+- **remove [location]** - Remove a location to provide automatic updates for
+- **get [location]** - Return a single location's statistics
+- **init** - Use the current channel for automatic updates. Still need to do /rb on to enable automatic updates
+- **on** - Turn on auto updates for the server
+- **off** - Turn off auto updates for the server
+- **setinterval [time in minutes]** - Set the how often the bot should check for updates (in minutes) if auto updates are on. If an update is found it will send it to the initialised channel.
+- **ping** - Get the current latency between the bot and the Discord server
+- **addserver** - If the bot doesn't detect your server, then use this command. WARNING: WILL REVERT ALL SETTINGS TO DEFAULT!!!
+- **help** - Show the commands the bot will accept
 
 ### TODO:
-- Scraper service
-- Allow the user to get an update at will via a command
+- Social media updates maybe?
