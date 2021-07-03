@@ -22,7 +22,7 @@ Prefix: /rb
 - **addserver** - If the bot doesn't detect your server, then use this command. WARNING: WILL REVERT ALL SETTINGS TO DEFAULT!!!
 - **help** - Show the commands the bot will accept
 
-### TODO:
+### Future updates:
 - Social media updates maybe?
 - Add other countries?
 - Permissions
