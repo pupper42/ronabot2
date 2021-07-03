@@ -10,8 +10,6 @@ module.exports = {
     name: 'setinterval',
     description: 'Sets the timeout between alerts in minutes',
     execute(message, args) {
-        // TODO: Set interval for servers
-        // Also use args[0], args[1] to process the user input
         let timeMinutes;
         let serverId = message.guild.id;
 
@@ -30,7 +28,7 @@ module.exports = {
             timeMinutes = parseFloat(args[0]);
             console.log(timeMinutes);
             if (timeMinutes >= 1 && timeMinutes <= 4320) {
-                
+
                 const embed = {
                     color: '#ffe360',
                     title: "Update interval set!",
@@ -41,7 +39,7 @@ module.exports = {
                     },
                     fields: []
                 };
-        
+
                 Server.update(serverId, {update_interval: timeMinutes});
                 message.channel.send({embed: embed});
             }
@@ -51,6 +49,6 @@ module.exports = {
         }
         catch {
             message.channel.send({embed: errorEmbed});
-        }        
+        }
     },
 };

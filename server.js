@@ -109,7 +109,7 @@ class RonaBot {
      * Initialises the Agenda.js task service
      */
     initAgenda() {
-        // Testing task runner
+        // Initialise the task runner
         const agenda = new Agenda({
             db: {address: config.databaseURL},
             processEvery: '1 minute',
