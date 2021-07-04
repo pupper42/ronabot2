@@ -121,9 +121,6 @@ class RonaBot {
             job.repeatEvery('15 minutes');
 
             // Scrape website data every 15 minutes
-            let date = new Date();
-            console.log('Job test now: '+date.toUTCString());
-
             // Grab all locations in database
             Statistics.all().then(res => {
                 res.forEach(async function (location, index) {
@@ -141,9 +138,6 @@ class RonaBot {
                     }
                 });
             });
-
-            // Update each location
-            console.log('Data updated!');
         });
 
         agenda.define('notify servers', async job => {
@@ -153,6 +147,7 @@ class RonaBot {
             Server.getServers().then(res => {
                 res.forEach(async function (server, index) {
                     console.log('Server:'+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
+
                     // Check if server is allowed to constantly update
                     if (!server.constantly_update || server.location.length < 1) {
                         return;
@@ -162,7 +157,6 @@ class RonaBot {
                     let updatedAt = moment(server.updated_at);
                     let currentTime = moment(new Date());
 
-                    console.log('Time diff: '+currentTime.diff(updatedAt, 'minutes'));
 
                     // Compare currentTime and last server was updated_at
                     if (currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
