@@ -2,6 +2,7 @@ const config = require('../config');
 
 /**
  * Ardex :heart:
+ * Dedicated to the 'elite study venue' Discord server by Ardex for providing us with a testing ground for the bot
  *
  * @type {{author: {icon_url: string, name: string}, name: string, description: string, execute(*): void}}
  */
