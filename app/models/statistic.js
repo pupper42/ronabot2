@@ -6,7 +6,7 @@ const Statistic = new Schema({
     new_lcases: String,
     new_ocases: String,
     active_cases: String,
-    total_lases: String,
+    total_lcases: String,
     total_ocases: String,
     tests: String,
     vaccinations: String,
