@@ -88,7 +88,7 @@ class RonaBot {
 
             // If the user did not provide a command
             if (!client.commands.has(command)) {
-                message.reply('please give me a command!');
+                message.reply('please give me a valid command! See `'+config.discord.prefix+' help` for list of commands.');
                 return;
             }
 
