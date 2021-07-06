@@ -24,6 +24,10 @@ module.exports = {
                     value: 'Show the current settings for the server',
                 },
                 {
+                    name: prefix + 'get [location]',
+                    value: 'Return a single location\'s statistics. Current available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
+                },
+                {
                     name: prefix + 'add [location]',
                     value: 'Add a location to provide automatic updates for. Current available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
                 },
@@ -32,32 +36,12 @@ module.exports = {
                     value: 'Remove a location to provide automatic updates for'
                 },
                 {
-                    name: prefix + 'get [location]',
-                    value: 'Return a single location\'s statistics',
+                    name: prefix + 'init [repeating/scheduled] [time]',
+                    value: 'Use the current channel for automatic updates and choose auto update mode. Choose repeating if you want the bot to send updates according to a time interval (in minutes). Choose scheduled if you want the bot to send an update at a specific time of the day (in 24h time without the colons like 0930 or 1554). Use `/rb toggle off` if you want to stop receiving auto updates',
                 },
                 {
-                    name: prefix + 'init',
-                    value: 'Use the current channel for automatic updates. Still need to do `/rb on` to enable automatic updates',
-                },
-                {
-                    name: prefix + 'on',
-                    value: 'Turn on auto updates for the server',
-                },
-                {
-                    name: prefix + 'off',
-                    value: 'Turn off auto updates for the server',
-                },
-                {
-                    name: prefix + 'setinterval [time]',
-                    value: 'Set the how often the bot should check for updates (in minutes between 1min and 4320min (72h)) if auto updates are on. If an update is found it will send it to the initialised channel.'
-                },
-                {
-                    name: prefix + 'ping',
-                    value: 'Get the current latency between the bot and the Discord server'
-                },
-                {
-                    name: prefix + 'addserver',
-                    value: 'If the bot doesn\'t detect your server, then use this command. WARNING: WILL REVERT ALL SETTINGS TO DEFAULT!!!',
+                    name: prefix + 'toggle [on/off]',
+                    value: 'Toggle on or off auto updates for the server',
                 },
                 {
                     name: prefix + 'help',

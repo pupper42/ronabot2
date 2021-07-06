@@ -9,13 +9,8 @@ const Server = require('../models/server');
  */
 exports.create = async function (serverId, serverName) {
     let defaultSettings = {
-        location: [],
         name: serverName,
         server_id: serverId,
-        constantly_update: false,
-        update_interval: 60,
-        updated_at: 0,
-        update_channel: 0
     }
     await Server.findOneAndUpdate({server_id: serverId}, defaultSettings, {new: true, upsert: true}, function (err, servers) {
         if (err) {

@@ -13,7 +13,7 @@ module.exports = {
     ntSource: 'https://covidlive.com.au/nt',
     actSource: 'https://covidlive.com.au/act',
     discord: {
-        prefix: "/rb",
+        prefix: "/rbd",
         token: process.env.DISCORD_TOKEN,
         icon: 'https://i.imgur.com/2ojyW5z.png'
     }
