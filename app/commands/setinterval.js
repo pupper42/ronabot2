@@ -4,6 +4,8 @@ const Server = require('../controllers/server');
 /**
  * Sets the interval
  *
+ * NOTE: This is deprecated in favour of init.js command
+ *
  * @type {{name: string, description: string, execute(*, *): void}}
  */
 module.exports = {

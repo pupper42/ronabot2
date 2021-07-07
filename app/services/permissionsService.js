@@ -9,7 +9,7 @@ exports.checkPermissions = function(message) {
                 icon_url: config.discord.icon
             },
         };
+
         message.channel.send({embed: errorEmbed});
-        return
     }
 }

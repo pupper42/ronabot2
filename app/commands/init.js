@@ -33,7 +33,7 @@ module.exports = {
         }
 
         async function init(mode, time) {
-            if (mode == 'repeating') {
+            if (mode === 'repeating') {
                 try {
                     let timeMin = parseFloat(time);
                     await Server.update(serverId, {update_channel: channelId});
@@ -64,7 +64,7 @@ module.exports = {
                 };
                 await message.channel.send({embed: embed});
 
-            } else if (mode == 'scheduled') {
+            } else if (mode === 'scheduled') {
                 await Server.update(serverId, {update_channel: channelId});
                 await Server.update(serverId, {mode: 'scheduled', constantly_update: true});
 
@@ -80,7 +80,7 @@ module.exports = {
                 };
                 await message.channel.send({embed: embed});
 
-            } else if (mode == "") {
+            } else if (mode === "") {
                 await Server.update(serverId, {update_channel: channelId});
                 const embed = {
                     color: '#ffe360',
@@ -93,7 +93,7 @@ module.exports = {
                     fields: []
                 }
             } else {
-                
+
             }
             await message.channel.send({embed: embed});
         }

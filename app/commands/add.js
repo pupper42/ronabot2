@@ -26,8 +26,8 @@ module.exports = {
             message.channel.send({embed: errorEmbed});
             return
         }
-        
-        //Hard coded locations, change later cant be bothered doing it now lol
+
+        // TODO: Hard coded locations, change later cant be bothered doing it now lol
         if (newLocation == "" || !(newLocation == "vic" || newLocation == "nsw" || newLocation == "act" || newLocation == "tas" || newLocation == "qld" || newLocation == "wa" || newLocation == "sa")) {
             const errorEmbed = {
                 title: "Error!",
