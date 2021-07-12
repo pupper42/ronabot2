@@ -33,7 +33,7 @@ module.exports = {
         }
 
         async function init(mode, time) {
-            if (mode == 'repeating') {
+            if (mode === 'repeating') {
                 try {
                     let timeMin = parseFloat(time);
                     if (timeMin >=1 && timeMin <= 4320) {
