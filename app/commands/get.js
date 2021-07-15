@@ -16,12 +16,36 @@ module.exports = {
         let location = args[0];
         let url = urlService.getUrl(location);
 
+        if (config.availableLocations.includes(location) == false) {
+            const errorEmbed = {
+                title: "Error!",
+                description: "Please specify a location (vic, nsw, act, tas, qld, wa or sa)",
+                color: '#ffe360',
+                author: {
+                    name: 'RonaBot v2',
+                    icon_url: config.discord.icon
+                },
+            };
+            message.channel.send({embed: errorEmbed});
+            return
+        }
+
         async function getData() {
             try {
                 updateData = await scraper.getData(url, location);
             }
             catch {
-                message.reply("please enter a valid location!")
+                const errorEmbed = {
+                    title: "Error!",
+                    description: "Please specify a location (vic, nsw, act, tas, qld, wa or sa)",
+                    color: '#ffe360',
+                    author: {
+                        name: 'RonaBot v2',
+                        icon_url: config.discord.icon
+                    },
+                };
+                message.channel.send({embed: errorEmbed});
+                return
             }
 
 
