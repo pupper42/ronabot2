@@ -7,28 +7,28 @@ exports.getUrl = function(location) {
 
     switch(location) {
         case 'vic':
-            url = config.vicSource;
+            url = config.sources.vic;
             break;
         case 'nsw':
-            url = config.nswSource;
+            url = config.sources.nsw;
             break;
         case 'qld':
-            url = config.qldSource;
+            url = config.sources.qld;
             break;
         case 'wa':
-            url = config.waSource;
+            url = config.sources.wa;
             break;
         case 'sa':
-            url = config.saSource;
+            url = config.sources.sa;
             break;
         case 'tas':
-            url = config.tasSource;
+            url = config.sources.tas;
             break;
         case 'nt':
-            url = config.ntSource;
+            url = config.sources.nt;
             break;
         case 'act':
-            url = config.actSource;
+            url = config.sources.act;
             break;
         default:
             break;
