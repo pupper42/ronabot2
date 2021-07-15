@@ -37,9 +37,14 @@ module.exports = {
                 try {
                     let timeMin = parseFloat(time);
                     if (timeMin >=1 && timeMin <= 4320) {
-                        await Server.update(serverId, {update_interval: timeMin});
-                        await Server.update(serverId, {update_channel: channelId});
-                        await Server.update(serverId, {mode: 'repeating', constantly_update: true});
+                        await Server.update(serverId,
+                            {
+                                update_interval: timeMin,
+                                update_channel: channelId,
+                                mode: 'repeating',
+                                constantly_update: true
+                            }
+                        );
                         const embed = {
                             color: '#ffe360',
                             author: {
@@ -50,7 +55,7 @@ module.exports = {
                             description: `Set to repeating mode, will send an update every ${time} minutes. Turn off auto updates with \`/rb toggle off\``,
                             fields: []
                         };
-                        await message.channel.send({embed: embed});                        
+                        await message.channel.send({embed: embed});
                     } else {
                         const errorEmbed = {
                             title: "Error!",
@@ -61,9 +66,9 @@ module.exports = {
                                 icon_url: config.discord.icon
                             },
                         };
-                        message.channel.send({embed: errorEmbed});                       
+                        message.channel.send({embed: errorEmbed});
                         return;
-                    }                    
+                    }
                 } catch {
                     const errorEmbed = {
                         title: "Error!",
@@ -76,9 +81,9 @@ module.exports = {
                     };
                     message.channel.send({embed: errorEmbed});
                     return;
-                }            
+                }
 
-            } else if (mode == 'scheduled') {                
+            } else if (mode == 'scheduled') {
                 try {
                     let timeDay = parseInt(time);
                     if (timeDay) {
@@ -95,7 +100,7 @@ module.exports = {
                             description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
                             fields: []
                         };
-                        await message.channel.send({embed: embed});                    
+                        await message.channel.send({embed: embed});
                     } else {
                         const errorEmbed = {
                             title: "Error!",
@@ -106,9 +111,9 @@ module.exports = {
                                 icon_url: config.discord.icon
                             },
                         };
-                        message.channel.send({embed: errorEmbed});                       
+                        message.channel.send({embed: errorEmbed});
                         return;
-                    }                     
+                    }
                 } catch {
                     const errorEmbed = {
                         title: "Error!",
@@ -119,9 +124,9 @@ module.exports = {
                             icon_url: config.discord.icon
                         },
                     };
-                    message.channel.send({embed: errorEmbed});                       
+                    message.channel.send({embed: errorEmbed});
                     return;
-                }               
+                }
 
 
             } else if (mode == "") {
@@ -147,8 +152,8 @@ module.exports = {
                         icon_url: config.discord.icon
                     },
                 };
-                message.channel.send({embed: errorEmbed});                       
-                return;                
+                message.channel.send({embed: errorEmbed});
+                return;
             }
         }
 
