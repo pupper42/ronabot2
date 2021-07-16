@@ -160,7 +160,6 @@ class RonaBot {
                     let updatedAt = moment(server.updated_at);
                     let currentTime = moment(new Date());
 
-
                     // Compare currentTime and last server was updated_at
                     if (currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
 

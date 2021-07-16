@@ -4,7 +4,7 @@ dotenv.config();
 
 module.exports = {
     databaseURL: process.env.MONGO_URI,
-    availableLocations: ['vic', 'nsw', 'qld', 'act', 'ta', 'nt', 'sa'],
+    availableLocations: ['vic', 'nsw', 'qld', 'wa', 'act', 'tas', 'nt', 'sa'],
     sources: {
         vic: 'https://covidlive.com.au/vic',
         nsw: 'https://covidlive.com.au/nsw',

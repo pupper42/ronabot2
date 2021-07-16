@@ -27,7 +27,7 @@ module.exports = {
         }
 
         async function toggle(arg) {
-            if (arg[0] == "on") {
+            if (arg[0] === "on") {
                 await Server.update(serverId, {'constantly_update': true});
                 const embed = {
                     color: '#ffe360',
@@ -40,7 +40,7 @@ module.exports = {
                     fields: []
                 };
                 await message.channel.send({embed: embed});
-            } else if (arg[0] == "off") {
+            } else if (arg[0] === "off") {
                 await Server.update(serverId, {'constantly_update': false});
                 const embed = {
                     color: '#ffe360',
@@ -63,8 +63,8 @@ module.exports = {
                         icon_url: config.discord.icon
                     },
                 };
-                message.channel.send({embed: errorEmbed});                
-            }           
+                await message.channel.send({embed: errorEmbed});
+            }
         }
 
         toggle(args);

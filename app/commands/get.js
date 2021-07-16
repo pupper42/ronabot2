@@ -43,10 +43,9 @@ module.exports = {
                         icon_url: config.discord.icon
                     },
                 };
-                message.channel.send({embed: errorEmbed});
+                await message.channel.send({embed: errorEmbed});
                 return
             }
-
 
             const embed = {
                 color: '#ffe360',
@@ -70,7 +69,7 @@ module.exports = {
                     {name: '\u200b', value: '\u200b', inline: true},
                 ]
             };
-            message.channel.send({embed: embed});
+            await message.channel.send({embed: embed});
         }
 
         getData();

@@ -66,8 +66,7 @@ module.exports = {
                                 icon_url: config.discord.icon
                             },
                         };
-                        message.channel.send({embed: errorEmbed});
-                        return;
+                        await message.channel.send({embed: errorEmbed});
                     }
                 } catch {
                     const errorEmbed = {
@@ -79,15 +78,14 @@ module.exports = {
                             icon_url: config.discord.icon
                         },
                     };
-                    message.channel.send({embed: errorEmbed});
-                    return;
+                    await message.channel.send({embed: errorEmbed});
                 }
 
-            } else if (mode == 'scheduled') {
+            } else if (mode === 'scheduled') {
                 try {
                     let timeDay = parseInt(time);
                     if (timeDay) {
-                        await Server.update(serverId, 
+                        await Server.update(serverId,
                             {
                                 update_channel: channelId,
                                 updated_at: timeDay,
@@ -117,8 +115,7 @@ module.exports = {
                                 icon_url: config.discord.icon
                             },
                         };
-                        message.channel.send({embed: errorEmbed});
-                        return;
+                        await message.channel.send({embed: errorEmbed});
                     }
                 } catch {
                     const errorEmbed = {
@@ -130,12 +127,9 @@ module.exports = {
                             icon_url: config.discord.icon
                         },
                     };
-                    message.channel.send({embed: errorEmbed});
-                    return;
+                    await message.channel.send({embed: errorEmbed});
                 }
-
-
-            } else if (mode == "") {
+            } else if (mode === "") {
                 await Server.update(serverId, {update_channel: channelId});
                 const embed = {
                     color: '#ffe360',
@@ -158,8 +152,7 @@ module.exports = {
                         icon_url: config.discord.icon
                     },
                 };
-                message.channel.send({embed: errorEmbed});
-                return;
+                await message.channel.send({embed: errorEmbed});
             }
         }
 

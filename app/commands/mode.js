@@ -27,7 +27,7 @@ module.exports = {
         }
 
         async function mode(arg) {
-            if (arg[0] == 'repeating') {
+            if (arg[0] === 'repeating') {
                 await Server.update(serverId, {mode: 'repeating'});
                 const embed = {
                     color: '#ffe360',
@@ -41,7 +41,7 @@ module.exports = {
                 };
                 await message.channel.send({embed: embed});
 
-            } else if (arg[0] == 'scheduled') {
+            } else if (arg[0] === 'scheduled') {
                 await Server.update(serverId, {mode: 'scheduled'});
                 const embed = {
                     color: '#ffe360',
@@ -53,7 +53,7 @@ module.exports = {
                     description: "Currently set to scheduled mode",
                     fields: []
                 };
-                await message.channel.send({embed: embed});                
+                await message.channel.send({embed: embed});
             }
             else {
                 const errorEmbed = {
@@ -65,8 +65,8 @@ module.exports = {
                         icon_url: config.discord.icon
                     },
                 };
-                await message.channel.send({embed: errorEmbed});        
-            }            
+                await message.channel.send({embed: errorEmbed});
+            }
         }
 
         mode(args);
