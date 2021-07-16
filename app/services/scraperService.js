@@ -3,6 +3,7 @@ const axios = require('axios');
 const Statistic = require('../controllers/statistic');
 
 exports.getData = async function (url, location) {
+    let updateData;
     let overviewData = [];
     let vaccinationData = [];
     let sourceData = [];
