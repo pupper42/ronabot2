@@ -23,7 +23,7 @@ exports.getData = async function (url, location) {
     // Grab the website
     const website = await axios.get(url);
     const $ = await cheerio.load(website.data);
-    
+
     // Scrape the data
     $(overviewSelector).each((index, element) => {
         if (index === 0) return true;
@@ -65,7 +65,7 @@ exports.getData = async function (url, location) {
 
     // Filter the data
     for (let i = 0; i < overviewData.length; i++) {
-        switch(overviewData[i].category) {
+        switch (overviewData[i].category) {
             case "Cases":
                 total_cases = overviewData[i].total;
                 break;
@@ -95,15 +95,22 @@ exports.getData = async function (url, location) {
     // Consolidate data into a usable object
     updateData = {
         location: location,
-        new_lcases: (new_lcases === "-") ? 'N/A' : new_lcases,
-        new_ocases: (new_ocases === "-") ? 'N/A' : new_ocases,
-        active_cases: (active_cases === "-") ? 'N/A' : active_cases,
-        total_lcases: (total_lcases === "-") ? 'N/A' : total_lcases,
-        total_ocases: (total_ocases === "-") ? 'N/A' : total_ocases,
-        tests: (tests === "-") ? 'N/A' : tests,
-        vaccinations: (vaccinations === "-") ? 'N/A' : vaccinations,
-        deaths: (deaths === "-") ? 'N/A' : deaths,
-        last_updated: (last_updated === "-") ? 'N/A' : last_updated,
+        new_lcases: new_lcases,
+        new_ocases: new_ocases,
+        active_cases: active_cases,
+        total_lcases: total_lcases,
+        total_ocases: total_ocases,
+        tests: tests,
+        vaccinations: vaccinations,
+        deaths: deaths,
+        last_updated: last_updated,
+    }
+
+    // Loop through updateData to check for empty data (because Discord doesnt like empty data zz)
+    for (let data in updateData) {
+        if (updateData[data] === '' || updateData[data] === '-') {
+            updateData[data] = 'N/A';
+        }
     }
 
     // Save to database
