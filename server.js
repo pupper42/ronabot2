@@ -81,7 +81,10 @@ class RonaBot {
         client.on('message', message => {
             let lowercaseMessage = message.content.toLowerCase();
 
-            if (!lowercaseMessage.startsWith(config.discord.prefix) || message.author.bot) return;
+            const commandText = lowercaseMessage.split(' ', 1);
+
+            // Check if bot prefix matches exactly as first message substring parsed
+            if ((commandText[0] !== config.discord.prefix) || message.author.bot) return;
 
             const args = lowercaseMessage.slice(config.discord.prefix.length).trim().split(/ +/);
             const command = args.shift().toLowerCase();

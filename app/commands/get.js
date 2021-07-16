@@ -12,11 +12,10 @@ module.exports = {
     description: 'Get stats for a location',
     execute(message, args) {
         // Also use args[0], args[1] to process the user input
-
         let location = args[0];
         let url = urlService.getUrl(location);
 
-        if (config.availableLocations.includes(location) == false) {
+        if (!config.availableLocations.includes(location)) {
             const errorEmbed = {
                 title: "Error!",
                 description: "Please specify a location (vic, nsw, act, tas, qld, wa or sa)",

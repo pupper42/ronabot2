@@ -17,7 +17,7 @@ module.exports = {
     },
     discord: {
         prefix: "/rbd",
-        token: process.env.DISCORD_TOKEN,
+        token: process.env.APP_ENV === 'staging' ? process.env.DISCORD_TOKEN_STAGING : process.env.DISCORD_TOKEN,
         icon: 'https://i.imgur.com/2ojyW5z.png'
     }
 }

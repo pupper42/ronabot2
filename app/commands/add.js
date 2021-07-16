@@ -28,7 +28,7 @@ module.exports = {
         }
 
         // TODO: Hard coded locations, change later cant be bothered doing it now lol
-        if (config.availableLocations.includes(newLocation) == false) {
+        if (!config.availableLocations.includes(newLocation)) {
             const errorEmbed = {
                 title: "Error!",
                 description: "Please specify a location (vic, nsw, act, tas, qld, wa or sa)",
