@@ -24,7 +24,7 @@ exports.getData = async function (url, location) {
     // Grab the website
     const website = await axios.get(url);
     const $ = await cheerio.load(website.data);
-    
+
     // Scrape the data
     $(overviewSelector).each((index, element) => {
         if (index === 0) return true;
