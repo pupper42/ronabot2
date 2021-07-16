@@ -16,9 +16,9 @@ exports.getData = async function (url, location) {
     let deaths;
     let last_updated;
 
-    let overviewSelector = "#content > div > div:nth-child(1) > section > table > tbody > tr";
-    let vaxSelector = "#content > div > div:nth-child(5) > section > table > tbody > tr";
-    let sourceSelector = "#content > div > div:nth-child(13) > section > table > tbody > tr";
+    let overviewSelector = "section.DAILY-SUMMARY > table > tbody > tr";
+    let vaxSelector = "section.DAILY-VACCINATIONS > table > tbody > tr";
+    let sourceSelector = "section.DAILY-SOURCE-OVERSEAS > table > tbody > tr";
 
     // Grab the website
     const website = await axios.get(url);
@@ -66,9 +66,6 @@ exports.getData = async function (url, location) {
     // Filter the data
     for (let i = 0; i < overviewData.length; i++) {
         switch (overviewData[i].category) {
-            case "Cases":
-                total_cases = overviewData[i].total;
-                break;
             case "Active":
                 active_cases = overviewData[i].total;
                 break;
