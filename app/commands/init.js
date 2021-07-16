@@ -87,9 +87,15 @@ module.exports = {
                 try {
                     let timeDay = parseInt(time);
                     if (timeDay) {
-                        await Server.update(serverId, {update_channel: channelId});
-                        await Server.update(serverId, {update_time: timeDay});
-                        await Server.update(serverId, {mode: 'scheduled', constantly_update: true});
+                        await Server.update(serverId, 
+                            {
+                                update_channel: channelId,
+                                updated_at: timeDay,
+                                mode: 'scheduled',
+                                update_interval: 1440,
+                                constantly_update: true
+                            }
+                        );
                         const embed = {
                             color: '#ffe360',
                             author: {

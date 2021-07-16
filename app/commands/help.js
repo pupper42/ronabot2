@@ -20,6 +20,10 @@ module.exports = {
             description: 'List of commands that Ronabot will accept!',
             fields: [
                 {
+                    name: 'QUICKSTART GUIDE',
+                    value: `Do ${prefix} + add to add the locations you want automatic updates for. Then do ${prefix} + init [repeating/scheduled] [time] to configure autmoatic updates. See below for more details`,
+                },
+                {
                     name: prefix + 'settings',
                     value: 'Show the current settings for the server',
                 },
