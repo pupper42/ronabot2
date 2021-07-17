@@ -1,3 +1,9 @@
+/**
+ * Permissions Service
+ *
+ * Check if user has permissions
+ */
+
 exports.checkPermissions = function(message) {
     if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
         const errorEmbed = {

@@ -1,5 +1,10 @@
-const config = require('../config');
+/**
+ * URL Service
+ *
+ * Returns the source websites for COVID data
+ */
 
+const config = require('../config');
 
 exports.getUrl = function(location) {
 

@@ -1,5 +1,5 @@
-const config = require('../config');
 const Server = require('../controllers/server');
+const MessagingService = require('../services/messagingService');
 
 /**
  * Returns locations that are added to a specific Discord server
@@ -14,9 +14,9 @@ module.exports = {
         let serverId = message.guild.id;
         let updateChannel;
 
-        async function sendSettings() {
-
+        async function getStatus() {
             let doc = await Server.getDoc(serverId);
+
             try {
                 updateChannel = message.guild.channels.cache.get(doc.update_channel).name;
             }
@@ -24,16 +24,7 @@ module.exports = {
                 updateChannel = "Not set"
             }
 
-            console.log(doc.location);
-
-
-            const embed = {
-                color: '#ffe360',
-                author: {
-                    name: 'RonaBot v2',
-                    icon_url: config.discord.icon
-                },
-                title: `Current settings/ping`,
+            const fields = {
                 fields: [
                     {name: 'Locations', value: (doc.location.length === 0) ? "Not set" : doc.location},
                     {name: 'Constantly update?', value: doc.constantly_update},
@@ -43,9 +34,9 @@ module.exports = {
                 ]
             };
 
-            message.channel.send({embed: embed});
+            message.channel.send({embed: MessagingService.getMessage('status', fields)});
         }
 
-        sendSettings();
+        getStatus();
     },
 };

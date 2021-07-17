@@ -1,7 +1,20 @@
+/**
+ * Scraper Service
+ *
+ * Used to retrieve data from the COVID live website
+ */
+
 const cheerio = require('cheerio');
 const axios = require('axios');
 const Statistic = require('../controllers/statistic');
 
+/**
+ * Scrapes the COVID live website for data
+ *
+ * @param url
+ * @param location
+ * @returns {Promise<{new_lcases, last_updated, tests, vaccinations, new_ocases: (*|jQuery), total_ocases: (*|jQuery), location, total_lcases: (*|jQuery), active_cases, deaths}>}
+ */
 exports.getData = async function (url, location) {
     let updateData;
     let overviewData = [];

@@ -1,5 +1,5 @@
-const config = require('../config');
 const Server = require('../controllers/server');
+const MessagingService = require('../services/messagingService');
 
 /**
  * Inits the bot to a specific channel to output messages to
@@ -19,16 +19,7 @@ module.exports = {
         let time = args[2];
 
         if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
-            const errorEmbed = {
-                title: "Error!",
-                description: "You must be admin or have the Rona role!",
-                color: '#ffe360',
-                author: {
-                    name: 'RonaBot v2',
-                    icon_url: config.discord.icon
-                },
-            };
-            message.channel.send({embed: errorEmbed});
+            message.channel.send({embed: MessagingService.getMessage('roleError')});
             return
         }
 
@@ -36,6 +27,7 @@ module.exports = {
             if (mode === 'repeating') {
                 try {
                     let timeMin = parseFloat(time);
+
                     if (timeMin >=1 && timeMin <= 4320) {
                         await Server.update(serverId,
                             {
@@ -45,45 +37,24 @@ module.exports = {
                                 constantly_update: true
                             }
                         );
-                        const embed = {
-                            color: '#ffe360',
-                            author: {
-                                name: 'RonaBot v2',
-                                icon_url: config.discord.icon
-                            },
+
+                        const fields = {
                             title: `Using '${channelName}' for auto updates`,
                             description: `Set to repeating mode, will send an update every ${time} minutes. Turn off auto updates with \`/rb toggle off\``,
-                            fields: []
                         };
-                        await message.channel.send({embed: embed});
+
+                        await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
                     } else {
-                        const errorEmbed = {
-                            title: "Error!",
-                            description: "Please enter a number between 1 and 4320!",
-                            color: '#ffe360',
-                            author: {
-                                name: 'RonaBot v2',
-                                icon_url: config.discord.icon
-                            },
-                        };
-                        await message.channel.send({embed: errorEmbed});
+                        await message.channel.send({embed: MessagingService.getMessage('timeError')});
                     }
                 } catch {
-                    const errorEmbed = {
-                        title: "Error!",
-                        description: "Please enter a number between 1 and 4320!",
-                        color: '#ffe360',
-                        author: {
-                            name: 'RonaBot v2',
-                            icon_url: config.discord.icon
-                        },
-                    };
-                    await message.channel.send({embed: errorEmbed});
+                    await message.channel.send({embed: MessagingService.getMessage('timeError')});
                 }
 
             } else if (mode === 'scheduled') {
                 try {
                     let timeDay = parseInt(time);
+
                     if (timeDay) {
                         await Server.update(serverId,
                             {
@@ -94,65 +65,30 @@ module.exports = {
                                 constantly_update: true
                             }
                         );
-                        const embed = {
-                            color: '#ffe360',
-                            author: {
-                                name: 'RonaBot v2',
-                                icon_url: config.discord.icon
-                            },
+
+                        const fields = {
                             title: `Using '${channelName}' for auto updates`,
                             description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
-                            fields: []
                         };
-                        await message.channel.send({embed: embed});
+
+                        await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
                     } else {
-                        const errorEmbed = {
-                            title: "Error!",
-                            description: "Please enter a 24h time!",
-                            color: '#ffe360',
-                            author: {
-                                name: 'RonaBot v2',
-                                icon_url: config.discord.icon
-                            },
-                        };
-                        await message.channel.send({embed: errorEmbed});
+                        await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
                     }
                 } catch {
-                    const errorEmbed = {
-                        title: "Error!",
-                        description: "Please enter a 24h time!",
-                        color: '#ffe360',
-                        author: {
-                            name: 'RonaBot v2',
-                            icon_url: config.discord.icon
-                        },
-                    };
-                    await message.channel.send({embed: errorEmbed});
+                    await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
                 }
             } else if (mode === "") {
                 await Server.update(serverId, {update_channel: channelId});
-                const embed = {
-                    color: '#ffe360',
-                    author: {
-                        name: 'RonaBot v2',
-                        icon_url: config.discord.icon
-                    },
+
+                const fields = {
                     title: `Using '${channelName}' for auto updates`,
                     description: 'Turn off auto updates with `/rb toggle off`',
-                    fields: []
                 }
-                await message.channel.send({embed: embed});
+
+                await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
             } else {
-                const errorEmbed = {
-                    title: "Error!",
-                    description: "Please enter scheduled or repeating!",
-                    color: '#ffe360',
-                    author: {
-                        name: 'RonaBot v2',
-                        icon_url: config.discord.icon
-                    },
-                };
-                await message.channel.send({embed: errorEmbed});
+                await message.channel.send({embed: MessagingService.getMessage('invalidMode')});
             }
         }
 

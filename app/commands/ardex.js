@@ -1,4 +1,4 @@
-const config = require('../config');
+const MessagingService = require('../services/messagingService');
 
 /**
  * Ardex :heart:
@@ -14,14 +14,6 @@ module.exports = {
     },
     description: 'Ardex! The bot loves you!',
     execute(message) {
-        const embed = {
-            color: '#e31b23',
-            author: {
-                name: 'RonaBot v2',
-                icon_url: config.discord.icon
-            },
-            description: ':heart:'
-        };
-        message.channel.send({embed: embed});
+        message.channel.send({embed: MessagingService.getMessage('ardex')});
     },
 };

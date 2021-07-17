@@ -13,6 +13,7 @@ const Server = require('./app/controllers/server');
 const Statistics = require('./app/controllers/statistic');
 const Url = require('./app/services/urlService');
 const Scraper = require('./app/services/scraperService');
+const MessagingService = require('./app/services/messagingService');
 
 class RonaBot {
 
@@ -172,12 +173,7 @@ class RonaBot {
                                 const updateData = res;
 
                                 // TODO: Rewrite this
-                                const embed = {
-                                    color: '#ffe360',
-                                    author: {
-                                        name: 'RonaBot v2',
-                                        icon_url: config.discord.icon
-                                    },
+                                const fields = {
                                     title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
                                     fields: [
                                         {name: 'New local cases', value: updateData.new_lcases, inline: true},
@@ -196,7 +192,7 @@ class RonaBot {
                                 };
 
                                 // Send the message to the specific server channel
-                                client.channels.cache.get(server.update_channel).send({embed: embed});
+                                client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
                             });
 
                         });

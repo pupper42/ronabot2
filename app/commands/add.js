@@ -1,5 +1,6 @@
 const config = require('../config');
 const Server = require('../controllers/server');
+const MessagingService = require('../services/messagingService');
 
 /**
  * Add a location to the database
@@ -14,46 +15,24 @@ module.exports = {
         let newLocation = args.join(" ");
 
         if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
-            const errorEmbed = {
-                title: "Error!",
-                description: "You must be admin or have the Rona role!",
-                color: '#ffe360',
-                author: {
-                    name: 'RonaBot v2',
-                    icon_url: config.discord.icon
-                },
-            };
-            message.channel.send({embed: errorEmbed});
+            message.channel.send({embed: MessagingService.getMessage('roleError')});
             return
         }
 
         // TODO: Hard coded locations, change later cant be bothered doing it now lol
         if (!config.availableLocations.includes(newLocation)) {
-            const errorEmbed = {
-                title: "Error!",
-                description: "Please specify a location (vic, nsw, act, tas, qld, wa or sa)",
-                color: '#ffe360',
-                author: {
-                    name: 'RonaBot v2',
-                    icon_url: config.discord.icon
-                },
-            };
-            message.channel.send({embed: errorEmbed});
+            message.channel.send({embed: MessagingService.getMessage('invalidLocation')});
             return
         }
 
         Server.update(messageServer, {$addToSet: {location: [newLocation]}});
 
-        const embed = {
-            color: '#ffe360',
-            author: {
-                name: 'RonaBot v2',
-                icon_url: config.discord.icon
-            },
+        const fields = {
             fields: [
                 {name: 'Added new location:', value: newLocation}
             ]
         };
-        message.channel.send({embed: embed});
+
+        message.channel.send({embed: MessagingService.getMessage('addedLocation', fields)});
     },
 };
