@@ -1,4 +1,5 @@
 const Server = require('../controllers/server');
+const PermissionsService = require('../services/permissionsService');
 const MessagingService = require('../services/messagingService');
 const moment = require('moment');
 
@@ -17,8 +18,7 @@ module.exports = {
         let mode = args[0];
         let time = args[1];
 
-        if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
-            message.channel.send({embed: MessagingService.getMessage('roleError')});
+        if (!PermissionsService.checkPermissions()) {
             return
         }
 

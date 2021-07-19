@@ -1,5 +1,6 @@
 const config = require('../config');
 const Server = require('../controllers/server');
+const PermissionsService = require('../services/permissionsService');
 const MessagingService = require('../services/messagingService');
 
 /**
@@ -14,8 +15,7 @@ module.exports = {
         let messageServer = message.guild.id;
         let newLocation = args.join(" ");
 
-        if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
-            message.channel.send({embed: MessagingService.getMessage('roleError')});
+        if (!PermissionsService.checkPermissions()) {
             return
         }
 

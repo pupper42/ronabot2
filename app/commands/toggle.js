@@ -1,9 +1,9 @@
-const config = require('../../app/config');
 const Server = require('../controllers/server');
+const PermissionsService = require('../services/permissionsService');
 const MessagingService = require('../services/messagingService');
 
 /**
- * Disnable the bot to use automatic notification updates
+ * Enable or disable the bot to use automatic notification updates
  *
  * @type {{name: string, description: string, execute(*): void}}
  */
@@ -13,8 +13,7 @@ module.exports = {
     execute(message, args) {
         let serverId = message.guild.id;
 
-        if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
-            message.channel.send({embed: MessagingService.getMessage('roleError')});
+        if (!PermissionsService.checkPermissions()) {
             return
         }
 

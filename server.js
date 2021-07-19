@@ -1,16 +1,26 @@
 /**
  * Welcome to RonaBot v2!
  */
-const moment = require('moment');
-const config = require('./app/config');
-const mongoose = require('mongoose');
+
+// System
 const fs = require('fs');
 const path = require('path');
+
+// Config
+const config = require('./app/config');
+
+// Vendors
+const moment = require('moment');
+const mongoose = require('mongoose');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Agenda = require('agenda');
+
+// Controllers
 const Server = require('./app/controllers/server');
 const Statistics = require('./app/controllers/statistic');
+
+// Services
 const Url = require('./app/services/urlService');
 const Scraper = require('./app/services/scraperService');
 const MessagingService = require('./app/services/messagingService');
@@ -162,38 +172,19 @@ class RonaBot {
                     let currentTime = moment(new Date());
                     let nextRunDate;
                     let locations = server.location;
+                    let notify = false;
 
+                    // Chedk server mode and update the datetime accordingly
                     if ((server.mode === 'scheduled') && currentTime >= updatedAt) {
-                        locations.forEach(function (location) {
-                            // Get the statistics
-                            Statistics.read(location).then(res => {
-                                const updateData = res;
-
-                                const fields = {
-                                    title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
-                                    fields: [
-                                        {name: 'New local cases', value: updateData.new_lcases, inline: true},
-                                        {name: 'New overseas cases', value: updateData.new_ocases, inline: true},
-                                        {name: '\u200b', value: '\u200b', inline: true},
-                                        {name: 'Total local cases', value: updateData.total_lcases, inline: true},
-                                        {name: 'Total overseas cases', value: updateData.total_ocases, inline: true},
-                                        {name: '\u200b', value: '\u200b', inline: true},
-                                        {name: 'Active cases', value: updateData.active_cases, inline: true},
-                                        {name: 'Deaths', value: updateData.deaths, inline: true},
-                                        {name: '\u200b', value: '\u200b', inline: true},
-                                        {name: 'Tests', value: updateData.tests, inline: true},
-                                        {name: 'Vaccinations', value: updateData.vaccinations, inline: true},
-                                        {name: '\u200b', value: '\u200b', inline: true},
-                                    ]
-                                };
-
-                                // Send the message to the specific server channel
-                                client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
-                            });
-                        });
-
+                        notify = true;
                         nextRunDate = moment(updatedAt).add(1, 'days');
                     } else if((server.mode === 'repeating') && currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
+                        notify = true;
+                        nextRunDate = currentTime;
+                    }
+
+                    // Check if notify is a go
+                    if (notify) {
                         locations.forEach(function (location) {
                             // Get the statistics
                             Statistics.read(location).then(res => {
@@ -221,8 +212,6 @@ class RonaBot {
                                 client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
                             });
                         });
-
-                        nextRunDate = currentTime;
                     }
 
                     Server.update(server.server_id, {updated_at: nextRunDate});
