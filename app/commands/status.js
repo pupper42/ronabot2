@@ -25,12 +25,14 @@ module.exports = {
                 updateChannel = 'Not set';
             }
 
+            // Check if server has a valid updated_at date and format the output accordingly
             if (server.updated_at == null) {
                 updatedAt = 'N/A';
             } else {
                 updatedAt = moment(server.updated_at).format('DD/MM/YYYY HH:mm').toString() + ' GMT+0';
             }
 
+            // Compile the fields to be sent to the MessagingService
             const fields = {
                 fields: [
                     {name: 'Locations', value: (server.location.length === 0) ? "Not set" : server.location},

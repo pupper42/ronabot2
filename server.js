@@ -163,14 +163,14 @@ class RonaBot {
                     console.log('Server:'+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
 
                     // Check if server is allowed to constantly update
-                    if (!server.constantly_update || server.location.length < 1) {
+                    if (!server.constantly_update || server.location.length < 1 || server.update_channel == 0) {
                         return;
                     }
 
                     // Check if any server requires notification (get updated_at and interval)
                     let updatedAt = moment(server.updated_at);
                     let currentTime = moment(new Date());
-                    let nextRunDate;
+                    let nextRunDate = currentTime;
                     let locations = server.location;
                     let notify = false;
 
@@ -180,7 +180,6 @@ class RonaBot {
                         nextRunDate = moment(updatedAt).add(1, 'days');
                     } else if((server.mode === 'repeating') && currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
                         notify = true;
-                        nextRunDate = currentTime;
                     }
 
                     // Check if notify is a go
@@ -212,9 +211,9 @@ class RonaBot {
                                 client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
                             });
                         });
-                    }
 
-                    Server.update(server.server_id, {updated_at: nextRunDate});
+                        Server.update(server.server_id, {updated_at: nextRunDate});
+                    }
                 });
             });
         });
