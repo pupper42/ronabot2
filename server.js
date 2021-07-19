@@ -160,19 +160,15 @@ class RonaBot {
                     // Check if any server requires notification (get updated_at and interval)
                     let updatedAt = moment(server.updated_at);
                     let currentTime = moment(new Date());
+                    let nextRunDate;
+                    let locations = server.location;
 
-                    // Compare currentTime and last server was updated_at
-                    if (currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
-
-                        // Get each added location and then notify
-                        let locations = server.location;
-
+                    if ((server.mode === 'scheduled') && currentTime >= updatedAt) {
                         locations.forEach(function (location) {
                             // Get the statistics
                             Statistics.read(location).then(res => {
                                 const updateData = res;
 
-                                // TODO: Rewrite this
                                 const fields = {
                                     title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
                                     fields: [
@@ -194,12 +190,42 @@ class RonaBot {
                                 // Send the message to the specific server channel
                                 client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
                             });
-
                         });
 
-                        // Update server updated_at
-                        Server.update(server.server_id, {updated_at: currentTime});
+                        nextRunDate = moment(updatedAt).add(1, 'days');
+                    } else if((server.mode === 'repeating') && currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
+                        locations.forEach(function (location) {
+                            // Get the statistics
+                            Statistics.read(location).then(res => {
+                                const updateData = res;
+
+                                const fields = {
+                                    title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
+                                    fields: [
+                                        {name: 'New local cases', value: updateData.new_lcases, inline: true},
+                                        {name: 'New overseas cases', value: updateData.new_ocases, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                        {name: 'Total local cases', value: updateData.total_lcases, inline: true},
+                                        {name: 'Total overseas cases', value: updateData.total_ocases, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                        {name: 'Active cases', value: updateData.active_cases, inline: true},
+                                        {name: 'Deaths', value: updateData.deaths, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                        {name: 'Tests', value: updateData.tests, inline: true},
+                                        {name: 'Vaccinations', value: updateData.vaccinations, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                    ]
+                                };
+
+                                // Send the message to the specific server channel
+                                client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
+                            });
+                        });
+
+                        nextRunDate = currentTime;
                     }
+
+                    Server.update(server.server_id, {updated_at: nextRunDate});
                 });
             });
         });

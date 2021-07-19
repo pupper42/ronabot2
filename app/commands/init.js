@@ -1,5 +1,6 @@
 const Server = require('../controllers/server');
 const MessagingService = require('../services/messagingService');
+const moment = require('moment');
 
 /**
  * Inits the bot to a specific channel to output messages to
@@ -50,10 +51,9 @@ module.exports = {
                 } catch {
                     await message.channel.send({embed: MessagingService.getMessage('timeError')});
                 }
-
             } else if (mode === 'scheduled') {
                 try {
-                    let timeDay = parseInt(time);
+                    let timeDay =  moment(time, 'HH:mm').toISOString();
 
                     if (timeDay) {
                         await Server.update(serverId,
