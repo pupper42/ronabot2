@@ -31,7 +31,7 @@ module.exports = {
                     {name: 'Constantly update?', value: server.constantly_update},
                     {name: 'Update interval', value: `${server.update_interval} minutes`},
                     {name: 'Update channel', value: updateChannel},
-                    {name: (server.mode === 'scheduled') ? "Next update" : "Last updated", value: moment(server.updated_at).format('DD/MM/YYYY HH:mm') + 'GMT+0'},
+                    {name: (server.mode === 'scheduled') ? "Next update" : "Last updated", value: moment(server.updated_at).format('DD/MM/YYYY HH:mm').toString() + ' GMT+0'},
                     {name: 'Ping', value: `:hourglass: ${Date.now() - message.createdTimestamp}ms, :stopwatch: ${Math.round(message.client.ws.ping)}ms`}
                 ]
             };
