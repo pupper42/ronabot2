@@ -16,12 +16,19 @@ module.exports = {
 
         async function getStatus() {
             let server = await Server.getServer(serverId);
+            let updateField;
 
             try {
                 updateChannel = message.guild.channels.cache.get(server.update_channel).name;
             }
             catch {
                 updateChannel = "Not set"
+            }
+
+            if (server.mode === 'repeating') {
+                updateField = {name: 'Last updated', value: server.updated_at};
+            } else if (server.mode === 'scheduled') {
+                updateField = {name: 'Next update', value: server.updated_at};
             }
 
             const fields = {
@@ -31,6 +38,7 @@ module.exports = {
                     {name: 'Constantly update?', value: server.constantly_update},
                     {name: 'Update interval', value: `${server.update_interval} minutes`},
                     {name: 'Update channel', value: updateChannel},
+                    updateField,
                     {name: 'Ping', value: `:hourglass: ${Date.now() - message.createdTimestamp}ms, :stopwatch: ${Math.round(message.client.ws.ping)}ms`}
                 ]
             };

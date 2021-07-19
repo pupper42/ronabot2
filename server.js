@@ -174,7 +174,12 @@ class RonaBot {
                     let locations = server.location;
                     let notify = false;
 
-                    // Chedk server mode and update the datetime accordingly
+                    // Null check on updatedAt
+                    if (updatedAt == null) {
+                        updatedAt = currentTime;
+                    }
+
+                    // Check server mode and update the datetime accordingly
                     if ((server.mode === 'scheduled') && currentTime >= updatedAt) {
                         notify = true;
                         nextRunDate = moment(updatedAt).add(1, 'days');
