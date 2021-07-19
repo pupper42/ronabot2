@@ -15,10 +15,10 @@ module.exports = {
         let updateChannel;
 
         async function getStatus() {
-            let doc = await Server.getDoc(serverId);
+            let server = await Server.getServer(serverId);
 
             try {
-                updateChannel = message.guild.channels.cache.get(doc.update_channel).name;
+                updateChannel = message.guild.channels.cache.get(server.update_channel).name;
             }
             catch {
                 updateChannel = "Not set"
@@ -26,9 +26,10 @@ module.exports = {
 
             const fields = {
                 fields: [
-                    {name: 'Locations', value: (doc.location.length === 0) ? "Not set" : doc.location},
-                    {name: 'Constantly update?', value: doc.constantly_update},
-                    {name: 'Update interval', value: `${doc.update_interval} minutes`},
+                    {name: 'Locations', value: (server.location.length === 0) ? "Not set" : server.location},
+                    {name: 'Mode', value: server.mode},
+                    {name: 'Constantly update?', value: server.constantly_update},
+                    {name: 'Update interval', value: `${server.update_interval} minutes`},
                     {name: 'Update channel', value: updateChannel},
                     {name: 'Ping', value: `:hourglass: ${Date.now() - message.createdTimestamp}ms, :stopwatch: ${Math.round(message.client.ws.ping)}ms`}
                 ]

@@ -223,7 +223,7 @@ class MessagingService {
                 name: 'RonaBot v2',
                 icon_url: config.discord.icon
             },
-            title: `Current settings/ping`
+            title: `Current Status & Settings`
         };
     }
 

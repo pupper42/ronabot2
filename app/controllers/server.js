@@ -22,11 +22,11 @@ exports.create = async function (serverId, serverName) {
 }
 
 /**
- * Retrieve a document based on server ID
+ * Retrieve a document (server) based on server ID
  *
  * @returns {Promise<void>}
  */
-exports.getDoc = async function (serverId) {
+exports.getServer = async function (serverId) {
     try {
         return await Server.findOne({server_id: serverId});
     } catch(e) {

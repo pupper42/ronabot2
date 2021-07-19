@@ -11,8 +11,6 @@ module.exports = {
     name: 'init',
     description: 'Set the channel to send updates in',
     execute(message, args) {
-        // Also use args[0], args[1] to process the user input
-
         let serverId = message.guild.id;
         let channelId = message.channel.id;
         let channelName = message.channel.name;
