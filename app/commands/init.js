@@ -18,7 +18,7 @@ module.exports = {
         let mode = args[0];
         let time = args[1];
 
-        if (!PermissionsService.checkPermissions()) {
+        if (!PermissionsService.checkPermissions(message)) {
             return
         }
 

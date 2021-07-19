@@ -14,7 +14,7 @@ module.exports = {
         let serverId = message.guild.id;
         let location = args[0];
 
-        if (!PermissionsService.checkPermissions()) {
+        if (!PermissionsService.checkPermissions(message)) {
             return
         }
 

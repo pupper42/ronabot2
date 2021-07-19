@@ -13,7 +13,7 @@ module.exports = {
     execute(message, args) {
         let serverId = message.guild.id;
 
-        if (!PermissionsService.checkPermissions()) {
+        if (!PermissionsService.checkPermissions(message)) {
             return
         }
 

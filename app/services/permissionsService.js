@@ -5,7 +5,7 @@
  */
 const MessagingService = require('../services/messagingService');
 
-exports.checkPermissions = function() {
+exports.checkPermissions = function(message) {
     if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
         message.channel.send({embed: MessagingService.getMessage('roleError')});
         return false;
