@@ -30,10 +30,11 @@ module.exports = {
                     if (timeMin >=1 && timeMin <= 4320) {
                         await Server.update(serverId,
                             {
-                                update_interval: timeMin,
+                                constantly_update: true,
                                 update_channel: channelId,
+                                update_interval: timeMin,
+                                updated_at: moment(new Date()),
                                 mode: 'repeating',
-                                constantly_update: true
                             }
                         );
 
@@ -56,11 +57,11 @@ module.exports = {
                     if (timeDay) {
                         await Server.update(serverId,
                             {
+                                constantly_update: true,
                                 update_channel: channelId,
-                                updated_at: timeDay,
-                                mode: 'scheduled',
                                 update_interval: 1440,
-                                constantly_update: true
+                                updated_at: timeDay,
+                                mode: 'scheduled'
                             }
                         );
 
