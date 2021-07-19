@@ -4,16 +4,19 @@ dotenv.config();
 
 module.exports = {
     databaseURL: process.env.MONGO_URI,
-    vicSource: 'https://covidlive.com.au/vic',
-    nswSource: 'https://covidlive.com.au/nsw',
-    qldSource: 'https://covidlive.com.au/qld',
-    waSource: 'https://covidlive.com.au/wa',
-    saSource: 'https://covidlive.com.au/sa',
-    tasSource: 'https://covidlive.com.au/tas',
-    ntSource: 'https://covidlive.com.au/nt',
-    actSource: 'https://covidlive.com.au/act',
+    availableLocations: ['vic', 'nsw', 'qld', 'wa', 'act', 'tas', 'nt', 'sa'],
+    sources: {
+        vic: 'https://covidlive.com.au/vic',
+        nsw: 'https://covidlive.com.au/nsw',
+        qld: 'https://covidlive.com.au/qld',
+        wa: 'https://covidlive.com.au/wa',
+        sa: 'https://covidlive.com.au/sa',
+        tas: 'https://covidlive.com.au/tas',
+        nt: 'https://covidlive.com.au/nt',
+        act: 'https://covidlive.com.au/act',
+    },
     discord: {
-        prefix: "/rb",
+        prefix: "/rbd",
         token: process.env.DISCORD_TOKEN,
         icon: 'https://i.imgur.com/2ojyW5z.png'
     }

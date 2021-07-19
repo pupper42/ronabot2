@@ -1,6 +1,7 @@
 const config = require('../config');
 const scraper = require('../services/scraperService');
 const urlService = require('../services/urlService');
+const MessagingService = require('../services/messagingService');
 
 /**
  * Get the statistics of a location
@@ -12,25 +13,24 @@ module.exports = {
     description: 'Get stats for a location',
     execute(message, args) {
         // Also use args[0], args[1] to process the user input
-
         let location = args[0];
         let url = urlService.getUrl(location);
+
+        if (!config.availableLocations.includes(location)) {
+            message.channel.send({embed: MessagingService.getMessage('invalidLocation')});
+            return
+        }
 
         async function getData() {
             try {
                 updateData = await scraper.getData(url, location);
             }
             catch {
-                message.reply("please enter a valid location!")
+                await message.channel.send({embed: MessagingService.getMessage('invalidLocation')});
+                return
             }
 
-
-            const embed = {
-                color: '#ffe360',
-                author: {
-                    name: 'RonaBot v2',
-                    icon_url: config.discord.icon
-                },
+            const fields = {
                 title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
                 fields: [
                     {name: 'New local cases', value: updateData.new_lcases, inline: true},
@@ -47,7 +47,7 @@ module.exports = {
                     {name: '\u200b', value: '\u200b', inline: true},
                 ]
             };
-            message.channel.send({embed: embed});
+            await message.channel.send({embed: MessagingService.getMessage('locationStats', fields)});
         }
 
         getData();

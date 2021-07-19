@@ -1,5 +1,6 @@
-const config = require('../config');
 const Server = require('../controllers/server');
+const MessagingService = require('../services/messagingService');
+const moment = require('moment');
 
 /**
  * Inits the bot to a specific channel to output messages to
@@ -9,42 +10,88 @@ const Server = require('../controllers/server');
 module.exports = {
     name: 'init',
     description: 'Set the channel to send updates in',
-    execute(message) {
+    execute(message, args) {
         // Also use args[0], args[1] to process the user input
 
         let serverId = message.guild.id;
         let channelId = message.channel.id;
         let channelName = message.channel.name;
+        let mode = args[1];
+        let time = args[2];
 
         if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
-            const errorEmbed = {
-                title: "Error!",
-                description: "You must be admin or have the Rona role!",
-                color: '#ffe360',
-                author: {
-                    name: 'RonaBot v2',
-                    icon_url: config.discord.icon
-                },
-            };
-            message.channel.send({embed: errorEmbed});
+            message.channel.send({embed: MessagingService.getMessage('roleError')});
             return
         }
 
-        async function init() {
-            await Server.update(serverId, {'update_channel': channelId});
-            const embed = {
-                color: '#ffe360',
-                author: {
-                    name: 'RonaBot v2',
-                    icon_url: config.discord.icon
-                },
-                fields: [
-                    {name: `'${channelName}' set`, value: "Will send updates to this channel if automatic updates are turned on. Enable automatic updates with `/ronabot on`"}
-                ]
-            };
-            await message.channel.send({embed: embed});
+        async function init(mode, time) {
+            if (mode === 'repeating') {
+                try {
+                    let timeMin = parseFloat(time);
+
+                    if (timeMin >=1 && timeMin <= 4320) {
+                        await Server.update(serverId,
+                            {
+                                update_interval: timeMin,
+                                update_channel: channelId,
+                                mode: 'repeating',
+                                constantly_update: true
+                            }
+                        );
+
+                        const fields = {
+                            title: `Using '${channelName}' for auto updates`,
+                            description: `Set to repeating mode, will send an update every ${time} minutes. Turn off auto updates with \`/rb toggle off\``,
+                        };
+
+                        await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
+                    } else {
+                        await message.channel.send({embed: MessagingService.getMessage('timeError')});
+                    }
+                } catch {
+                    await message.channel.send({embed: MessagingService.getMessage('timeError')});
+                }
+            } else if (mode === 'scheduled') {
+                try {
+                    let timeDay =  moment(time, 'HH:mm').toISOString();
+
+                    if (timeDay) {
+                        await Server.update(serverId,
+                            {
+                                update_channel: channelId,
+                                updated_at: timeDay,
+                                mode: 'scheduled',
+                                update_interval: 1440,
+                                constantly_update: true
+                            }
+                        );
+
+                        const fields = {
+                            title: `Using '${channelName}' for auto updates`,
+                            description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
+                        };
+
+                        await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
+                    } else {
+                        await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
+                    }
+                } catch {
+                    await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
+                }
+            } else if (mode === "") {
+                await Server.update(serverId, {update_channel: channelId});
+
+                const fields = {
+                    title: `Using '${channelName}' for auto updates`,
+                    description: 'Turn off auto updates with `/rb toggle off`',
+                }
+
+                await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
+            } else {
+                await message.channel.send({embed: MessagingService.getMessage('invalidMode')});
+            }
         }
 
-        init();
+        init(mode, time);
     },
 };
