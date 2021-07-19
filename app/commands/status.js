@@ -16,12 +16,19 @@ module.exports = {
 
         async function getStatus() {
             let server = await Server.getServer(serverId);
+            let updatedAt;
 
             try {
                 updateChannel = message.guild.channels.cache.get(server.update_channel).name;
             }
             catch {
                 updateChannel = 'Not set';
+            }
+
+            if (server.updated_at == null) {
+                updatedAt = 'N/A';
+            } else {
+                updatedAt = moment(server.updated_at).format('DD/MM/YYYY HH:mm').toString() + ' GMT+0';
             }
 
             const fields = {
@@ -31,7 +38,7 @@ module.exports = {
                     {name: 'Constantly update?', value: server.constantly_update},
                     {name: 'Update interval', value: `${server.update_interval} minutes`},
                     {name: 'Update channel', value: updateChannel},
-                    {name: (server.mode === 'scheduled') ? "Next update" : "Last updated", value: moment(server.updated_at).format('DD/MM/YYYY HH:mm').toString() + ' GMT+0'},
+                    {name: (server.mode === 'scheduled') ? "Next update" : "Last updated", value: updatedAt},
                     {name: 'Ping', value: `:hourglass: ${Date.now() - message.createdTimestamp}ms, :stopwatch: ${Math.round(message.client.ws.ping)}ms`}
                 ]
             };
