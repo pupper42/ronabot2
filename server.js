@@ -163,7 +163,7 @@ class RonaBot {
                     console.log('Server:'+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
 
                     // Check if server is allowed to constantly update
-                    if (!server.constantly_update || server.location.length < 1 || server.update_channel == 0) {
+                    if (!server.constantly_update || server.location.length < 1 || server.update_channel == 0 || server.updated_at == null) {
                         return;
                     }
 
