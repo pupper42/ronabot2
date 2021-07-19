@@ -16,8 +16,8 @@ module.exports = {
         let serverId = message.guild.id;
         let channelId = message.channel.id;
         let channelName = message.channel.name;
-        let mode = args[1];
-        let time = args[2];
+        let mode = args[0];
+        let time = args[1];
 
         if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
             message.channel.send({embed: MessagingService.getMessage('roleError')});
