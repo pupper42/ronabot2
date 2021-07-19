@@ -22,7 +22,7 @@ module.exports = {
             return
         }
 
-        async function init(mode, time) {
+        async function init(mode = '', time = 0) {
             if (mode === 'repeating') {
                 try {
                     let timeMin = parseFloat(time);
@@ -77,7 +77,7 @@ module.exports = {
                 } catch {
                     await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
                 }
-            } else if (mode === "") {
+            } else if (mode === '') {
                 await Server.update(serverId, {update_channel: channelId});
 
                 const fields = {
