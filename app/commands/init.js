@@ -59,7 +59,7 @@ module.exports = {
                             {
                                 constantly_update: true,
                                 update_channel: channelId,
-                                update_interval: 1440,
+                                update_interval: time,
                                 updated_at: timeDay,
                                 mode: 'scheduled'
                             }
