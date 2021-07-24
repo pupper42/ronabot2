@@ -1,7 +1,8 @@
 /**
  * Welcome to RonaBot v2!
  */
-const moment = require('moment');
+//const moment = require('moment');
+const { DateTime } = require("luxon");
 const config = require('./app/config');
 const mongoose = require('mongoose');
 const fs = require('fs');
@@ -150,7 +151,7 @@ class RonaBot {
             // Get all servers and their intervals
             Server.getServers().then(res => {
                 res.forEach(async function (server, index) {
-                    console.log('Server:'+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
+                    console.log('Server: '+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
 
                     // Check if server is allowed to constantly update
                     if (!server.constantly_update || server.location.length < 1) {
@@ -158,10 +159,13 @@ class RonaBot {
                     }
 
                     // Check if any server requires notification (get updated_at and interval)
-                    let updatedAt = moment(server.updated_at);
-                    let currentTime = moment(new Date());
+                    //let updatedAt = DateTime.fromFormat(server.updated_at);
+                    let updatedAt = server.updated_at.toISOString()
+                    let currentTime = DateTime.now().toISO();
                     let nextRunDate;
                     let locations = server.location;
+
+                    console.log(`Updated at: ${updatedAt}, current time: ${currentTime}`);
 
                     if ((server.mode === 'scheduled') && currentTime >= updatedAt) {
                         locations.forEach(function (location) {
@@ -192,8 +196,10 @@ class RonaBot {
                             });
                         });
 
-                        nextRunDate = moment(updatedAt).add(1, 'days');
-                    } else if((server.mode === 'repeating') && currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
+                        nextRunDate = DateTime.fromISO(updatedAt).plus({days: 1}).toISO();
+                        console.log(nextRunDate);
+
+                    } else if((server.mode === 'repeating') && DateTime.fromISO(currentTime).diff(DateTime.fromISO(updatedAt), 'minutes') >= server.update_interval) {
                         locations.forEach(function (location) {
                             // Get the statistics
                             Statistics.read(location).then(res => {
@@ -223,6 +229,9 @@ class RonaBot {
                         });
 
                         nextRunDate = currentTime;
+                        console.log(nextRunDate);
+                    } else {
+                        console.log("Something happened...");
                     }
 
                     Server.update(server.server_id, {updated_at: nextRunDate});

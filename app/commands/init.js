@@ -1,6 +1,6 @@
 const Server = require('../controllers/server');
 const MessagingService = require('../services/messagingService');
-const moment = require('moment');
+const { DateTime } = require("luxon");
 
 /**
  * Inits the bot to a specific channel to output messages to
@@ -16,8 +16,9 @@ module.exports = {
         let serverId = message.guild.id;
         let channelId = message.channel.id;
         let channelName = message.channel.name;
-        let mode = args[1];
-        let time = args[2];
+        let mode = args[0];
+        let time = args[1];
+        console.log(args)
 
         if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
             message.channel.send({embed: MessagingService.getMessage('roleError')});
@@ -53,25 +54,54 @@ module.exports = {
                 }
             } else if (mode === 'scheduled') {
                 try {
-                    let timeDay =  moment(time, 'HH:mm').toISOString();
+                    let timeDay = DateTime.fromFormat(time, 'H:mm');
+                    let currentTime = DateTime.now();
+
+                    console.log(`init.js - timeDay: ${timeDay}, currentTime: ${currentTime}`);
 
                     if (timeDay) {
-                        await Server.update(serverId,
-                            {
-                                update_channel: channelId,
-                                updated_at: timeDay,
-                                mode: 'scheduled',
-                                update_interval: 1440,
-                                constantly_update: true
-                            }
-                        );
+                        if (timeDay < currentTime) {
 
-                        const fields = {
-                            title: `Using '${channelName}' for auto updates`,
-                            description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
-                        };
+                            await Server.update(serverId,
+                                {
+                                    update_channel: channelId,
+                                    updated_at: timeDay,
+                                    mode: 'scheduled',
+                                    constantly_update: true
+                                }
+                            );
 
-                        await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
+                            const fields = {
+                                title: `Using '${channelName}' for auto updates`,
+                                description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
+                            };
+    
+                            await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
+                        
+
+                        } else if (timeDay >= currentTime) {
+
+                            await Server.update(serverId,
+                                {
+                                    update_channel: channelId,
+                                    updated_at: timeDay,
+                                    mode: 'scheduled',
+                                    constantly_update: true
+                                }
+                            );
+
+
+                            const fields = {
+                                title: `Using '${channelName}' for auto updates`,
+                                description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
+                            };
+    
+                            await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
+
+                        } else {
+                            await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
+                        }
+
                     } else {
                         await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
                     }
