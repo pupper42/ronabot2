@@ -3,7 +3,6 @@
  */
 //const moment = require('moment');
 const { DateTime } = require("luxon");
-const config = require('./app/config');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
@@ -13,7 +12,6 @@ const config = require('./app/config');
 
 // Vendors
 const moment = require('moment');
-const mongoose = require('mongoose');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Agenda = require('agenda');
