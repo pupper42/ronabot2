@@ -1,8 +1,10 @@
 /**
  * Welcome to RonaBot v2!
  */
-
-// System
+//const moment = require('moment');
+const { DateTime } = require("luxon");
+const config = require('./app/config');
+const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 
@@ -160,7 +162,7 @@ class RonaBot {
             // Get all servers and their intervals
             Server.getServers().then(res => {
                 res.forEach(async function (server, index) {
-                    console.log('Server:'+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
+                    console.log('Server: '+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
 
                     // Check if server is allowed to constantly update
                     if (!server.constantly_update || server.location.length < 1 || server.updated_at == null) {
@@ -168,22 +170,16 @@ class RonaBot {
                     }
 
                     // Check if any server requires notification (get updated_at and interval)
-                    let updatedAt = moment(server.updated_at);
-                    let currentTime = moment(new Date());
-                    let nextRunDate = currentTime;
+                    //let updatedAt = DateTime.fromFormat(server.updated_at);
+                    let updatedAt = server.updated_at.toISOString()
+                    let currentTime = DateTime.now().toISO();
+                    let nextRunDate;
                     let locations = server.location;
                     let notify = false;
 
-                    // Check server mode and update the datetime accordingly
-                    if ((server.mode === 'scheduled') && currentTime >= updatedAt) {
-                        notify = true;
-                        nextRunDate = moment(updatedAt).add(1, 'days');
-                    } else if((server.mode === 'repeating') && currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
-                        notify = true;
-                    }
+                    console.log(`Updated at: ${updatedAt}, current time: ${currentTime}`);
 
-                    // Check if notify is a go
-                    if (notify) {
+                    if ((server.mode === 'scheduled') && currentTime >= updatedAt) {
                         locations.forEach(function (location) {
                             // Get the statistics
                             Statistics.read(location).then(res => {
@@ -212,7 +208,42 @@ class RonaBot {
                             });
                         });
 
-                        Server.update(server.server_id, {updated_at: nextRunDate});
+                        nextRunDate = DateTime.fromISO(updatedAt).plus({days: 1}).toISO();
+                        console.log(nextRunDate);
+
+                    } else if((server.mode === 'repeating') && DateTime.fromISO(currentTime).diff(DateTime.fromISO(updatedAt), 'minutes') >= server.update_interval) {
+                        locations.forEach(function (location) {
+                            // Get the statistics
+                            Statistics.read(location).then(res => {
+                                const updateData = res;
+
+                                const fields = {
+                                    title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
+                                    fields: [
+                                        {name: 'New local cases', value: updateData.new_lcases, inline: true},
+                                        {name: 'New overseas cases', value: updateData.new_ocases, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                        {name: 'Total local cases', value: updateData.total_lcases, inline: true},
+                                        {name: 'Total overseas cases', value: updateData.total_ocases, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                        {name: 'Active cases', value: updateData.active_cases, inline: true},
+                                        {name: 'Deaths', value: updateData.deaths, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                        {name: 'Tests', value: updateData.tests, inline: true},
+                                        {name: 'Vaccinations', value: updateData.vaccinations, inline: true},
+                                        {name: '\u200b', value: '\u200b', inline: true},
+                                    ]
+                                };
+
+                                // Send the message to the specific server channel
+                                client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
+                            });
+                        });
+
+                        nextRunDate = currentTime;
+                        console.log(nextRunDate);
+                    } else {
+                        console.log("Something happened...");
                     }
                 });
             });

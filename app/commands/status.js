@@ -1,6 +1,7 @@
 const moment = require('moment');
 const Server = require('../controllers/server');
 const MessagingService = require('../services/messagingService');
+const { DateTime } = require('luxon');
 
 /**
  * Returns locations that are added to a specific Discord server
@@ -13,11 +14,10 @@ module.exports = {
     execute(message, args) {
         let serverId = message.guild.id;
         let updateChannel;
+        
 
         async function getStatus() {
-            let server = await Server.getServer(serverId);
-            let updatedAt;
-
+            let doc = await Server.getDoc(serverId);
             try {
                 updateChannel = message.guild.channels.cache.get(server.update_channel).name;
             }
@@ -46,6 +46,7 @@ module.exports = {
             };
 
             message.channel.send({embed: MessagingService.getMessage('status', fields)});
+            
         }
 
         getStatus();

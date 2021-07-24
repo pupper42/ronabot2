@@ -1,7 +1,7 @@
 const Server = require('../controllers/server');
 const PermissionsService = require('../services/permissionsService');
 const MessagingService = require('../services/messagingService');
-const moment = require('moment');
+const { DateTime } = require("luxon");
 
 /**
  * Inits the bot to a specific channel to output messages to
@@ -52,25 +52,54 @@ module.exports = {
                 }
             } else if (mode === 'scheduled') {
                 try {
-                    let timeDay =  moment(time, 'HH:mm').toISOString();
+                    let timeDay = DateTime.fromFormat(time, 'H:mm');
+                    let currentTime = DateTime.now();
+
+                    console.log(`init.js - timeDay: ${timeDay}, currentTime: ${currentTime}`);
 
                     if (timeDay) {
-                        await Server.update(serverId,
-                            {
-                                constantly_update: true,
-                                update_channel: channelId,
-                                update_interval: time,
-                                updated_at: timeDay,
-                                mode: 'scheduled'
-                            }
-                        );
+                        if (timeDay < currentTime) {
 
-                        const fields = {
-                            title: `Using '${channelName}' for auto updates`,
-                            description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
-                        };
+                            await Server.update(serverId,
+                                {
+                                    update_channel: channelId,
+                                    updated_at: timeDay,
+                                    mode: 'scheduled',
+                                    constantly_update: true
+                                }
+                            );
 
-                        await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
+                            const fields = {
+                                title: `Using '${channelName}' for auto updates`,
+                                description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
+                            };
+    
+                            await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
+                        
+
+                        } else if (timeDay >= currentTime) {
+
+                            await Server.update(serverId,
+                                {
+                                    update_channel: channelId,
+                                    updated_at: timeDay,
+                                    mode: 'scheduled',
+                                    constantly_update: true
+                                }
+                            );
+
+
+                            const fields = {
+                                title: `Using '${channelName}' for auto updates`,
+                                description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
+                            };
+    
+                            await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
+
+                        } else {
+                            await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
+                        }
+
                     } else {
                         await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
                     }
