@@ -13,10 +13,10 @@ module.exports = {
     execute(message, args) {
         let serverId = message.guild.id;
         let updateChannel;
-        
 
         async function getStatus() {
-            let doc = await Server.getDoc(serverId);
+            let server = await Server.getServer(serverId);
+
             try {
                 updateChannel = message.guild.channels.cache.get(server.update_channel).name;
             }
@@ -28,7 +28,7 @@ module.exports = {
             if (server.updated_at == null) {
                 updatedAt = 'N/A';
             } else {
-                updatedAt = DateTime.fromISO(server.updated_at).toFormat('DD/MM/YYYY HH:mm').toString() + ' GMT+0';
+                updatedAt = DateTime.fromISO(server.updated_at.toISOString()).toFormat('dd/MM/y HH:mm').toString() + ' GMT+0';
             }
 
             // Compile the fields to be sent to the MessagingService
