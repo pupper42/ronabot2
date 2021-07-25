@@ -33,7 +33,7 @@ module.exports = {
                                 constantly_update: true,
                                 update_channel: channelId,
                                 update_interval: timeMin,
-                                updated_at: moment(new Date()),
+                                updated_at: DateTime.now(),
                                 mode: 'repeating',
                             }
                         );
