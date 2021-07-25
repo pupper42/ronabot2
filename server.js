@@ -1,9 +1,7 @@
 /**
  * Welcome to RonaBot v2!
  */
-//const moment = require('moment');
-const { DateTime } = require("luxon");
-const mongoose = require('mongoose');
+// System
 const fs = require('fs');
 const path = require('path');
 
@@ -11,7 +9,8 @@ const path = require('path');
 const config = require('./app/config');
 
 // Vendors
-const moment = require('moment');
+const { DateTime } = require('luxon');
+const mongoose = require('mongoose');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const Agenda = require('agenda');

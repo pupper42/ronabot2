@@ -1,4 +1,3 @@
-const moment = require('moment');
 const Server = require('../controllers/server');
 const MessagingService = require('../services/messagingService');
 const { DateTime } = require('luxon');
@@ -29,7 +28,7 @@ module.exports = {
             if (server.updated_at == null) {
                 updatedAt = 'N/A';
             } else {
-                updatedAt = moment(server.updated_at).format('DD/MM/YYYY HH:mm').toString() + ' GMT+0';
+                updatedAt = DateTime.fromISO(server.updated_at).toFormat('DD/MM/YYYY HH:mm').toString() + ' GMT+0';
             }
 
             // Compile the fields to be sent to the MessagingService
