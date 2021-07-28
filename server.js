@@ -182,7 +182,7 @@ class RonaBot {
                         notify = true;
                     }
 
-                    // Check if notify is a go
+                    // Check if notify is a `go
                     if (notify) {
                         locations.forEach(function (location) {
                             // Get the statistics
