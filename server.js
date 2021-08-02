@@ -162,58 +162,56 @@ class RonaBot {
                     console.log('Server: '+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
 
                     // Check if server is allowed to constantly update
-                    if (!server.constantly_update || server.location.length < 1 || server.updated_at == null) {
+                    if (!server.constantly_update || server.location.length < 1 || server.updated_at == null || server.mode == null) {
                         return;
                     }
 
                     // Check if any server requires notification (get updated_at and interval)
                     //let updatedAt = DateTime.fromFormat(server.updated_at);
-                    let updatedAt = DateTime.fromISO(server.updated_at.toISOString());
-                    let currentTime = DateTime.now().toISO();
+                    let updatedAt = DateTime.fromISO(server.updated_at);
+                    let currentTime = DateTime.now();
                     let nextRunDate;
                     let locations = server.location;
-                    let notify = false;
 
                     // Check server mode and update the datetime accordingly
                     if ((server.mode === 'scheduled') && currentTime >= updatedAt) {
-                        notify = true;
                         nextRunDate = updatedAt.plus({ days: 1 }).toISO();
                     } else if((server.mode === 'repeating') && DateTime.fromISO(currentTime).diff(updatedAt, 'minutes') >= server.update_interval) {
-                        notify = true;
+                        nextRunDate = currentTime.toISO();
+                    } else {
+                        return;
                     }
 
                     // Check if notify is a `go
-                    if (notify) {
-                        locations.forEach(function (location) {
-                            // Get the statistics
-                            Statistics.read(location).then(res => {
-                                const updateData = res;
+                    locations.forEach(function (location) {
+                        // Get the statistics
+                        Statistics.read(location).then(res => {
+                            const updateData = res;
 
-                                const fields = {
-                                    title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
-                                    fields: [
-                                        {name: 'New local cases', value: updateData.new_lcases, inline: true},
-                                        {name: 'New overseas cases', value: updateData.new_ocases, inline: true},
-                                        {name: '\u200b', value: '\u200b', inline: true},
-                                        {name: 'Total local cases', value: updateData.total_lcases, inline: true},
-                                        {name: 'Total overseas cases', value: updateData.total_ocases, inline: true},
-                                        {name: '\u200b', value: '\u200b', inline: true},
-                                        {name: 'Active cases', value: updateData.active_cases, inline: true},
-                                        {name: 'Deaths', value: updateData.deaths, inline: true},
-                                        {name: '\u200b', value: '\u200b', inline: true},
-                                        {name: 'Tests', value: updateData.tests, inline: true},
-                                        {name: 'Vaccinations', value: updateData.vaccinations, inline: true},
-                                        {name: '\u200b', value: '\u200b', inline: true},
-                                    ]
-                                };
+                            const fields = {
+                                title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
+                                fields: [
+                                    {name: 'New local cases', value: updateData.new_lcases, inline: true},
+                                    {name: 'New overseas cases', value: updateData.new_ocases, inline: true},
+                                    {name: '\u200b', value: '\u200b', inline: true},
+                                    {name: 'Total local cases', value: updateData.total_lcases, inline: true},
+                                    {name: 'Total overseas cases', value: updateData.total_ocases, inline: true},
+                                    {name: '\u200b', value: '\u200b', inline: true},
+                                    {name: 'Active cases', value: updateData.active_cases, inline: true},
+                                    {name: 'Deaths', value: updateData.deaths, inline: true},
+                                    {name: '\u200b', value: '\u200b', inline: true},
+                                    {name: 'Tests', value: updateData.tests, inline: true},
+                                    {name: 'Vaccinations', value: updateData.vaccinations, inline: true},
+                                    {name: '\u200b', value: '\u200b', inline: true},
+                                ]
+                            };
 
-                                // Send the message to the specific server channel
-                                client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
-                            });
+                            // Send the message to the specific server channel
+                            client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
                         });
+                    });
 
-                        Server.update(server.server_id, {updated_at: nextRunDate});
-                    }
+                    Server.update(server.server_id, {updated_at: nextRunDate});
                 });
             });
         });

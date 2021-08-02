@@ -60,7 +60,7 @@ module.exports = {
                     await Server.update(serverId,
                         {
                             update_channel: channelId,
-                            updated_at: timeDay,
+                            updated_at: timeDay.toISO(),
                             mode: 'scheduled',
                             constantly_update: true
                         }
