@@ -25,7 +25,7 @@ module.exports = {
         async function init(mode = '', time = 0) {
             if (mode === 'repeating') {
                 try {
-                    let timeMin = parseFloat(time);
+                    let timeMin = parseInt(time);
 
                     if (timeMin >=1 && timeMin <= 4320) {
                         await Server.update(serverId,
@@ -33,7 +33,7 @@ module.exports = {
                                 constantly_update: true,
                                 update_channel: channelId,
                                 update_interval: timeMin,
-                                updated_at: DateTime.now().toISO(),
+                                updated_at: DateTime.now().plus({ minutes: timeMin }).toISO(),
                                 mode: 'repeating',
                             }
                         );
