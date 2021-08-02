@@ -28,7 +28,7 @@ module.exports = {
             if (server.updated_at == null) {
                 updatedAt = 'N/A';
             } else {
-                updatedAt = DateTime.fromISO(server.updated_at).toFormat('dd/MM/y HH:mm').toString() + ' GMT+0';
+                updatedAt = DateTime.fromISO(server.updated_at.toISOString()).toFormat('dd/MM/y HH:mm').toString() + ' GMT+0';
             }
 
             // Compile the fields to be sent to the MessagingService
@@ -39,7 +39,7 @@ module.exports = {
                     {name: 'Constantly update?', value: server.constantly_update},
                     {name: 'Update interval', value: `${server.update_interval} minutes`},
                     {name: 'Update channel', value: updateChannel},
-                    {name: (server.mode === 'scheduled') ? "Next update" : "Last updated", value: updatedAt},
+                    {name: "Next update", value: updatedAt},
                     {name: 'Ping', value: `:hourglass: ${Date.now() - message.createdTimestamp}ms, :stopwatch: ${Math.round(message.client.ws.ping)}ms`}
                 ]
             };
