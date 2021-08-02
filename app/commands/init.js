@@ -33,7 +33,7 @@ module.exports = {
                                 constantly_update: true,
                                 update_channel: channelId,
                                 update_interval: timeMin,
-                                updated_at: DateTime.now(),
+                                updated_at: DateTime.now().toISO(),
                                 mode: 'repeating',
                             }
                         );
@@ -58,47 +58,21 @@ module.exports = {
                     console.log(`init.js - timeDay: ${timeDay}, currentTime: ${currentTime}`);
 
                     if (timeDay) {
-                        if (timeDay < currentTime) {
+                        await Server.update(serverId,
+                            {
+                                update_channel: channelId,
+                                updated_at: timeDay,
+                                mode: 'scheduled',
+                                constantly_update: true
+                            }
+                        );
 
-                            await Server.update(serverId,
-                                {
-                                    update_channel: channelId,
-                                    updated_at: timeDay,
-                                    mode: 'scheduled',
-                                    constantly_update: true
-                                }
-                            );
+                        const fields = {
+                            title: `Using '${channelName}' for auto updates`,
+                            description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
+                        };
 
-                            const fields = {
-                                title: `Using '${channelName}' for auto updates`,
-                                description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
-                            };
-    
-                            await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
-                        
-
-                        } else if (timeDay >= currentTime) {
-
-                            await Server.update(serverId,
-                                {
-                                    update_channel: channelId,
-                                    updated_at: timeDay,
-                                    mode: 'scheduled',
-                                    constantly_update: true
-                                }
-                            );
-
-
-                            const fields = {
-                                title: `Using '${channelName}' for auto updates`,
-                                description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
-                            };
-    
-                            await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
-
-                        } else {
-                            await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
-                        }
+                        await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
 
                     } else {
                         await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
