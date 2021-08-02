@@ -131,7 +131,7 @@ class RonaBot {
 
         // Define the job
         agenda.define('get latest statistics', async job => {
-            job.repeatEvery('15 minutes');
+            job.repeatEvery('60 minutes');
 
             // Scrape website data every 15 minutes
             // Grab all locations in database
