@@ -19,7 +19,7 @@ module.exports = {
         let time = args[1];
 
         if (!PermissionsService.checkPermissions(message)) {
-            return
+            return;
         }
 
         async function init(mode = '', time = 0) {
@@ -57,26 +57,21 @@ module.exports = {
 
                     console.log(`init.js - timeDay: ${timeDay}, currentTime: ${currentTime}`);
 
-                    if (timeDay) {
-                        await Server.update(serverId,
-                            {
-                                update_channel: channelId,
-                                updated_at: timeDay,
-                                mode: 'scheduled',
-                                constantly_update: true
-                            }
-                        );
+                    await Server.update(serverId,
+                        {
+                            update_channel: channelId,
+                            updated_at: timeDay,
+                            mode: 'scheduled',
+                            constantly_update: true
+                        }
+                    );
 
-                        const fields = {
-                            title: `Using '${channelName}' for auto updates`,
-                            description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
-                        };
+                    const fields = {
+                        title: `Using '${channelName}' for auto updates`,
+                        description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/rb toggle off\``,
+                    };
 
-                        await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
-
-                    } else {
-                        await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
-                    }
+                    await message.channel.send({embed: MessagingService.getMessage('autoUpdates', fields)});
                 } catch {
                     await message.channel.send({embed: MessagingService.getMessage('timeError24h')});
                 }

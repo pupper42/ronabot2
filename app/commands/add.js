@@ -16,7 +16,7 @@ module.exports = {
         let newLocation = args.join(" ");
 
         if (!PermissionsService.checkPermissions(message)) {
-            return
+            return;
         }
 
         // TODO: Hard coded locations, change later cant be bothered doing it now lol

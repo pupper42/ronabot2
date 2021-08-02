@@ -15,7 +15,7 @@ module.exports = {
         let location = args[0];
 
         if (!PermissionsService.checkPermissions(message)) {
-            return
+            return;
         }
 
         async function removeLocation() {

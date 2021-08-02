@@ -14,7 +14,7 @@ module.exports = {
         let serverId = message.guild.id;
 
         if (!PermissionsService.checkPermissions(message)) {
-            return
+            return;
         }
 
         async function toggle(arg) {
