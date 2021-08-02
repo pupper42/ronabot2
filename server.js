@@ -162,13 +162,13 @@ class RonaBot {
                     console.log('Server: '+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
 
                     // Check if server is allowed to constantly update
-                    if (!server.constantly_update || server.location.length < 1 || server.updated_at == null || server.mode == null) {
+                    if (!server.constantly_update || server.location.length < 1 || server.updated_at == null || server.mode == null || !server.update_channel) {
                         return;
                     }
 
                     // Check if any server requires notification (get updated_at and interval)
                     //let updatedAt = DateTime.fromFormat(server.updated_at);
-                    let updatedAt = DateTime.fromISO(server.updated_at);
+                    let updatedAt = DateTime.fromISO(server.updated_at.toISOString());
                     let currentTime = DateTime.now();
                     let nextRunDate;
                     let locations = server.location;
@@ -207,7 +207,11 @@ class RonaBot {
                             };
 
                             // Send the message to the specific server channel
-                            client.channels.cache.get(server.update_channel).send({embed:  MessagingService.getMessage('locationStats', fields)});
+                            try {
+                                client.channels.cache.get(server.update_channel).send({embed: MessagingService.getMessage('locationStats', fields)});
+                            } catch (e) {
+                                console.log(e);
+                            }
                         });
                     });
 
