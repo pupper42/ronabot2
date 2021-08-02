@@ -28,7 +28,7 @@ module.exports = {
             if (server.updated_at == null) {
                 updatedAt = 'N/A';
             } else {
-                updatedAt = DateTime.fromISO(server.updated_at.toISOString()).toFormat('dd/MM/y HH:mm').toString() + ' GMT+0';
+                updatedAt = DateTime.fromISO(server.updated_at).toFormat('dd/MM/y HH:mm').toString() + ' GMT+0';
             }
 
             // Compile the fields to be sent to the MessagingService

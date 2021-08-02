@@ -176,7 +176,7 @@ class RonaBot {
                     // Check server mode and update the datetime accordingly
                     if ((server.mode === 'scheduled') && currentTime >= updatedAt) {
                         nextRunDate = updatedAt.plus({ days: 1 }).toISO();
-                    } else if((server.mode === 'repeating') && DateTime.fromISO(currentTime).diff(updatedAt, 'minutes') >= server.update_interval) {
+                    } else if((server.mode === 'repeating') && currentTime.diff(updatedAt, 'minutes') >= server.update_interval) {
                         nextRunDate = currentTime.toISO();
                     } else {
                         return;
