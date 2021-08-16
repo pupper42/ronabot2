@@ -1,4 +1,5 @@
 const MessagingService = require('../services/messagingService');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 /**
  * Returns help text
@@ -6,9 +7,10 @@ const MessagingService = require('../services/messagingService');
  * @type {{name: string, description: string, execute(*): void}}
  */
 module.exports = {
-    name: 'help',
-    description: 'Return list of commands available for use',
-    execute(message) {
-        message.channel.send({embed: MessagingService.getMessage('help')});
+    data: new SlashCommandBuilder()
+        .setName('help')
+        .setDescription('Return list of commands available for use'),
+    async execute(interaction) {
+        await interaction.reply({embed: MessagingService.getMessage('help')});
     },
 };

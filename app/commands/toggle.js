@@ -1,6 +1,7 @@
 const Server = require('../controllers/server');
 const PermissionsService = require('../services/permissionsService');
 const MessagingService = require('../services/messagingService');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 /**
  * Enable or disable the bot to use automatic notification updates
@@ -8,27 +9,24 @@ const MessagingService = require('../services/messagingService');
  * @type {{name: string, description: string, execute(*): void}}
  */
 module.exports = {
-    name: 'toggle',
-    description: 'Toggle off or on the bot alerts',
-    execute(message, args) {
-        let serverId = message.guild.id;
+    data: new SlashCommandBuilder()
+        .setName('toggle')
+        .setDescription('Toggle off or on the bot alerts'),
+    async execute(interaction, args) {
+        let serverId = interaction.guild.id;
 
-        if (!PermissionsService.checkPermissions(message)) {
+        if (!PermissionsService.checkPermissions(interaction)) {
             return;
         }
 
-        async function toggle(arg) {
-            if (arg[0] === "on") {
-                await Server.update(serverId, {'constantly_update': true});
-                await message.channel.send({embed: MessagingService.getMessage('toggleOn')});
-            } else if (arg[0] === "off") {
-                await Server.update(serverId, {'constantly_update': false});
-                await message.channel.send({embed: MessagingService.getMessage('toggleOff')});
-            } else {
-                await message.channel.send({embed: MessagingService.getMessage('toggleError')});
-            }
+        if (arg[0] === "on") {
+            await Server.update(serverId, {'constantly_update': true});
+            await interaction.reply({embed: MessagingService.getMessage('toggleOn')});
+        } else if (arg[0] === "off") {
+            await Server.update(serverId, {'constantly_update': false});
+            await interaction.reply({embed: MessagingService.getMessage('toggleOff')});
+        } else {
+            await interaction.reply({embed: MessagingService.getMessage('toggleError')});
         }
-
-        toggle(args);
     },
 };

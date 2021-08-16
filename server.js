@@ -11,8 +11,10 @@ const config = require('./app/config');
 // Vendors
 const { DateTime } = require('luxon');
 const mongoose = require('mongoose');
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const { Client, Collection, Intents } = require('discord.js');
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
 const Agenda = require('agenda');
 
 // Controllers
@@ -59,26 +61,28 @@ class RonaBot {
      * Initialise the Discord
      */
     initDiscord() {
-        client.on('ready', () => {
+        const commands = [];
+
+        client.once('ready', () => {
             console.log(`Logged in as ${client.user.tag}`);
             client.guilds.cache.forEach(guild => {
                 console.log(`${guild.name} | ${guild.id}`);
             });
-            client.user.setActivity(" '/rb help'", {type: "LISTENING"});
+            client.user.setActivity(" '"+config.discord.prefix+"'", {type: "LISTENING"});
         });
 
-
         // Load the Discord listener
-        client.commands = new Discord.Collection();
+        client.commands = new Collection();
 
-        // Retrieve all the commands (as files)
+        // Retrieve all the commands (as files) and also register the commands
         const commandFiles = fs.readdirSync(path.resolve(__dirname, './app/commands')).filter(file => file.endsWith('.js'));
 
         for (const file of commandFiles) {
             const command = require(path.resolve(__dirname, `./app/commands/${file}`));
             // set a new item in the Collection
             // with the key as the command name and the value as the exported module
-            client.commands.set(command.name, command);
+            client.commands.set(command.data.name, command);
+            commands.push(command.data.toJSON());
         }
 
         // Listen to when the bot joins a new server
@@ -87,30 +91,43 @@ class RonaBot {
             Server.create(guild.id, guild.name);
         });
 
+        // Set the commands to the Discord server
+        const rest = new REST({ version: '9' }).setToken(config.discord.token);
+
+        // TODO: Change this into a loop to register all the server_id
+        (async () => {
+            try {
+                console.log('Started refreshing application (/) commands.');
+
+                await rest.put(
+                    Routes.applicationGuildCommands('844123673257443338', '837614387803193344'),
+                    { body: commands },
+                );
+
+                console.log('Successfully reloaded application (/) commands.');
+            } catch (error) {
+                console.error(error);
+            }
+        })();
+
         // Listen to Discord messages
-        client.on('message', message => {
-            let lowercaseMessage = message.content.toLowerCase();
+        client.on('interactionCreate', async interaction => {
+            if (!interaction.isCommand()) return;
 
-            const commandText = lowercaseMessage.split(' ', 1);
-
-            // Check if bot prefix matches exactly as first message substring parsed
-            if ((commandText[0] !== config.discord.prefix) || message.author.bot) return;
-
-            const args = lowercaseMessage.slice(config.discord.prefix.length).trim().split(/ +/);
-            const command = args.shift().toLowerCase();
+            const { commandName } = interaction;
 
             // If the user did not provide a command
-            if (!client.commands.has(command)) {
-                message.reply('please give me a valid command! See `'+config.discord.prefix+' help` for list of commands.');
+            if (!client.commands.has(commandName)) {
+                await interaction.reply({content: 'please give me a valid command! See `'+config.discord.prefix+' help` for list of commands.'});
                 return;
             }
 
             // Attempt to execute the command
             try {
-                client.commands.get(command).execute(message, args);
+                client.commands.get(commandName).execute(interaction, args);
             } catch (error) {
                 console.error(error);
-                message.reply('there was an error trying to execute that command!');
+                await interaction.reply({content: 'There was an error trying to execute that command!'});
             }
         });
 

@@ -1,4 +1,5 @@
 const MessagingService = require('../services/messagingService');
+const {SlashCommandBuilder} = require("@discordjs/builders");
 
 /**
  * Ardex :heart:
@@ -7,13 +8,10 @@ const MessagingService = require('../services/messagingService');
  * @type {{author: {icon_url: string, name: string}, name: string, description: string, execute(*): void}}
  */
 module.exports = {
-    name: 'ardex',
-    author: {
-        name: 'RonaBot v2',
-        icon_url: 'https://i.imgur.com/2ojyW5z.png'
-    },
-    description: 'Ardex! The bot loves you!',
-    execute(message) {
-        message.channel.send({embed: MessagingService.getMessage('ardex')});
+    data: new SlashCommandBuilder()
+        .setName('ardex')
+        .setDescription('Ardex! The bot loves you!'),
+    async execute(interaction, args) {
+        await interaction.reply({embed: MessagingService.getMessage('ardex')});
     },
 };

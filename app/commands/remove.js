@@ -1,6 +1,7 @@
 const Server = require('../controllers/server');
 const PermissionsService = require('../services/permissionsService');
 const MessagingService = require('../services/messagingService');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 /**
  * Removes a location from the server
@@ -8,30 +9,27 @@ const MessagingService = require('../services/messagingService');
  * @type {{name: string, description: string, execute(*, *): void}}
  */
 module.exports = {
-    name: 'remove',
-    description: 'Remove a location',
-    execute(message, args) {
-        let serverId = message.guild.id;
+    data: new SlashCommandBuilder()
+        .setName('remove')
+        .setDescription('Remove a location'),
+    async execute(interaction, args) {
+        let serverId = interaction.guild.id;
         let location = args[0];
 
-        if (!PermissionsService.checkPermissions(message)) {
+        if (!PermissionsService.checkPermissions(interaction)) {
             return;
         }
 
-        async function removeLocation() {
-            try {
-                await Server.removeLocation(serverId, location);
-                const fields = {
-                    fields: [
-                        {name: 'Removed', value: location}
-                    ]
-                };
-                await message.channel.send({embed: MessagingService.getMessage('removedLocation', fields)});
-            } catch(e) {
-                console.log(e);
-            }
+        try {
+            await Server.removeLocation(serverId, location);
+            const fields = {
+                fields: [
+                    {name: 'Removed', value: location}
+                ]
+            };
+            await interaction.reply({embed: MessagingService.getMessage('removedLocation', fields)});
+        } catch(e) {
+            console.log(e);
         }
-
-        removeLocation();
     },
 };
