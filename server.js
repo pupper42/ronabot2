@@ -68,7 +68,7 @@ class RonaBot {
             client.guilds.cache.forEach(guild => {
                 console.log(`${guild.name} | ${guild.id}`);
             });
-            client.user.setActivity(" '"+config.discord.prefix+"'", {type: "LISTENING"});
+            client.user.setActivity(" '/help'", {type: "LISTENING"});
         });
 
         // Load the Discord listener
@@ -82,7 +82,9 @@ class RonaBot {
             // set a new item in the Collection
             // with the key as the command name and the value as the exported module
             client.commands.set(command.data.name, command);
-            commands.push(command.data.toJSON());
+            if (command.data.name !== 'ardex') {
+                commands.push(command.data.toJSON());
+            }
         }
 
         // Listen to when the bot joins a new server
@@ -100,7 +102,7 @@ class RonaBot {
                 console.log('Started refreshing application (/) commands.');
 
                 await rest.put(
-                    Routes.applicationGuildCommands('844123673257443338', '837614387803193344'),
+                    Routes.applicationGuildCommands(config.discord.client_id, '837614387803193344'),
                     { body: commands },
                 );
 
@@ -118,13 +120,13 @@ class RonaBot {
 
             // If the user did not provide a command
             if (!client.commands.has(commandName)) {
-                await interaction.reply({content: 'please give me a valid command! See `'+config.discord.prefix+' help` for list of commands.'});
+                await interaction.reply({content: 'please give me a valid command! See `/help` for list of commands.'});
                 return;
             }
 
             // Attempt to execute the command
             try {
-                client.commands.get(commandName).execute(interaction, args);
+                client.commands.get(commandName).execute(interaction);
             } catch (error) {
                 console.error(error);
                 await interaction.reply({content: 'There was an error trying to execute that command!'});

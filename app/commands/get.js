@@ -12,10 +12,14 @@ const {SlashCommandBuilder} = require("@discordjs/builders");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('get')
-        .setDescription('Get stats for a location'),
-    async execute(interaction, args) {
+        .setDescription('Get stats for a location')
+        .addStringOption(option =>
+            option.setName('location')
+                .setDescription('Get statistics for a specified location.')
+                .setRequired(true)),
+    async execute(interaction) {
         // Also use args[0], args[1] to process the user input
-        let location = args[0];
+        let location = interaction.options.getString('location');
         let url = urlService.getUrl(location);
 
         if (!config.availableLocations.includes(location)) {

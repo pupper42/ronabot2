@@ -12,7 +12,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('status')
         .setDescription('Show current settings and ping for the server'),
-    async execute(interaction, args) {
+    async execute(interaction) {
         let serverId = message.guild.id;
         let updateChannel;
         let server = await Server.getServer(serverId);

@@ -11,18 +11,26 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('toggle')
-        .setDescription('Toggle off or on the bot alerts'),
-    async execute(interaction, args) {
+        .setDescription('Toggle off or on the bot alerts')
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('on')
+                .setDescription('Toggle notifications on.'))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('off')
+                .setDescription('Toggle notifications off.')),
+    async execute(interaction) {
         let serverId = interaction.guild.id;
 
         if (!PermissionsService.checkPermissions(interaction)) {
             return;
         }
 
-        if (arg[0] === "on") {
+        if (interaction.options.getSubcommand() === "on") {
             await Server.update(serverId, {'constantly_update': true});
             await interaction.reply({embed: MessagingService.getMessage('toggleOn')});
-        } else if (arg[0] === "off") {
+        } else if (interaction.options.getSubcommand() === "off") {
             await Server.update(serverId, {'constantly_update': false});
             await interaction.reply({embed: MessagingService.getMessage('toggleOff')});
         } else {

@@ -11,10 +11,14 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('remove')
-        .setDescription('Remove a location'),
-    async execute(interaction, args) {
+        .setDescription('Remove a location')
+        .addStringOption(option =>
+            option.setName('location')
+                .setDescription('The location you want to remove.')
+                .setRequired(true)),
+    async execute(interaction) {
         let serverId = interaction.guild.id;
-        let location = args[0];
+        let location = interaction.options.getString('location');
 
         if (!PermissionsService.checkPermissions(interaction)) {
             return;

@@ -12,10 +12,14 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('add')
-        .setDescription('Add a location'),
+        .setDescription('Add a location')
+        .addStringOption(option =>
+            option.setName('location')
+                .setDescription('The location you want to add.')
+                .setRequired(true)),
     async execute(interaction) {
         let messageServer = interaction.guild.id;
-        let newLocation = args.join(" ");
+        let newLocation = interaction.options.getString('location');
 
         if (!PermissionsService.checkPermissions(interaction)) {
             return;

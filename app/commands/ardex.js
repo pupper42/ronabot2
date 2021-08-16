@@ -11,7 +11,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('ardex')
         .setDescription('Ardex! The bot loves you!'),
-    async execute(interaction, args) {
+    async execute(interaction) {
         await interaction.reply({embed: MessagingService.getMessage('ardex')});
     },
 };
