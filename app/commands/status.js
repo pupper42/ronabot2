@@ -34,9 +34,9 @@ module.exports = {
         // Compile the fields to be sent to the MessagingService
         const fields = {
             fields: [
-                {name: 'Locations', value: (server.location.length === 0) ? "Not set" : server.location},
+                {name: 'Locations', value: (server.location.length === 0) ? "Not set" : `${server.location}`},
                 {name: 'Mode', value: server.mode},
-                {name: 'Constantly update?', value: server.constantly_update},
+                {name: 'Constantly update?', value: `${server.constantly_update}`},
                 {name: 'Update interval', value: `${server.update_interval} minutes`},
                 {name: 'Update channel', value: updateChannel},
                 {name: "Next update", value: updatedAt},
@@ -44,6 +44,6 @@ module.exports = {
             ]
         };
 
-        await interaction.reply({embed: MessagingService.getMessage('status', fields)});
+        await interaction.reply({embeds: [MessagingService.getMessage('status', fields)]});
     },
 };

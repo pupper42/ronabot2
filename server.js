@@ -82,9 +82,7 @@ class RonaBot {
             // set a new item in the Collection
             // with the key as the command name and the value as the exported module
             client.commands.set(command.data.name, command);
-            if (command.data.name !== 'ardex') {
-                commands.push(command.data.toJSON());
-            }
+            commands.push(command.data.toJSON());
         }
 
         // Listen to when the bot joins a new server
@@ -210,24 +208,24 @@ class RonaBot {
                             const fields = {
                                 title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
                                 fields: [
-                                    {name: 'New local cases', value: updateData.new_lcases, inline: true},
-                                    {name: 'New overseas cases', value: updateData.new_ocases, inline: true},
+                                    {name: 'New local cases', value: `${updateData.new_lcases}`, inline: true},
+                                    {name: 'New overseas cases', value: `${updateData.new_ocases}`, inline: true},
                                     {name: '\u200b', value: '\u200b', inline: true},
-                                    {name: 'Total local cases', value: updateData.total_lcases, inline: true},
-                                    {name: 'Total overseas cases', value: updateData.total_ocases, inline: true},
+                                    {name: 'Total local cases', value: `${updateData.total_lcases}`, inline: true},
+                                    {name: 'Total overseas cases', value: `${updateData.total_ocases}`, inline: true},
                                     {name: '\u200b', value: '\u200b', inline: true},
-                                    {name: 'Active cases', value: updateData.active_cases, inline: true},
-                                    {name: 'Deaths', value: updateData.deaths, inline: true},
+                                    {name: 'Active cases', value: `${updateData.active_cases}`, inline: true},
+                                    {name: 'Deaths', value: `${updateData.deaths}`, inline: true},
                                     {name: '\u200b', value: '\u200b', inline: true},
-                                    {name: 'Tests', value: updateData.tests, inline: true},
-                                    {name: 'Vaccinations', value: updateData.vaccinations, inline: true},
+                                    {name: 'Tests', value: `${updateData.tests}`, inline: true},
+                                    {name: 'Vaccinations', value: `${updateData.vaccinations}`, inline: true},
                                     {name: '\u200b', value: '\u200b', inline: true},
                                 ]
                             };
 
                             // Send the message to the specific server channel
                             try {
-                                client.channels.cache.get(server.update_channel).send({embed: MessagingService.getMessage('locationStats', fields)});
+                                client.channels.cache.get(server.update_channel).send({embeds: [MessagingService.getMessage('locationStats', fields)]});
                             } catch (e) {
                                 console.log(e);
                             }
