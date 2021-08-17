@@ -94,21 +94,23 @@ class RonaBot {
         // Set the commands to the Discord server
         const rest = new REST({ version: '9' }).setToken(config.discord.token);
 
-        // TODO: Change this into a loop to register all the server_id
-        (async () => {
-            try {
-                console.log('Started refreshing application (/) commands.');
+        // Get each server and register the slash commands
+        Server.getServers().then(res => {
+            res.forEach(async function (server) {
+                try {
+                    console.log('Started refreshing application (/) commands.');
 
-                await rest.put(
-                    Routes.applicationGuildCommands(config.discord.client_id, '837614387803193344'),
-                    { body: commands },
-                );
+                    await rest.put(
+                        Routes.applicationGuildCommands(config.discord.client_id, `${server.server_id}`),
+                        { body: commands },
+                    );
 
-                console.log('Successfully reloaded application (/) commands.');
-            } catch (error) {
-                console.error(error);
-            }
-        })();
+                    console.log('Successfully reloaded application (/) commands.');
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+        });
 
         // Listen to Discord messages
         client.on('interactionCreate', async interaction => {
@@ -153,7 +155,7 @@ class RonaBot {
             // Scrape website data every 15 minutes
             // Grab all locations in database
             Statistics.all().then(res => {
-                res.forEach(async function (location, index) {
+                res.forEach(async function (location) {
                     try {
                         // Get the URL
                         let url = Url.getUrl(location);
@@ -175,7 +177,7 @@ class RonaBot {
 
             // Get all servers and their intervals
             Server.getServers().then(res => {
-                res.forEach(async function (server, index) {
+                res.forEach(async function (server) {
                     console.log('Server: '+server.name+' | Constantly update: '+server.constantly_update+' | Locations: '+server.location.length);
 
                     // Check if server is allowed to constantly update
