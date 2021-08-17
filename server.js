@@ -98,14 +98,14 @@ class RonaBot {
         Server.getServers().then(res => {
             res.forEach(async function (server) {
                 try {
-                    console.log('Started refreshing application (/) commands.');
+                    console.log(`Started refreshing application (/) commands for server: ${server.name}.`);
 
                     await rest.put(
                         Routes.applicationGuildCommands(config.discord.client_id, `${server.server_id}`),
                         { body: commands },
                     );
 
-                    console.log('Successfully reloaded application (/) commands.');
+                    console.log(`Successfully reloaded application (/) commands for server: ${server.name}.`);
                 } catch (error) {
                     console.error(error);
                 }
