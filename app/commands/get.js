@@ -18,12 +18,11 @@ module.exports = {
                 .setDescription('Get statistics for a specified location.')
                 .setRequired(true)),
     async execute(interaction) {
-        // Also use args[0], args[1] to process the user input
         let location = interaction.options.getString('location');
         let url = urlService.getUrl(location);
 
         if (!config.availableLocations.includes(location)) {
-            await interaction.reply({embed: MessagingService.getMessage('invalidLocation')});
+            await interaction.reply({embeds: [MessagingService.getMessage('invalidLocation')]});
             return
         }
 
@@ -31,27 +30,27 @@ module.exports = {
             updateData = await scraper.getData(url, location);
         }
         catch {
-            await interaction.reply({embed: MessagingService.getMessage('invalidLocation')});
+            await interaction.reply({embeds: [MessagingService.getMessage('invalidLocation')]});
             return
         }
 
         const fields = {
             title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
             fields: [
-                {name: 'New local cases', value: updateData.new_lcases, inline: true},
-                {name: 'New overseas cases', value: updateData.new_ocases, inline: true},
+                {name: 'New local cases', value: `${updateData.new_lcases}`, inline: true},
+                {name: 'New overseas cases', value: `${updateData.new_ocases}`, inline: true},
                 {name: '\u200b', value: '\u200b', inline: true},
-                {name: 'Total local cases', value: updateData.total_lcases, inline: true},
-                {name: 'Total overseas cases', value: updateData.total_ocases, inline: true},
+                {name: 'Total local cases', value: `${updateData.total_lcases}`, inline: true},
+                {name: 'Total overseas cases', value: `${updateData.total_ocases}`, inline: true},
                 {name: '\u200b', value: '\u200b', inline: true},
-                {name: 'Active cases', value: updateData.active_cases, inline: true},
-                {name: 'Deaths', value: updateData.deaths, inline: true},
+                {name: 'Active cases', value: `${updateData.active_cases}`, inline: true},
+                {name: 'Deaths', value: `${updateData.deaths}`, inline: true},
                 {name: '\u200b', value: '\u200b', inline: true},
-                {name: 'Tests', value: updateData.tests, inline: true},
-                {name: 'Vaccinations', value: updateData.vaccinations, inline: true},
+                {name: 'Tests', value: `${updateData.tests}`, inline: true},
+                {name: 'Vaccinations', value: `${updateData.vaccinations}`, inline: true},
                 {name: '\u200b', value: '\u200b', inline: true},
             ]
         };
-        await interaction.reply({embed: MessagingService.getMessage('locationStats', fields)});
+        await interaction.reply({embeds: [MessagingService.getMessage('locationStats', fields)]});
     },
 };

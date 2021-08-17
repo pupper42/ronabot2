@@ -42,7 +42,7 @@ module.exports = {
 
         if (interaction.options.getSubcommand() === 'repeating') {
             try {
-                let timeMin = interaction.options.getInteger('repeating');
+                let timeMin = interaction.options.getInteger('interval');
 
                 if (timeMin >=1 && timeMin <= 4320) {
                     await Server.update(serverId,
@@ -57,19 +57,20 @@ module.exports = {
 
                     const fields = {
                         title: `Using '${channelName}' for auto updates`,
-                        description: `Set to repeating mode, will send an update every ${time} minutes. Turn off auto updates with \`/toggle off\``,
+                        description: `Set to repeating mode, will send an update every ${timeMin} minutes. Turn off auto updates with \`/toggle off\``,
                     };
 
-                    await interaction.reply({embed: MessagingService.getMessage('autoUpdates', fields)});
+                    await interaction.reply({embeds: [MessagingService.getMessage('autoUpdates', fields)]});
                 } else {
-                    await interaction.reply({embed: MessagingService.getMessage('timeError')});
+                    await interaction.reply({embeds: [MessagingService.getMessage('timeError')]});
                 }
             } catch {
-                await interaction.reply({embed: MessagingService.getMessage('timeError')});
+                await interaction.reply({embeds: [MessagingService.getMessage('timeError')]});
             }
         } else if (interaction.options.getSubcommand() === 'scheduled') {
             try {
-                let timeDay = DateTime.fromFormat(interaction.options.getString('time'), 'H:mm');
+                const time = interaction.options.getString('time');
+                let timeDay = DateTime.fromFormat(time, 'H:mm');
                 let currentTime = DateTime.now();
 
                 console.log(`init.js - timeDay: ${timeDay}, currentTime: ${currentTime}`);
@@ -88,9 +89,9 @@ module.exports = {
                     description: `Set to scheduled mode, will run at ${time} each day. Turn off auto updates with \`/toggle off\``,
                 };
 
-                await interaction.reply({embed: MessagingService.getMessage('autoUpdates', fields)});
+                await interaction.reply({embeds: [MessagingService.getMessage('autoUpdates', fields)]});
             } catch {
-                await interaction.reply({embed: MessagingService.getMessage('timeError24h')});
+                await interaction.reply({embeds: [MessagingService.getMessage('timeError24h')]});
             }
         }
     },

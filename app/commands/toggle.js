@@ -29,12 +29,12 @@ module.exports = {
 
         if (interaction.options.getSubcommand() === "on") {
             await Server.update(serverId, {'constantly_update': true});
-            await interaction.reply({embed: MessagingService.getMessage('toggleOn')});
+            await interaction.reply({embeds: [MessagingService.getMessage('toggleOn')]});
         } else if (interaction.options.getSubcommand() === "off") {
             await Server.update(serverId, {'constantly_update': false});
-            await interaction.reply({embed: MessagingService.getMessage('toggleOff')});
+            await interaction.reply({embeds: [MessagingService.getMessage('toggleOff')]});
         } else {
-            await interaction.reply({embed: MessagingService.getMessage('toggleError')});
+            await interaction.reply({embeds: [MessagingService.getMessage('toggleError')]});
         }
     },
 };

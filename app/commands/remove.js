@@ -31,7 +31,7 @@ module.exports = {
                     {name: 'Removed', value: location}
                 ]
             };
-            await interaction.reply({embed: MessagingService.getMessage('removedLocation', fields)});
+            await interaction.reply({embeds: [MessagingService.getMessage('removedLocation', fields)]});
         } catch(e) {
             console.log(e);
         }

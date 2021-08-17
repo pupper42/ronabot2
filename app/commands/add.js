@@ -27,7 +27,7 @@ module.exports = {
 
         // TODO: Hard coded locations, change later cant be bothered doing it now lol
         if (!config.availableLocations.includes(newLocation)) {
-            await interaction.reply({embed: MessagingService.getMessage('invalidLocation')});
+            await interaction.reply({embeds: [MessagingService.getMessage('invalidLocation')]});
             return
         }
 
@@ -39,6 +39,6 @@ module.exports = {
             ]
         };
 
-        await interaction.reply({embed: MessagingService.getMessage('addedLocation', fields)});
+        await interaction.reply({embeds: [MessagingService.getMessage('addedLocation', fields)]});
     },
 };

@@ -11,6 +11,6 @@ module.exports = {
         .setName('help')
         .setDescription('Return list of commands available for use'),
     async execute(interaction) {
-        await interaction.reply({embed: MessagingService.getMessage('help')});
+        await interaction.reply({embeds: [MessagingService.getMessage('help')]});
     },
 };

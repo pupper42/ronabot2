@@ -16,7 +16,6 @@ module.exports = {
         act: 'https://covidlive.com.au/act',
     },
     discord: {
-        prefix: "/rbd", // deprecated
         token: process.env.DISCORD_TOKEN,
         client_id: '844123673257443338',
         icon: 'https://i.imgur.com/2ojyW5z.png'

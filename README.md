@@ -1,7 +1,7 @@
 # RonaBot v2
 ### About
 A bot that will show COVID-19 cases in Australia at the state level. Settings are saved on MongoDB.
-Invite: https://discord.com/api/oauth2/authorize?client_id=844123673257443338&permissions=0&scope=bot
+Invite: https://discord.com/api/oauth2/authorize?client_id=844123673257443338&permissions=2147483648&scope=bot%20applications.commands
 
 ### Hosting it yourself
 You will need to create a .env file with the following values:
@@ -11,7 +11,6 @@ You will need to create a .env file with the following values:
 You will need to set up a MongoDB server somewhere and retrieve its URL and place it into the .env file.
 
 ### Commands
-Prefix: /rb
 - **add [location]** - Add a location to provide automatic updates for. Current available locations are: vic, nsw, qld, wa, sa, tas, nt, act
 - **remove [location]** - Remove a location to provide automatic updates for
 - **get [location]** - Return a single location's statistics

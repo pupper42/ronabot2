@@ -12,6 +12,6 @@ module.exports = {
         .setName('ardex')
         .setDescription('Ardex! The bot loves you!'),
     async execute(interaction) {
-        await interaction.reply({embed: MessagingService.getMessage('ardex')});
+        await interaction.reply({embeds: [MessagingService.getMessage('ardex')]});
     },
 };
