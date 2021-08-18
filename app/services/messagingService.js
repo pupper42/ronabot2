@@ -123,8 +123,6 @@ class MessagingService {
     }
 
     msgHelp() {
-        const prefix = config.discord.prefix + ' ';
-
         return {
             color: '#ffe360',
             author: {
@@ -136,34 +134,34 @@ class MessagingService {
             fields: [
                 {
                     name: 'QUICKSTART GUIDE',
-                    value: `Do \`${prefix} + add\` to add the locations you want automatic updates for. Then do \`${prefix} + init [repeating/scheduled] [time]\` to configure automatic updates. See below for more details`,
+                    value: 'Do /add to add the locations you want automatic updates for. Then do /init [repeating/scheduled] [time] to configure automatic updates. See below for more details',
                 },
                 {
-                    name: prefix + 'status',
+                    name: '/status',
                     value: 'Show the current status and settings for the server',
                 },
                 {
-                    name: prefix + 'get [location]',
-                    value: 'Return a single location\'s statistics. Current available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
+                    name: '/get [location]',
+                    value: 'Return a single location\'s statistics. Current available locations are: vic, nsw, qld, wa, sa, tas, nt, act',
                 },
                 {
-                    name: prefix + 'add [location]',
-                    value: 'Add a location to provide automatic updates for. Current available locations are: `vic, nsw, qld, wa, sa, tas, nt, act`',
+                    name: '/add [location]',
+                    value: 'Add a location to provide automatic updates for. Current available locations are: vic, nsw, qld, wa, sa, tas, nt, act',
                 },
                 {
-                    name: prefix + 'remove [location]',
+                    name: '/remove [location]',
                     value: 'Remove a location to provide automatic updates for'
                 },
                 {
-                    name: prefix + 'init [repeating/scheduled] [time]',
-                    value: 'Use the current channel for automatic updates and choose auto update mode. Choose repeating if you want the bot to send updates according to a time interval (in minutes). Choose scheduled if you want the bot to send an update at a specific time of the day (in 24h time without the colons like 0930 or 1554). Use `/rb toggle off` if you want to stop receiving auto updates',
+                    name: '/init [repeating/scheduled] [time]',
+                    value: 'Use the current channel for automatic updates and choose auto update mode. Choose repeating if you want the bot to send updates according to a time interval (in minutes). Choose scheduled if you want the bot to send an update at a specific time of the day (in 24h time without the colons like 0930 or 1554). Use `/toggle off` if you want to stop receiving auto updates',
                 },
                 {
-                    name: prefix + 'toggle [on/off]',
+                    name: '/toggle [on/off]',
                     value: 'Toggle on or off auto updates for the server',
                 },
                 {
-                    name: prefix + 'help',
+                    name: '/help',
                     value: 'Well you\'re looking at it right now, aren\'t you?',
                 },
             ]
@@ -247,7 +245,7 @@ class MessagingService {
                 icon_url: config.discord.icon
             },
             title: 'Automatic updates turned on',
-            description: `Use \`${config.discord.prefix} toggle off\` to turn it back off`,
+            description: 'Use /toggle off to turn it back off',
         };
     }
 
@@ -259,7 +257,7 @@ class MessagingService {
                 icon_url: config.discord.icon
             },
             title: 'Automatic updates turned off',
-            description: `Use \`${config.discord.prefix} toggle on\` to turn it back on`,
+            description: 'Use /toggle on to turn it back on',
             fields: []
         };
     }

@@ -2,6 +2,7 @@ const config = require('../config');
 const Server = require('../controllers/server');
 const PermissionsService = require('../services/permissionsService');
 const MessagingService = require('../services/messagingService');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 /**
  * Add a location to the database
@@ -9,19 +10,24 @@ const MessagingService = require('../services/messagingService');
  * @type {{name: string, description: string, execute(*, *): void}}
  */
 module.exports = {
-    name: 'add',
-    description: 'Add a location',
-    execute(message, args) {
-        let messageServer = message.guild.id;
-        let newLocation = args.join(" ");
+    data: new SlashCommandBuilder()
+        .setName('add')
+        .setDescription('Add a location')
+        .addStringOption(option =>
+            option.setName('location')
+                .setDescription('The location you want to add.')
+                .setRequired(true)),
+    async execute(interaction) {
+        let messageServer = interaction.guild.id;
+        let newLocation = interaction.options.getString('location');
 
-        if (!PermissionsService.checkPermissions(message)) {
+        if (!PermissionsService.checkPermissions(interaction)) {
             return;
         }
 
         // TODO: Hard coded locations, change later cant be bothered doing it now lol
         if (!config.availableLocations.includes(newLocation)) {
-            message.channel.send({embed: MessagingService.getMessage('invalidLocation')});
+            await interaction.reply({embeds: [MessagingService.getMessage('invalidLocation')]});
             return
         }
 
@@ -33,6 +39,6 @@ module.exports = {
             ]
         };
 
-        message.channel.send({embed: MessagingService.getMessage('addedLocation', fields)});
+        await interaction.reply({embeds: [MessagingService.getMessage('addedLocation', fields)]});
     },
 };

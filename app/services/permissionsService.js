@@ -4,10 +4,11 @@
  * Check if user has permissions
  */
 const MessagingService = require('../services/messagingService');
+const { Permissions } = require('discord.js');
 
-exports.checkPermissions = function(message) {
-    if (!(message.member.hasPermission("ADMINISTRATOR") || message.member.roles.cache.some(r => r.name === "Rona"))) {
-        message.channel.send({embed: MessagingService.getMessage('roleError')});
+exports.checkPermissions = function(interaction) {
+    if (!(interaction.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR) || interaction.member.roles.cache.some(r => r.name === "Rona"))) {
+        interaction.channel.send({embeds: [MessagingService.getMessage('roleError')]});
         return false;
     }
     return true;
