@@ -186,11 +186,11 @@ class RonaBot {
                     }
 
                     // Check if any server requires notification (get updated_at and interval)
+                    //let updatedAt = DateTime.fromFormat(server.updated_at);
                     let updatedAt = DateTime.fromISO(server.updated_at.toISOString());
                     let currentTime = DateTime.now();
                     let nextRunDate;
                     let locations = server.location;
-                    let responseMessage = [];
 
                     // Check server mode and update the datetime accordingly
                     if ((server.mode === 'scheduled') && currentTime >= updatedAt) {
@@ -204,7 +204,9 @@ class RonaBot {
                     // Check if notify is a `go
                     locations.forEach(function (location) {
                         // Get the statistics
-                        Statistics.read(location).then(updateData => {
+                        Statistics.read(location).then(res => {
+                            const updateData = res;
+
                             const fields = {
                                 title: `${updateData.last_updated} report for ${location.toUpperCase()}`,
                                 fields: [
@@ -224,19 +226,15 @@ class RonaBot {
                             };
 
                             // Send the message to the specific server channel
-                            responseMessage.push(MessagingService.getMessage('locationStats', fields));
+                            try {
+                                client.channels.cache.get(server.update_channel).send({embeds: [MessagingService.getMessage('locationStats', fields)]});
+                            } catch (e) {
+                                console.log(e);
+                            }
                         });
                     });
 
-                    // Update the next run date
                     Server.update(server.server_id, {updated_at: nextRunDate});
-
-                    // Send the message to the channel
-                    try {
-                        client.channels.cache.get(server.update_channel).send({embeds: responseMessage});
-                    } catch (e) {
-                        console.log(e);
-                    }
                 });
             });
         });
