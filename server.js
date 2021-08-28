@@ -242,7 +242,7 @@ class RonaBot {
         // Start the job scheduler
         (async function() {
             await agenda.start();
-            await agenda.every('60 minutes', 'get latest statistics');
+            await agenda.every('30 minutes', 'get latest statistics');
             await agenda.every('1 minute', 'notify servers');
         })();
     }
