@@ -188,7 +188,7 @@ class RonaBot {
                     // Check if any server requires notification (get updated_at and interval)
                     //let updatedAt = DateTime.fromFormat(server.updated_at);
                     let updatedAt = DateTime.fromISO(server.updated_at.toISOString());
-                    let currentTime = DateTime.now();
+                    let currentTime = DateTime.now().toUTC();
                     let nextRunDate;
                     let locations = server.location;
 

@@ -29,7 +29,7 @@ module.exports = {
                 .setDescription('Set the notification mode to `scheduled`.')
                 .addStringOption(option =>
                     option.setName('time')
-                        .setDescription('Set the interval between each notification in minutes.')
+                        .setDescription('Choose when to send updates (timezone: AEST)')
                         .setRequired(true))),
     async execute(interaction) {
         let serverId = interaction.guild.id;
@@ -70,7 +70,7 @@ module.exports = {
         } else if (interaction.options.getSubcommand() === 'scheduled') {
             try {
                 const time = interaction.options.getString('time');
-                let timeDay = DateTime.fromFormat(time, 'H:mm');
+                let timeDay = DateTime.fromFormat(time, 'H:mm', { zone: "Australia/Melbourne" }).toUTC();
                 let currentTime = DateTime.now();
 
                 console.log(`init.js - timeDay: ${timeDay}, currentTime: ${currentTime}`);
