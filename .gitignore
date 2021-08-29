@@ -107,3 +107,4 @@ dist
 .idea/
 
 notifyservers backup.txt
+tokens.txt
