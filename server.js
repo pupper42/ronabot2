@@ -12,10 +12,11 @@ const config = require('./app/config');
 const { DateTime } = require('luxon');
 const mongoose = require('mongoose');
 const { Client, Collection, Intents } = require('discord.js');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const Agenda = require('agenda');
+const { Player } = require("discord-player");
 
 // Controllers
 const Server = require('./app/controllers/server');
@@ -70,6 +71,11 @@ class RonaBot {
             });
             client.user.setActivity(" '/help'", {type: "LISTENING"});
         });
+
+        // Load the player
+        const player = new Player(client);
+
+        player.on("trackStart", (queue, track) => queue.metadata.channel.send(`🎶 | Now playing **${track.title}**!`))
 
         // Load the Discord listener
         client.commands = new Collection();
