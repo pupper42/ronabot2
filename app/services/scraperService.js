@@ -67,10 +67,10 @@ exports.getData = async function (url, location) {
         let tds = $(element).find("td");
 
         let day = $(tds[0]).text();
-        let total_local = $(tds[1]).text();
-        let local = $(tds[3]).text();
-        let total_overseas = $(tds[4]).text();
-        let overseas = $(tds[6]).text();
+        let total_overseas = $(tds[1]).text();
+        let overseas = $(tds[2]).text();
+        let total_local = $(tds[3]).text();
+        let local = $(tds[4]).text();
 
         let tableRow = {total_local, local, total_overseas, overseas, day};
         sourceData.push(tableRow);
