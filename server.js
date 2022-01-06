@@ -150,7 +150,7 @@ class RonaBot {
 
         // Define the job
         agenda.define('get latest statistics', async job => {
-            job.repeatEvery('60 minutes');
+            job.repeatEvery('15 minutes');
 
             // Scrape website data every 15 minutes
             // Grab all locations in database
@@ -242,7 +242,7 @@ class RonaBot {
         // Start the job scheduler
         (async function() {
             await agenda.start();
-            await agenda.every('60 minutes', 'get latest statistics');
+            await agenda.every('15 minutes', 'get latest statistics');
             await agenda.every('1 minute', 'notify servers');
         })();
     }

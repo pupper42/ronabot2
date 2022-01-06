@@ -117,7 +117,7 @@ exports.getData = async function (url, location) {
         last_updated: last_updated,
     }
 
-    // Loop through updateData to check for empty data (because Discord doesnt like empty data zz)
+    // Loop through updateData to check for empty data (because Discord doesn't like empty data zz)
     for (let data in updateData) {
         if (updateData[data] === '' || updateData[data] === '-') {
             updateData[data] = '-';
