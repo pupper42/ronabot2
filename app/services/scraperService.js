@@ -108,11 +108,12 @@ exports.getData = async function (url, location) {
             case "Tests":
                 tests = overviewData[i].change;
                 break;
+            case "Cases":
+                new_lcases = overviewData[i].change;
         }
 
     }
 
-    new_lcases = overviewData[0].change;
     new_ocases = sourceData[0].overseas;
     total_lcases = sourceData[0].total_local;
     total_ocases = sourceData[0].total_overseas;
