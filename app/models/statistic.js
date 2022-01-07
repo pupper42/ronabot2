@@ -12,6 +12,8 @@ const Statistic = new Schema({
     vaccinations: String,
     deaths: String,
     last_updated: String,
+    f_dose: String,
+    s_dose: String
 });
 
 module.exports = mongoose.model('Statistic', Statistic);

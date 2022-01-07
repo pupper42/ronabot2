@@ -20,6 +20,8 @@ exports.getData = async function (url, location) {
     let overviewData = [];
     let vaccinationData = [];
     let sourceData = [];
+    let vaxProgressData = [];
+
     let new_lcases;
     let new_ocases;
     let active_cases;
@@ -29,16 +31,30 @@ exports.getData = async function (url, location) {
     let vaccinations;
     let deaths;
     let last_updated;
+    let f_dose;
+    let s_dose;
 
     let overviewSelector = "section.DAILY-SUMMARY > table > tbody > tr";
     let vaxSelector = "section.DAILY-VACCINATIONS > table > tbody > tr";
     let sourceSelector = "section.DAILY-SOURCE-OVERSEAS > table > tbody > tr";
+    let vaccineProgress = "#page-state > div.wrapper > header > div > table > tbody > tr.STATS"
 
     // Grab the website
     const website = await axios.get(url);
     const $ = await cheerio.load(website.data);
 
     // Scrape the data
+    $(vaccineProgress).each((index, element) => {
+        if (index === 0) return true;
+        let tds = $(element).find("td");
+
+        let f_dose = $(tds[1]).text();
+        let s_dose = $(tds[2]).text();
+
+        let tableRow = {f_dose, s_dose};
+        vaxProgressData.push(tableRow);
+    })
+
     $(overviewSelector).each((index, element) => {
         if (index === 0) return true;
         let tds = $(element).find("td");
@@ -96,12 +112,14 @@ exports.getData = async function (url, location) {
 
     }
 
-    new_lcases = sourceData[0].local;
+    new_lcases = overviewData[0].change;
     new_ocases = sourceData[0].overseas;
     total_lcases = sourceData[0].total_local;
     total_ocases = sourceData[0].total_overseas;
     vaccinations = vaccinationData[0].change;
     last_updated = sourceData[0].day;
+    f_dose = vaxProgressData[0].f_dose;
+    s_dose = vaxProgressData[0].s_dose;
 
     // Consolidate data into a usable object
     updateData = {
@@ -115,6 +133,8 @@ exports.getData = async function (url, location) {
         vaccinations: vaccinations,
         deaths: deaths,
         last_updated: last_updated,
+        f_dose: f_dose,
+        s_dose: s_dose
     }
 
     // Loop through updateData to check for empty data (because Discord doesn't like empty data zz)
