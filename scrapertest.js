@@ -127,8 +127,8 @@ getData = async function (url, location) {
          vaccinations: _.isEmpty(vaccinationData[0]) ? '-' : vaccinationData[0].change,
          deaths: _.isEmpty(deaths) ? '-' : deaths,
          last_updated: _.isEmpty(sourceData[0]) ? '-' : sourceData[0].day,
-         //f_dose: _.isEmpty(vaxProgressData[0]) ? '-' : vaxProgressData[0].f_dose,
-         //s_dose: _.isEmpty(vaxProgressData[0]) ? '-' : vaxProgressData[0].s_dose
+         f_dose: _.isEmpty(vaxProgressData[0]) ? '-' : vaxProgressData[0].f_dose,
+         s_dose: _.isEmpty(vaxProgressData[0]) ? '-' : vaxProgressData[0].s_dose
      }
  
      // Save to database

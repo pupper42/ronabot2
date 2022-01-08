@@ -51,6 +51,7 @@ module.exports = {
                 {name: '\u200b', value: '\u200b', inline: true},                
                 {name: 'First Dose', value: `${updateData.f_dose}`, inline: true},
                 {name: 'Second Dose', value: `${updateData.s_dose}`, inline: true},
+                {name: '\u200b', value: '\u200b', inline: true},     
             ]
         };
         await interaction.reply({embeds: [MessagingService.getMessage('locationStats', fields)]});
