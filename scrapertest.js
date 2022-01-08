@@ -6,7 +6,6 @@
 
 const cheerio = require('cheerio');
 const axios = require('axios');
-const Statistic = require('../controllers/statistic');
 
 /**
  * Scrapes the COVID live website for data
@@ -15,12 +14,12 @@ const Statistic = require('../controllers/statistic');
  * @param location
  * @returns {Promise<{new_lcases, last_updated, tests, vaccinations, new_ocases: (*|jQuery), total_ocases: (*|jQuery), location, total_lcases: (*|jQuery), active_cases, deaths}>}
  */
-exports.getData = async function (url, location) {
+async function getData(url, location) {
     let updateData;
     let dailySummaryData = [];
     let vaccinationData = [];
     let sourceData = [];
-    //let vaxProgressData = [];
+    let vaxProgressData = [];
 
     let new_lcases;
     let new_ocases;
@@ -150,7 +149,8 @@ exports.getData = async function (url, location) {
 
     // Save to database
     console.log(updateData);
-    await Statistic.update(location, updateData);
 
     return updateData;
 }
+
+getData("https://covidlive.com.au/vic", "vic");
