@@ -7,6 +7,7 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
 const Statistic = require('../controllers/statistic');
+const _ = require('lodash');
 
 /**
  * Scrapes the COVID live website for data
@@ -23,16 +24,10 @@ exports.getData = async function (url, location) {
     //let vaxProgressData = [];
 
     let new_lcases;
-    let new_ocases;
     let active_cases;
-    let total_lcases;
-    let total_ocases;
     let tests;
-    let vaccinations;
     let deaths;
     let last_updated;
-    let f_dose;
-    let s_dose;
 
     let dailySummarySelector = "section.DAILY-SUMMARY > table > tbody > tr";
     let vaxSelector = "section.DAILY-VACCINATIONS > table > tbody > tr";
@@ -116,40 +111,24 @@ exports.getData = async function (url, location) {
 
     }
 
-    new_ocases = sourceData[0].overseas;
-    total_lcases = sourceData[0].total_local;
-    total_ocases = sourceData[0].total_overseas;
-    vaccinations = vaccinationData[0].change;
-    last_updated = sourceData[0].day;
-    //f_dose = vaxProgressData[0].f_dose;
-    //s_dose = vaxProgressData[0].s_dose;
-
-    
-    // Consolidate data into a usable object
+    // Consolidate data into a usable object and check if data is valid
     updateData = {
-        location: location,
-        new_lcases: new_lcases,
-        new_ocases: new_ocases,
-        active_cases: active_cases,
-        total_lcases: total_lcases,
-        total_ocases: total_ocases,
-        tests: tests,
-        vaccinations: vaccinations,
-        deaths: deaths,
-        last_updated: last_updated,
-        f_dose: f_dose,
-        s_dose: s_dose
-    }
-
-    // Loop through updateData to check for empty data (because Discord doesn't like empty data zz)
-    for (let data in updateData) {
-        if (updateData[data] === '' || updateData[data] === '-') {
-            updateData[data] = '-';
-        }
+        location: _.isEmpty(location) ? '-' : location,
+        new_lcases: _.isEmpty(new_lcases) ? '-' : new_lcases,
+        new_ocases: _.isEmpty(sourceData[0]) ? '-' : sourceData[0].overseas,
+        active_cases: _.isEmpty(active_cases) ? '-' : active_cases,
+        total_lcases: _.isEmpty(sourceData[0]) ? '-' : sourceData[0].total_local,
+        total_ocases: _.isEmpty(sourceData[0]) ? '-' : sourceData[0].total_overseas,
+        tests: _.isEmpty(tests) ? '-' : tests,
+        vaccinations: _.isEmpty(vaccinationData[0]) ? '-' : vaccinationData[0].change,
+        deaths: _.isEmpty(deaths) ? '-' : deaths,
+        last_updated: _.isEmpty(sourceData[0]) ? '-' : sourceData[0].day,
+        f_dose: _.isEmpty(vaxProgressData[0]) ? '-' : vaxProgressData[0].f_dose,
+        s_dose: _.isEmpty(vaxProgressData[0]) ? '-' : vaxProgressData[0].s_dose
     }
 
     // Save to database
-    console.log(updateData);
+    // console.log(updateData);
     await Statistic.update(location, updateData);
 
     return updateData;
