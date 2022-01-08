@@ -115,28 +115,20 @@ exports.getData = async function (url, location) {
 
     }
 
-    new_ocases = sourceData[0].overseas;
-    total_lcases = sourceData[0].total_local;
-    total_ocases = sourceData[0].total_overseas;
-    vaccinations = vaccinationData[0].change;
-    last_updated = sourceData[0].day;
-    f_dose = vaxProgressData[0].f_dose;
-    s_dose = vaxProgressData[0].s_dose;
-
     // Consolidate data into a usable object and check if data is valid
     updateData = {
         location: _.isEmpty(location) ? '-' : location,
         new_lcases: _.isEmpty(new_lcases) ? '-' : new_lcases,
-        new_ocases: _.isEmpty(new_ocases) ? '-' : new_ocases,
+        new_ocases: _.isEmpty(sourceData[0].overseas) ? '-' : sourceData[0].overseas,
         active_cases: _.isEmpty(active_cases) ? '-' : active_cases,
-        total_lcases: _.isEmpty(total_lcases) ? '-' : total_lcases,
-        total_ocases: _.isEmpty(total_ocases) ? '-' : total_ocases,
+        total_lcases: _.isEmpty(sourceData[0].total_local) ? '-' : sourceData[0].total_local,
+        total_ocases: _.isEmpty(sourceData[0].total_overseas) ? '-' : sourceData[0].total_overseas,
         tests: _.isEmpty(tests) ? '-' : tests,
-        vaccinations: _.isEmpty(vaccinations) ? '-' : vaccinations,
+        vaccinations: _.isEmpty(vaccinationData[0].change) ? '-' : vaccinationData[0].change,
         deaths: _.isEmpty(deaths) ? '-' : deaths,
-        last_updated: _.isEmpty(last_updated) ? '-' : last_updated,
-        f_dose: _.isEmpty(f_dose) ? '-' : f_dose,
-        s_dose: _.isEmpty(s_dose) ? '-' : s_dose
+        last_updated: _.isEmpty(sourceData[0].day) ? '-' : sourceData[0].day,
+        f_dose: _.isEmpty(vaxProgressData[0].f_dose) ? '-' : vaxProgressData[0].f_dose,
+        s_dose: _.isEmpty(vaxProgressData[0].s_dose) ? '-' : vaxProgressData[0].s_dose
     }
 
     // Save to database
