@@ -37,7 +37,7 @@ exports.getData = async function (url, location) {
     let overviewSelector = "section.DAILY-SUMMARY > table > tbody > tr";
     let vaxSelector = "section.DAILY-VACCINATIONS > table > tbody > tr";
     let sourceSelector = "section.DAILY-SOURCE-OVERSEAS > table > tbody > tr";
-    let vaccineProgress = "#page-state > div.wrapper > header > div > table > tbody > tr.STATS"
+    let vaccineProgress = "#page-state > div.wrapper > header > div > table > tbody > tr.STATS";
 
     // Grab the website
     const website = await axios.get(url);
@@ -140,13 +140,13 @@ exports.getData = async function (url, location) {
 
     // Loop through updateData to check for empty data (because Discord doesn't like empty data zz)
     for (let data in updateData) {
-        if (updateData[data] === '' || updateData[data] === '-') {
+        if (updateData[data] === undefined || updateData[data].length === 0 || updateData[data] === '' || updateData[data] === '-') {
             updateData[data] = '-';
         }
     }
 
     // Save to database
-    console.log(updateData);
+    // console.log(updateData);
     await Statistic.update(location, updateData);
 
     return updateData;
