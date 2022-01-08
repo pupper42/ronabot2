@@ -7,6 +7,7 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
 const Statistic = require('../controllers/statistic');
+const _ = require('lodash');
 
 /**
  * Scrapes the COVID live website for data
@@ -122,27 +123,20 @@ exports.getData = async function (url, location) {
     f_dose = vaxProgressData[0].f_dose;
     s_dose = vaxProgressData[0].s_dose;
 
-    // Consolidate data into a usable object
+    // Consolidate data into a usable object and check if data is valid
     updateData = {
-        location: location,
-        new_lcases: new_lcases,
-        new_ocases: new_ocases,
-        active_cases: active_cases,
-        total_lcases: total_lcases,
-        total_ocases: total_ocases,
-        tests: tests,
-        vaccinations: vaccinations,
-        deaths: deaths,
-        last_updated: last_updated,
-        f_dose: f_dose,
-        s_dose: s_dose
-    }
-
-    // Loop through updateData to check for empty data (because Discord doesn't like empty data zz)
-    for (let data in updateData) {
-        if (updateData[data] === undefined || updateData[data].length === 0 || updateData[data] === '' || updateData[data] === '-') {
-            updateData[data] = '-';
-        }
+        location: _.isEmpty(location) ? '-' : location,
+        new_lcases: _.isEmpty(new_lcases) ? '-' : new_lcases,
+        new_ocases: _.isEmpty(new_ocases) ? '-' : new_ocases,
+        active_cases: _.isEmpty(active_cases) ? '-' : active_cases,
+        total_lcases: _.isEmpty(total_lcases) ? '-' : total_lcases,
+        total_ocases: _.isEmpty(total_ocases) ? '-' : total_ocases,
+        tests: _.isEmpty(tests) ? '-' : tests,
+        vaccinations: _.isEmpty(vaccinations) ? '-' : vaccinations,
+        deaths: _.isEmpty(deaths) ? '-' : deaths,
+        last_updated: _.isEmpty(last_updated) ? '-' : last_updated,
+        f_dose: _.isEmpty(f_dose) ? '-' : f_dose,
+        s_dose: _.isEmpty(s_dose) ? '-' : s_dose
     }
 
     // Save to database
