@@ -24,16 +24,10 @@ exports.getData = async function (url, location) {
     let vaxProgressData = [];
 
     let new_lcases;
-    let new_ocases;
     let active_cases;
-    let total_lcases;
-    let total_ocases;
     let tests;
-    let vaccinations;
     let deaths;
     let last_updated;
-    let f_dose;
-    let s_dose;
 
     let overviewSelector = "section.DAILY-SUMMARY > table > tbody > tr";
     let vaxSelector = "section.DAILY-VACCINATIONS > table > tbody > tr";
@@ -119,16 +113,16 @@ exports.getData = async function (url, location) {
     updateData = {
         location: _.isEmpty(location) ? '-' : location,
         new_lcases: _.isEmpty(new_lcases) ? '-' : new_lcases,
-        new_ocases: _.isEmpty(sourceData[0].overseas) ? '-' : sourceData[0].overseas,
+        new_ocases: _.isEmpty(sourceData[0]) ? '-' : sourceData[0].overseas,
         active_cases: _.isEmpty(active_cases) ? '-' : active_cases,
-        total_lcases: _.isEmpty(sourceData[0].total_local) ? '-' : sourceData[0].total_local,
-        total_ocases: _.isEmpty(sourceData[0].total_overseas) ? '-' : sourceData[0].total_overseas,
+        total_lcases: _.isEmpty(sourceData[0]) ? '-' : sourceData[0].total_local,
+        total_ocases: _.isEmpty(sourceData[0]) ? '-' : sourceData[0].total_overseas,
         tests: _.isEmpty(tests) ? '-' : tests,
-        vaccinations: _.isEmpty(vaccinationData[0].change) ? '-' : vaccinationData[0].change,
+        vaccinations: _.isEmpty(vaccinationData[0]) ? '-' : vaccinationData[0].change,
         deaths: _.isEmpty(deaths) ? '-' : deaths,
-        last_updated: _.isEmpty(sourceData[0].day) ? '-' : sourceData[0].day,
-        f_dose: _.isEmpty(vaxProgressData[0].f_dose) ? '-' : vaxProgressData[0].f_dose,
-        s_dose: _.isEmpty(vaxProgressData[0].s_dose) ? '-' : vaxProgressData[0].s_dose
+        last_updated: _.isEmpty(sourceData[0]) ? '-' : sourceData[0].day,
+        f_dose: _.isEmpty(vaxProgressData[0]) ? '-' : vaxProgressData[0].f_dose,
+        s_dose: _.isEmpty(vaxProgressData[0]) ? '-' : vaxProgressData[0].s_dose
     }
 
     // Save to database
