@@ -20,6 +20,7 @@ class MessagingService {
         messages = new Map([
             ['ardex', this.msgArdex()],
             ['roleError', this.msgRoleError()],
+            ['failedUpdate', this.failedUpdate()],
             ['invalidLocation', this.msgInvalidLocation()],
             ['addedLocation', this.msgAddedLocation()],
             ['removedLocation', this.msgRemovedLocation()],
@@ -72,6 +73,18 @@ class MessagingService {
         return {
             title: "Error!",
             description: "You must be admin or have the Rona role!",
+            color: '#ffe360',
+            author: {
+                name: 'RonaBot v2',
+                icon_url: config.discord.icon
+            },
+        };
+    }
+
+    failedUpdate() {
+        return {
+            title: "Statistics failed to update!",
+            description: "Something has gone wrong with the source. Please try again later.",
             color: '#ffe360',
             author: {
                 name: 'RonaBot v2',

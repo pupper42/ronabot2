@@ -30,7 +30,7 @@ module.exports = {
             updateData = await scraper.getData(url, location);
         }
         catch {
-            await interaction.reply({embeds: [MessagingService.getMessage('invalidLocation')]});
+            await interaction.reply({embeds: [MessagingService.getMessage('failedUpdate')]});
             return
         }
 
