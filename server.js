@@ -222,6 +222,8 @@ class RonaBot {
                                     {name: 'Tests', value: `${updateData.tests}`, inline: true},
                                     {name: 'Vaccinations', value: `${updateData.vaccinations}`, inline: true},
                                     {name: '\u200b', value: '\u200b', inline: true},
+                                    {name: 'First Dose', value: `${updateData.f_dose}`, inline: true},
+                                    {name: 'Second Dose', value: `${updateData.s_dose}`, inline: true},
                                 ]
                             };
 
