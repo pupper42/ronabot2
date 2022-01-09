@@ -24,22 +24,43 @@ module.exports = {
         let country = interaction.options.getString('country');
         let countrySelector = "table.CASES-WORLDWIDE > tbody > tr";
 
-        // Grab the website
-        const website = await axios.get(config.sources.global);
-        const $ = await cheerio.load(website.data);
+        /**
+         * Global Cases
+         */
+        const globalCases = await axios.get(config.globalSources.cases);
+        const globalCasesData = await cheerio.load(globalCases.data);
 
         // Scrape the website for matching location
-        $(countrySelector).each((index, element) => {
+        globalCasesData(countrySelector).each((index, element) => {
             if (index === 0) return true;
-            let tds = $(element).find("td");
+            let tds = globalCasesData(element).find("td");
 
             // Check if country name matches user input
-            let countryName = $(tds[0]).text();
+            let countryName = globalCasesData(tds[0]).text();
             if (country === countryName) {
-                let totalCases = $(tds[1]).text();
-                let newCases = $(tds[3]).text();
+                let totalCases = globalCasesData(tds[1]).text();
+                let newCases = globalCasesData(tds[3]).text();
 
                 countryData = {totalCases, newCases};
+            }
+        });
+
+        /**
+         * Global Vaccinations
+         */
+        const globalVaccinations = await axios.get(config.globalSources.vaccinations);
+        const globalVaccinationsData = await cheerio.load(globalVaccinations.data);
+
+        // Scrape the website for matching location
+        globalVaccinationsData(countrySelector).each((index, element) => {
+            if (index === 0) return true;
+            let tds = globalVaccinationsData(element).find("td");
+
+            // Check if country name matches user input
+            let countryName = globalVaccinationsData(tds[0]).text();
+            if (country === countryName) {
+                countryData['firstDose'] = globalVaccinationsData(tds[2]).text();
+                countryData['secondDose'] = globalVaccinationsData(tds[3]).text();
             }
         });
 
@@ -48,10 +69,13 @@ module.exports = {
             await interaction.reply({embeds: [MessagingService.getMessage('invalidLocation')]});
         } else {
             const fields = {
-                title: `Current report for ${country.toUpperCase()}`,
+                title: `COVID-19 Stats for ${country.toUpperCase()} (Country)`,
                 fields: [
                     {name: 'Total cases', value: `${countryData.totalCases}`, inline: true},
                     {name: 'New cases', value: `${countryData.newCases}`, inline: true},
+                    {name: '\u200b', value: '\u200b', inline: true},
+                    {name: 'First Dose', value: `${countryData.firstDose}`, inline: true},
+                    {name: 'Second Dose', value: `${countryData.secondDose}`, inline: true},
                     {name: '\u200b', value: '\u200b', inline: true},
                 ]
             };

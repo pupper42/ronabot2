@@ -13,8 +13,11 @@ module.exports = {
         sa: 'https://covidlive.com.au/sa',
         tas: 'https://covidlive.com.au/tas',
         nt: 'https://covidlive.com.au/nt',
-        act: 'https://covidlive.com.au/act',
-        global: 'https://covidlive.com.au/world/cases'
+        act: 'https://covidlive.com.au/act'
+    },
+    globalSources: {
+        cases: 'https://covidlive.com.au/world/cases',
+        vaccinations: 'https://covidlive.com.au/world/vaccinations'
     },
     discord: {
         token: process.env.DISCORD_TOKEN,

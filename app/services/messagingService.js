@@ -150,6 +150,10 @@ class MessagingService {
                     value: 'Do /add to add the locations you want automatic updates for. Then do /init [repeating/scheduled] [time] to configure automatic updates. See below for more details',
                 },
                 {
+                    name: '/country [countryname]',
+                    value: 'Show the current statistics for a specified country',
+                },
+                {
                     name: '/status',
                     value: 'Show the current status and settings for the server',
                 },
