@@ -21,7 +21,7 @@ module.exports = {
     async execute (interaction) {
         // Constants
         let countryData = {};
-        let country = interaction.options.getString('country');
+        let country = interaction.options.getString('country').toLowerCase();
 
         /**
          * Global Cases
@@ -36,7 +36,7 @@ module.exports = {
             let tds = globalCasesData(element).find("td");
 
             // Check if country name matches user input
-            let countryName = globalCasesData(tds[0]).text();
+            let countryName = globalCasesData(tds[0]).text().toLowerCase();
             if (country === countryName) {
                 let totalCases = globalCasesData(tds[1]).text();
                 let newCases = globalCasesData(tds[3]).text();
