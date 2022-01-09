@@ -58,7 +58,7 @@ module.exports = {
             let tds = globalVaccinationsData(element).find("td");
 
             // Check if country name matches user input
-            let countryName = globalVaccinationsData(tds[0]).text();
+            let countryName = globalVaccinationsData(tds[0]).text().toLowerCase();
             if (country === countryName) {
                 countryData['firstDose'] = globalVaccinationsData(tds[2]).text();
                 countryData['secondDose'] = globalVaccinationsData(tds[3]).text();
