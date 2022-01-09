@@ -60,10 +60,8 @@ module.exports = {
             // Check if country name matches user input
             let countryName = globalVaccinationsData(tds[0]).text();
             if (country === countryName) {
-                countryData.push({
-                    firstDose: globalVaccinationsData(tds[2]).text(),
-                    secondDose: globalVaccinationsData(tds[3]).text()
-                });
+                countryData['firstDose'] = globalVaccinationsData(tds[2]).text();
+                countryData['secondDose'] = globalVaccinationsData(tds[3]).text();
             }
         });
 
