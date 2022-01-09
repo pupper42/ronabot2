@@ -39,8 +39,6 @@ exports.getData = async function (url, location) {
     const $ = await cheerio.load(website.data);
 
     // Scrape the data
-
-
     $(vaccineProgressSelector).each((index, element) => {
         let tds = $(element).find("td");
         let f_dose = $(tds[1]).text();
