@@ -120,7 +120,7 @@ class RonaBot {
 
             // If the user did not provide a command
             if (!client.commands.has(commandName)) {
-                await interaction.reply({content: 'please give me a valid command! See `/help` for list of commands.'});
+                await interaction.reply({content: 'Please give me a valid command! See `/help` for list of commands.'});
                 return;
             }
 
@@ -224,7 +224,7 @@ class RonaBot {
                                     {name: '\u200b', value: '\u200b', inline: true},
                                     {name: 'First Dose', value: `${updateData.f_dose}`, inline: true},
                                     {name: 'Second Dose', value: `${updateData.s_dose}`, inline: true},
-                                    {name: '\u200b', value: '\u200b', inline: true},     
+                                    {name: '\u200b', value: '\u200b', inline: true},
                                 ]
                             };
 
