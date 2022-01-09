@@ -22,13 +22,13 @@ module.exports = {
         // Constants
         let countryData = {};
         let country = interaction.options.getString('country');
-        let countrySelector = "table.CASES-WORLDWIDE > tbody > tr";
 
         /**
          * Global Cases
          */
         const globalCases = await axios.get(config.globalSources.cases);
         const globalCasesData = await cheerio.load(globalCases.data);
+        let countrySelector = "table.CASES-WORLDWIDE > tbody > tr";
 
         // Scrape the website for matching location
         globalCasesData(countrySelector).each((index, element) => {
@@ -50,17 +50,20 @@ module.exports = {
          */
         const globalVaccinations = await axios.get(config.globalSources.vaccinations);
         const globalVaccinationsData = await cheerio.load(globalVaccinations.data);
+        let vaccinationSelector = "table.VACCINATIONS-WORLDWIDE > tbody > tr";
 
         // Scrape the website for matching location
-        globalVaccinationsData(countrySelector).each((index, element) => {
+        globalVaccinationsData(vaccinationSelector).each((index, element) => {
             if (index === 0) return true;
             let tds = globalVaccinationsData(element).find("td");
 
             // Check if country name matches user input
             let countryName = globalVaccinationsData(tds[0]).text();
             if (country === countryName) {
-                countryData['firstDose'] = globalVaccinationsData(tds[2]).text();
-                countryData['secondDose'] = globalVaccinationsData(tds[3]).text();
+                countryData.push({
+                    firstDose: globalVaccinationsData(tds[2]).text(),
+                    secondDose: globalVaccinationsData(tds[3]).text()
+                });
             }
         });
 
