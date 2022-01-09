@@ -11,6 +11,7 @@ You will need to create a .env file with the following values:
 You will need to set up a MongoDB server somewhere and retrieve its URL and place it into the .env file.
 
 ### Commands
+- **country [countryname]** - Get basic stats for a specific country
 - **add [location]** - Add a location to provide automatic updates for. Current available locations are: vic, nsw, qld, wa, sa, tas, nt, act
 - **remove [location]** - Remove a location to provide automatic updates for
 - **get [location]** - Return a single location's statistics
@@ -21,4 +22,3 @@ You will need to set up a MongoDB server somewhere and retrieve its URL and plac
 
 ### Future updates:
 - Social media updates maybe?
-- Add other countries?
