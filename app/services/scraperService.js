@@ -86,10 +86,10 @@ exports.getData = async function (url, location) {
         $(firstDoseTable).each((index, element) => {
             let tds = $(element).find("td");
 
-            let total = $(tds[1]).text();
+            let last_updated = $(tds[0]).text();
             let f_dose = $(tds[2]).text();
 
-            let tableRow = {total, f_dose};
+            let tableRow = {last_updated, f_dose};
             firstDoseTableData.push(tableRow);
         });
 
@@ -119,7 +119,8 @@ exports.getData = async function (url, location) {
             deaths: _.isEmpty(deaths) ? '-' : deaths,
             f_dose: _.isEmpty(firstDoseTableData[1]) ? '-' : firstDoseTableData[1].f_dose,
             s_dose: _.isEmpty(secondDoseTableData[1]) ? '-' : secondDoseTableData[1].s_dose,
-            t_dose: _.isEmpty(topBarData[0]) ? '-' : topBarData[0].t_dose
+            t_dose: _.isEmpty(topBarData[0]) ? '-' : topBarData[0].t_dose,
+            last_updated: _.isEmpty(firstDoseTableData[1]) ? '-' : firstDoseTableData[1].lastUpdated
         }
 
     // Save to database
