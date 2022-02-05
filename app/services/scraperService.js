@@ -120,7 +120,7 @@ exports.getData = async function (url, location) {
             f_dose: _.isEmpty(firstDoseTableData[1]) ? '-' : firstDoseTableData[1].f_dose,
             s_dose: _.isEmpty(secondDoseTableData[1]) ? '-' : secondDoseTableData[1].s_dose,
             t_dose: _.isEmpty(topBarData[0]) ? '-' : topBarData[0].t_dose,
-            last_updated: _.isEmpty(firstDoseTableData[1]) ? '-' : firstDoseTableData[1].lastUpdated
+            last_updated: _.isEmpty(firstDoseTableData[1]) ? '-' : firstDoseTableData[1].last_updated
         }
 
     // Save to database
