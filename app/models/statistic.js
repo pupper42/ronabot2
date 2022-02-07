@@ -12,6 +12,7 @@ const Statistic = new Schema({
     f_dose: String,
     s_dose: String,
     t_dose: String,
+    last_updated: String,
 });
 
 module.exports = mongoose.model('Statistic', Statistic);
