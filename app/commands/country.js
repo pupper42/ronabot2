@@ -42,6 +42,9 @@ module.exports = {
                 let newCases = globalCasesData(tds[3]).text();
 
                 countryData = {totalCases, newCases};
+            } else {
+                countryData['totalCases'] = 'N/A';
+                countryData['newCases'] = 'N/A';
             }
         });
 
@@ -63,6 +66,10 @@ module.exports = {
                 countryData['firstDose'] = globalVaccinationsData(tds[1]).text();
                 countryData['secondDose'] = globalVaccinationsData(tds[2]).text();
                 countryData['thirdDose'] = globalVaccinationsData(tds[3]).text();
+            } else {
+                countryData['firstDose'] = 'N/A';
+                countryData['secondDose'] = 'N/A';
+                countryData['thirdDose'] = 'N/A';
             }
         });
 
